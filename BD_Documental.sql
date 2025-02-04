@@ -23,7 +23,7 @@ CREATE TABLE documento_etiqueta (
     PRIMARY KEY (id_documento, id_etiqueta)
 );
 
-CREATE TABLE DocumentChunk (
+CREATE TABLE document_chunk (
     id SERIAL PRIMARY KEY,
     id_documento SERIAL NOT NULL REFERENCES documento(id) ON DELETE CASCADE,
     idDocRag INT,
@@ -32,8 +32,7 @@ CREATE TABLE DocumentChunk (
     chunked_by VARCHAR(255), -- Usuario que procesó el chunk
     estado VARCHAR(20) DEFAULT 'pendiente', -- "pendiente", "aprobado", "denegado", "modificado"
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    fecha_modificacion TIMESTAMP,
-    numero_palabras INT -- Se calculará en la aplicación o con un trigger
+    fecha_modificacion TIMESTAMP
 );
 
 CREATE TABLE estadistica (
@@ -43,6 +42,5 @@ CREATE TABLE estadistica (
     tiempo_revision INT, -- Tiempo total en segundos
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     usuario VARCHAR(255), -- Usuario que realizó la revisión
-    tipo VARCHAR(50) CHECK (tipo IN ('documento', 'chunk')), -- Tipo de estadística
     estado_final VARCHAR(20) -- Estado final después de la revisión
 );
