@@ -14,15 +14,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class DocumentChunkEdit implements Serializable{
-
+public class DocumentChunkList implements Serializable{
     private static final long serialVersionUID = 1L;
     private Long id;
-    
-    @NotNull(message = "El id del documento no puede ser nulo")
-    private Long idDocumento;
-    
-    private Integer idDocRag;
     
     @NotNull(message = "El orden del chunk no puede ser nulo")
     private Integer chunkOrder;
