@@ -32,8 +32,7 @@ CREATE TABLE DocumentChunk (
     chunked_by VARCHAR(255), -- Usuario que procesó el chunk
     estado VARCHAR(20) DEFAULT 'pendiente', -- "pendiente", "aprobado", "denegado", "modificado"
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    fecha_modificacion TIMESTAMP,
-    numero_palabras INT -- Se calculará en la aplicación o con un trigger
+    fecha_modificacion TIMESTAMP
 );
 
 CREATE TABLE estadistica (
