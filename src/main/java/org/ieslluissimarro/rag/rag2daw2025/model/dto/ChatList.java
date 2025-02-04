@@ -1,26 +1,18 @@
-package org.ieslluissimarro.rag.rag2daw2025.model.db;
+package org.ieslluissimarro.rag.rag2daw2025.model.dto;
+
 import java.time.LocalDate;
 
-
-import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Entity
-@Table(name="chats")
-public class ChatDb {
+public class ChatList {
 
     @Id
     private Long idChat;
     private String user;
     private LocalDate date;
-
-
 }

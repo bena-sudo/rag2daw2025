@@ -20,6 +20,7 @@ Taules
 -- Answers
 - Long idAnswer
 - Long idQuestion
+- Long idChat
 - String user
 - String text
 
