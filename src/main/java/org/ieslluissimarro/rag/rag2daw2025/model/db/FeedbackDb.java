@@ -1,6 +1,5 @@
 package org.ieslluissimarro.rag.rag2daw2025.model.db;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -8,17 +7,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Entity
-@Table(name="questions")
-public class QuestionDb {
+@Table(name="feedback")
+public class FeedbackDb {
 
     @Id
-    private Long idQuestion;
-    private Long idChat;
+    private Long idAnswer;
     private String user;
-    private String text;
-   // private List
+    private String feedback;
+
 }

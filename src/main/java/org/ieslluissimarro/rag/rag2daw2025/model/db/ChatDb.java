@@ -1,4 +1,4 @@
-package main.java.org.ieslluissimarro.rag.rag2daw2025.model.db;
+package org.ieslluissimarro.rag.rag2daw2025.model.db;
 import java.time.LocalDate;
 
 import org.hibernate.validator.constraints.Range;
