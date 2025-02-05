@@ -15,6 +15,7 @@ import lombok.Setter;
 public class FeedbackInfo {
 
     @Id
+    private Long idFeedback;
     private Long idAnswer;
     private String user;
     private String feedback;

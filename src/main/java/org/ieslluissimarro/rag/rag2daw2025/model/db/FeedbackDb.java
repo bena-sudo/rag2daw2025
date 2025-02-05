@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class FeedbackDb {
 
     @Id
+    private Long idFeedback;
     private Long idAnswer;
     private String user;
     private String feedback;
