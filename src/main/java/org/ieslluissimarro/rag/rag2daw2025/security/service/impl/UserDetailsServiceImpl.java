@@ -21,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         //Método que debemos sobreescribir  (debe tener este nombre) de la interfaz UserDetailsService.
         //En nuestro caso buscamos por nickname en la BD y devolvemos un UsuarioPrincipal,
         //que es una implementación de la interfaz UserDetails.
-        UsuarioDb usuario = usuarioService.getByNickname(nickname).get();
+        UsuarioDb usuario = usuarioService.getByNickName(nickname).get();
         return UsuarioPrincipal.build(usuario);
     }
 }

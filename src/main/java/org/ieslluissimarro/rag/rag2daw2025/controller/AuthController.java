@@ -48,40 +48,96 @@ public class AuthController {
     @Autowired
     JwtService jwtProvider;
 
-    
+
     @PostMapping("/nuevo")
-    public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult) {
-        if (bindingResult.hasErrors())
+    public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult){
+        if(bindingResult.hasErrors())
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje("Datos incorrectos o email inválido"));
-        
-        if (usuarioService.existsByNickname(nuevoUsuario.getNickname()))
+        if(usuarioService.existsByNickname(nuevoUsuario.getNickname()))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje("El nickname del usuario ya existe"));
-        
-        if (usuarioService.existsByEmail(nuevoUsuario.getEmail()))
+        if(usuarioService.existsByEmail(nuevoUsuario.getEmail()))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje("El email del usuario ya existe"));
-        
-        UsuarioDb usuarioDb = new UsuarioDb(nuevoUsuario.getNombre(), nuevoUsuario.getNickname(), nuevoUsuario.getEmail(),
-                passwordEncoder.encode(nuevoUsuario.getPassword()));
-        
+        UsuarioDb usuarioDb =
+                new UsuarioDb(nuevoUsuario.getNombre(), nuevoUsuario.getNickname(), nuevoUsuario.getEmail(),
+                        passwordEncoder.encode(nuevoUsuario.getPassword()));
         Set<RolDb> rolesDb = new HashSet<>();
         rolesDb.add(rolService.getByRolNombre(RolNombre.USUARIO).get());
-        
-        if (nuevoUsuario.getRoles().contains("ADMINISTRADOR")) // nO RECOMENDADO EN UNA BD DE PRODUCCIÓN
+        if(nuevoUsuario.getRoles().contains("ADMINISTRADOR")) //nO RECOMENDADO EN UNA BD DE PRODUCCIÓN
             rolesDb.add(rolService.getByRolNombre(RolNombre.ADMINISTRADOR).get());
-        
         usuarioDb.setRoles(rolesDb);
-    
-        // Aquí está el try-catch para capturar cualquier excepción al guardar
-        try {
-            usuarioService.save(usuarioDb);  // Intenta guardar el usuario
-        } catch (Exception e) {
-            e.printStackTrace();  // Muestra el error en consola
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new Mensaje("Error al guardar usuario: " + e.getMessage()));  // Responde con un mensaje de error
-        }
-        
+        usuarioService.save(usuarioDb);
         return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Usuario creado"));
     }
+    
+
+    /*
+    @PostMapping("/nuevo")
+    public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult) {
+        // Si hay errores de validación, retornamos una respuesta con el mensaje de error
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje("Datos incorrectos o email inválido"));
+        }
+    
+        // Verificamos si el nickname ya existe
+        if (usuarioService.existsByNickname(nuevoUsuario.getNickname())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje("El nickname del usuario ya existe"));
+        }
+    
+        // Verificamos si el email ya existe
+        if (usuarioService.existsByEmail(nuevoUsuario.getEmail())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje("El email del usuario ya existe"));
+        }
+    
+        // Creamos el usuario en la base de datos
+        UsuarioDb usuarioDb = new UsuarioDb(
+                nuevoUsuario.getNombre(),
+                nuevoUsuario.getNickname(),
+                nuevoUsuario.getEmail(),
+                passwordEncoder.encode(nuevoUsuario.getPassword())
+        );
+    
+        // Definimos los roles
+        Set<RolDb> rolesDb = new HashSet<>();
+        
+        // Agregamos el rol "USUARIO" de manera obligatoria
+        Optional<RolDb> rolUsuario = rolService.getByRolNombre(RolNombre.USUARIO);
+        if (rolUsuario.isPresent()) {
+            rolesDb.add(rolUsuario.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Mensaje("Rol de usuario no encontrado"));
+        }
+    
+        // Si el usuario tiene rol "ADMINISTRADOR", agregamos el rol correspondiente
+        if (nuevoUsuario.getRoles().contains("ADMINISTRADOR")) {
+            Optional<RolDb> rolAdministrador = rolService.getByRolNombre(RolNombre.ADMINISTRADOR);
+            if (rolAdministrador.isPresent()) {
+                rolesDb.add(rolAdministrador.get());
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Mensaje("Rol de administrador no encontrado"));
+            }
+        }
+    
+        usuarioDb.setRoles(rolesDb);
+    
+        try {
+            // Intentamos guardar el nuevo usuario
+            usuarioService.save(usuarioDb);
+        } catch (Exception e) {
+            // Si ocurre un error al guardar, devolvemos un mensaje adecuado
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Mensaje("Error al guardar el usuario: " + e.getMessage()));
+        }
+    
+        // Devolvemos una respuesta indicando que el usuario fue creado correctamente
+        return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Usuario creado"));
+    }
+    */
+
+
+
+
+
+
+
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult){

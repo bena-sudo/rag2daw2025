@@ -15,8 +15,8 @@ public class UsuarioService {
 
     @Autowired
     UsuarioRepository usuarioRepository;
-
-    public Optional<UsuarioDb> getByNickname(String nickname){
+                               
+    public Optional<UsuarioDb> getByNickName(String nickname){
         return usuarioRepository.findByNickname(nickname);
     }
 
