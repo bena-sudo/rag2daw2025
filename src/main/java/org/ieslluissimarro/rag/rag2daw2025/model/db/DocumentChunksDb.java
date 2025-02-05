@@ -9,7 +9,7 @@ public class DocumentChunksDb {
     @Id
     private Long idDocumentChunk;
 
-    private LocalDate dateCreated;
+    private LocalDate fechaCreado;
 
 
 

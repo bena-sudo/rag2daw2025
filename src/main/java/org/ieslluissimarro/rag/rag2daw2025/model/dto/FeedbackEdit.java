@@ -15,8 +15,8 @@ public class FeedbackEdit {
 
     @Id
     private Long idFeedback;
-    private Long idAnswer;
-    private String user;
+    private Long idRespuesta;
+    private String usuario;
     private String feedback;
 
 }

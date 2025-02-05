@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class QuestionList {
+public class PreguntaInfo {
 
 
     @Id
-    private Long idQuestion;
+    private Long idPregunta;
     private Long idChat;
-    private String user;
-    private String text;
+    private String usuario;
+    private String texto;
 }

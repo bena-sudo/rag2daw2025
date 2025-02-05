@@ -11,13 +11,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name="questions")
-public class QuestionDb {
+@Table(name="preguntas")
+public class PreguntaDb {
 
     @Id
-    private Long idQuestion;
+    private Long idPregunta;
     private Long idChat;
-    private String user;
-    private String text;
+    private String usuario;
+    private String texto;
    // private List
 }

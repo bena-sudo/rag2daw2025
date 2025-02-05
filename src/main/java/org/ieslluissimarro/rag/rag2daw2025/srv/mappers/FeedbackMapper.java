@@ -13,9 +13,9 @@ import org.mapstruct.factory.Mappers;
 public interface FeedbackMapper {
     FeedbackMapper INSTANCE = Mappers.getMapper(FeedbackMapper.class);
 
-    FeedbackInfo FeedbackDbToFeedbackInfo(FeedbackDb feedbackDb);
-    FeedbackList FeedbackDbToFeedbackList(FeedbackDb feedbackDb);
-    FeedbackEdit FeedbackDbToFeedbackEdit(FeedbackDb feedbackDb);
-    FeedbackDb FeedbackEditToFeedbackDb(FeedbackEdit feedbackEdit);
-    List<FeedbackList> feedbackstoFeedbackList(List<FeedbackDb> feedbacksDb);
+    FeedbackInfo FeedbackDbAFeedbackInfo(FeedbackDb feedbackDb);
+    FeedbackList FeedbackDbAFeedbackList(FeedbackDb feedbackDb);
+    FeedbackEdit FeedbackDbAFeedbackEdit(FeedbackDb feedbackDb);
+    FeedbackDb FeedbackEditAFeedbackDb(FeedbackEdit feedbackEdit);
+    List<FeedbackList> feedbacksAFeedbackList(List<FeedbackDb> feedbacksDb);
 }

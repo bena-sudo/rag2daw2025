@@ -13,6 +13,6 @@ public class ChatList {
 
     @Id
     private Long idChat;
-    private String user;
-    private LocalDate date;
+    private String usuario;
+    private LocalDate fecha;
 }

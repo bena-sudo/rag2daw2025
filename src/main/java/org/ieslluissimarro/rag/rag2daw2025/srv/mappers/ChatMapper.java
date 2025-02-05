@@ -13,9 +13,9 @@ import org.mapstruct.factory.Mappers;
 public interface ChatMapper {
     ChatMapper INSTANCE = Mappers.getMapper(ChatMapper.class);
 
-    ChatInfo ChatDbToChatInfo(ChatDb chatDb);
-    ChatList ChatDbToChatList(ChatDb chatDb);
-    ChatEdit ChatDbToChatEdit(ChatDb chatDb);
-    ChatDb ChatEditToChatDb(ChatEdit chatEdit);
-    List<ChatList> chatstoChatList(List<ChatDb> chatsDb);
+    ChatInfo ChatDbAChatInfo(ChatDb chatDb);
+    ChatList ChatDbAChatList(ChatDb chatDb);
+    ChatEdit ChatDbAChatEdit(ChatDb chatDb);
+    ChatDb ChatEditAChatDb(ChatEdit chatEdit);
+    List<ChatList> chatsAChatList(List<ChatDb> chatsDb);
 }
