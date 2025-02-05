@@ -18,7 +18,5 @@ public class ChatEdit {
     @Id
     private Long idChat;
     private String usuario;
-    private LocalDate fecha;
-
 
 }

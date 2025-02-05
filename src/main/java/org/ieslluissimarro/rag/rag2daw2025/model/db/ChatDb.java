@@ -1,9 +1,12 @@
 package org.ieslluissimarro.rag.rag2daw2025.model.db;
 import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -25,5 +28,8 @@ public class ChatDb {
     @Column(name = "fecha")
     private LocalDate fecha;
 
+    @OneToMany
+    @JoinColumn(name="preguntas", referencedColumnName = "id_pregunta")
+    private List<PreguntaDb> preguntas;
 
 }

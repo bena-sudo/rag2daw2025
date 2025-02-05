@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.ieslluissimarro.rag.rag2daw2025.model.db.PreguntaDb;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.PreguntaEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PreguntaInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PreguntaList;
 import org.springframework.data.domain.Sort;
@@ -12,6 +13,9 @@ import io.micrometer.common.lang.NonNull;
 
 
 public interface PreguntaService {
+
+    public PreguntaEdit create(Long idChat, String textoPregunta, String user);
+    public PreguntaEdit responderPreguntaChat(Long idPregunta, String user );
     public Optional<PreguntaInfo> getPreguntaInfoById( Long id);
     public List<PreguntaList> findAllPreguntaList();
     public List<PreguntaList> findAllPreguntaList( Sort sort);
