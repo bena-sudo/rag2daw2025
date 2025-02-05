@@ -1,8 +1,17 @@
 package org.ieslluissimarro.rag.rag2daw2025.model.db;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,8 +35,15 @@ public class PreguntaDb {
     private String textoPregunta;
     @Column(name = "texto_respuesta")
     private String textoRespuesta;
-    @Column(name = "valoracion")
-    private String valoracion;
+    @Column(name = "feedback")
+    @Enumerated(EnumType.STRING)
+    private String feedback;
     @Column(name = "valorado")
     private Boolean valorado;
-    }
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "pregunta_documentchunks", joinColumns =
+     @JoinColumn(name="id_pregunta"), inverseJoinColumns = @JoinColumn(name="id_documentchunk"))
+    private Set<DocumentChunksDb> documentchunksImportantes = new HashSet<>();
+
+
+}

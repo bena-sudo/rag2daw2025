@@ -2,7 +2,6 @@ package org.ieslluissimarro.rag.rag2daw2025.controller;
 
 import org.ieslluissimarro.rag.rag2daw2025.exception.CustomErrorResponse;
 import org.ieslluissimarro.rag.rag2daw2025.helper.BindingResultHelper;
-import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PreguntaEdit;
 import org.ieslluissimarro.rag.rag2daw2025.srv.PreguntaService;
 import org.springframework.http.HttpStatus;

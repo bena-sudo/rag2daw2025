@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class ChatInfo {
 
-        @Id
+
     private Long idChat;
     private String usuario;
     private LocalDate fecha;

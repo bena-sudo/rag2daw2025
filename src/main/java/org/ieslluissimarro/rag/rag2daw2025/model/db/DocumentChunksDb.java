@@ -22,10 +22,10 @@ public class DocumentChunksDb {
     private Long idDocumentChunk;
     @Column(name = "id_doc_source")
     private Long idDocSource;
-    @Column(name = "fecha_creacion")
-    private LocalDate fechaCreado;
+    @Column(name = "contenido")
+    private String contenido;
 
-
+    
 
 
 }
