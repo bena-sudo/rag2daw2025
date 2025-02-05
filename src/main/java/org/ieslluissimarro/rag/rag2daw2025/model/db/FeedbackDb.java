@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="feedback")
+@Table(name="feedbacks")
 public class FeedbackDb {
 
     @Id

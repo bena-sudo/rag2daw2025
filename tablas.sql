@@ -11,7 +11,7 @@ CREATE TABLE preguntas (
     "user" VARCHAR NOT NULL,
     texto_pregunta TEXT NOT NULL,
     texto_respuesta TEXT NOT NULL,
-    fecha TIMESTAMP DEFAULT 
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     id_chat BIGINT NOT NULL REFERENCES chats(id_chat) ON DELETE CASCADE
 );
 
