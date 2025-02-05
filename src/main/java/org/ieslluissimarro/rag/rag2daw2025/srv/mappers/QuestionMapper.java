@@ -16,5 +16,6 @@ public interface QuestionMapper {
     QuestionInfo QuestionDbToQuestionInfo(QuestionDb questionDb);
     QuestionList QuestionDbToQuestionList(QuestionDb questionDb);
     QuestionEdit QuestionDbToQuestionEdit(QuestionDb questionDb);
+    QuestionDb QuestionEditToQuestionDb(QuestionEdit questionEdit);
     List<QuestionList> questionstoQuestionList(List<QuestionDb> questionsDb);
 }

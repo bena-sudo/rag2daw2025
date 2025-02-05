@@ -16,7 +16,6 @@ public interface FeedbackMapper {
     FeedbackInfo FeedbackDbToFeedbackInfo(FeedbackDb feedbackDb);
     FeedbackList FeedbackDbToFeedbackList(FeedbackDb feedbackDb);
     FeedbackEdit FeedbackDbToFeedbackEdit(FeedbackDb feedbackDb);
-    FeedbackDb FeedbackEditToFeedbackEdit(FeedbackDb feedbackDb);
-
+    FeedbackDb FeedbackEditToFeedbackDb(FeedbackEdit feedbackEdit);
     List<FeedbackList> feedbackstoFeedbackList(List<FeedbackDb> feedbacksDb);
 }

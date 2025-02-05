@@ -16,5 +16,6 @@ public interface AnswerMapper {
     AnswerInfo AnswerDbToAnswerInfo(AnswerDb answerDb);
     AnswerList AnswerDbToAnswerList(AnswerDb answerDb);
     AnswerEdit AnswerDbToAnswerEdit(AnswerDb answerDb);
+    AnswerDb AnswerEditToAnswerDb(AnswerEdit answerEdit);
     List<AnswerList> answerstoAnswerList(List<AnswerDb> answersDb);
 }

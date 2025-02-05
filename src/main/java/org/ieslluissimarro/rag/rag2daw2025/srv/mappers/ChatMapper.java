@@ -16,5 +16,6 @@ public interface ChatMapper {
     ChatInfo ChatDbToChatInfo(ChatDb chatDb);
     ChatList ChatDbToChatList(ChatDb chatDb);
     ChatEdit ChatDbToChatEdit(ChatDb chatDb);
+    ChatDb ChatEditToChatDb(ChatEdit chatEdit);
     List<ChatList> chatstoChatList(List<ChatDb> chatsDb);
 }
