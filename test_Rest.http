@@ -65,11 +65,12 @@ POST http://localhost:8090/auth/nuevo HTTP/1.1
 Content-Type: application/json
 
 {
-    "nickname": "edgartormo",
+    "nickname": "edgartormojornet",
     "nombre": "Edgar Tormo Jornet",
-    "email": "edgar.alumno@gmail.com",
+    "email": "edgar.alumno2@gmail.com",
     "password": "TeLoDigo@2",
-    "roles": ["USUARIO"]
+    "telefono": "123456789",
+    "fecha_nacimiento": "2004-12-12"
 }
 
 ###

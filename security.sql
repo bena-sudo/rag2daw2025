@@ -147,6 +147,7 @@ CREATE TABLE IF NOT EXISTS auditoria_eventos (
 
 
 SELECT * FROM usuarios;
+SELECT * FROM roles;
 
 
 
@@ -163,3 +164,5 @@ VALUES (
   '1990-05-15', 
   'activo'
 );
+
+INSERT INTO roles(nombre) VALUES ('USUARIO')

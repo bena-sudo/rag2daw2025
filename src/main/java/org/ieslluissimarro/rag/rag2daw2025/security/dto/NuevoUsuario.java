@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,6 +23,9 @@ public class NuevoUsuario {
     private String email;
     @NotBlank
     private String password;
+
+    private String telefono;
+    private LocalDate fechaNacimiento;
     //Al utilizar API Rest utilizamos objetos tipo Json y 
     //es mejor que sean cadenas para agilizar el tráfico
     private Set<String> roles = new HashSet<>();

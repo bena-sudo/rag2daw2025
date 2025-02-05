@@ -14,5 +14,7 @@ public class UsuarioInfo {
     private String nombre;
     private String nickname;
     private String email;
+    private Integer telefono;
+    private String fechaNacimiento;
     private Set<RolInfo> roles;
 }

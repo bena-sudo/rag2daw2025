@@ -40,8 +40,6 @@ public class UsuarioDb {
     @Column(nullable = false)
     private String password;
 
-    private String passwordSalt;
-
     @Column(length = 15)
     private String telefono;
 
@@ -70,10 +68,12 @@ public class UsuarioDb {
 
 
     public UsuarioDb(@NotNull String nombre, @NotNull String nickname, @NotNull String email,
-    @NotNull String password) {
+    @NotNull String password, @NotNull String telefono, @NotNull LocalDate fechaNacimiento) {
     this.nombre = nombre;
     this.nickname = nickname;
     this.email = email;
     this.password = password;
+    this.telefono = telefono;
+    this.fechaNacimiento = fechaNacimiento;
 }
 }
