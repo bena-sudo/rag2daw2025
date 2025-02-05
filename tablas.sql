@@ -2,43 +2,37 @@ DROP TABLE IF EXISTS chats;
 CREATE TABLE chats (
     id_chat BIGSERIAL PRIMARY KEY,
     "user" VARCHAR NOT NULL,
-    "date" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-DROP TABLE IF EXISTS questions;
-CREATE TABLE questions (
-    id_question BIGSERIAL PRIMARY KEY,
+DROP TABLE IF EXISTS preguntas;
+CREATE TABLE preguntas (
+    id_pregunta BIGSERIAL PRIMARY KEY,
     "user" VARCHAR NOT NULL,
-    "text" TEXT NOT NULL,
-    chat BIGINT NOT NULL REFERENCES chats(id_chat) ON DELETE CASCADE
-);
-
-DROP TABLE IF EXISTS answers;
-CREATE TABLE answers (
-    id_answer BIGSERIAL PRIMARY KEY,
-    "text" TEXT NOT NULL,
-    "user" VARCHAR NOT NULL,
-    id_question BIGINT NOT NULL REFERENCES questions(id_question) ON DELETE CASCADE,
+    texto_pregunta TEXT NOT NULL,
+    texto_respuesta TEXT NOT NULL,
+    fecha TIMESTAMP DEFAULT 
     id_chat BIGINT NOT NULL REFERENCES chats(id_chat) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS feedbacks;
 CREATE TABLE feedbacks (
     id_feedback BIGSERIAL PRIMARY KEY,
-    feedback VARCHAR NOT NULL,
-    "user" VARCHAR NOT NULL,
-    id_answer BIGINT NOT NULL REFERENCES answers(id_answer) ON DELETE CASCADE
-);
-
-DROP TABLE IF EXISTS answer_feedback;
-CREATE TABLE answer_feedback (
-    id_answer BIGINT NOT NULL REFERENCES answers(id_answer) ON DELETE CASCADE,
-    id_feedback BIGINT NOT NULL REFERENCES feedbacks(id_feedback) ON DELETE CASCADE,
-    PRIMARY KEY (idAnswer, id_feedback)
+    valoracion VARCHAR(255) NOT NULL,
+    "user" VARCHAR(255) NOT NULL,
+    id_pregunta BIGINT NOT NULL REFERENCES preguntas(id_pregunta) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS documentchunks;
 CREATE TABLE documentchunks (
-    id_document_chunk BIGSERIAL PRIMARY KEY,
-    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    id_documentchunk BIGSERIAL PRIMARY KEY,
+    id_doc_source BIGINT,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+DROP TABLE IF EXISTS pregunta_documentchunk;
+CREATE TABLE pregunta_documentchunk (
+    id_pregunta BIGINT NOT NULL REFERENCES preguntas(id_pregunta) ON DELETE CASCADE,
+    id_documentchunk BIGINT NOT NULL REFERENCES documentchunks(id_documentchunk) ON DELETE CASCADE,
+    PRIMARY KEY (id_pregunta, id_documentchunk)
 );
