@@ -3,6 +3,7 @@ package org.ieslluissimarro.rag.rag2daw2025.srv.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatList;
 import org.ieslluissimarro.rag.rag2daw2025.srv.ChatService;
@@ -28,6 +29,18 @@ public class ChatServiceImpl implements ChatService {
     public List<ChatList> findAllChatList(Sort sort) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findAllChatList'");
+    }
+
+    @Override
+    public ChatEdit create(ChatEdit chatEdit) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'create'");
+    }
+
+    @Override
+    public ChatEdit initialMessageChat(String mensaje) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'initialMessageChat'");
     }
     
 }

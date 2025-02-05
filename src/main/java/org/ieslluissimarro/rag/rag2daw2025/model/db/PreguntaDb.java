@@ -26,5 +26,8 @@ public class PreguntaDb {
     private String textoPregunta;
     @Column(name = "texto_respuesta")
     private String textoRespuesta;
-   // private List
-}
+    @Column(name = "valoracion")
+    private String valoracion;
+    @Column(name = "valorado")
+    private Boolean valorado;
+    }
