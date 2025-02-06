@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RestController
-@RequestMapping("api/usuarios")
+@RequestMapping("api/")
 public class UsuarioRestController {
     
     private final UsuarioService usuarioService;

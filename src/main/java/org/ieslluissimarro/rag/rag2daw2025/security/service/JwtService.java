@@ -9,7 +9,7 @@ import io.jsonwebtoken.Claims;
 
 public interface JwtService {
  public String generateToken(Authentication authentication);
- public String getNicknameUsuarioFromToken(String token);
+ public String getEmailUsuarioFromToken(String token);
  public <T> T extractClaim(String token, Function<Claims, T> claimsResolver);
  public boolean isTokenValid(String token, UserDetails userDetails);
 }

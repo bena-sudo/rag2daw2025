@@ -36,7 +36,7 @@ public class JwtServiceImpl implements JwtService{ // Se encargará de generar e
     }
     
     @Override
-    public String getNicknameUsuarioFromToken(String token) {// extrae el nickname del token
+    public String getEmailUsuarioFromToken(String token) {// extrae el nickname del token
         return extractClaim(token, Claims::getSubject);
     }
     @Override
@@ -55,7 +55,7 @@ public class JwtServiceImpl implements JwtService{ // Se encargará de generar e
     }
     @Override
     public boolean isTokenValid(String token, UserDetails userDetails) {
-    final String username = getNicknameUsuarioFromToken(token);
+    final String username = getEmailUsuarioFromToken(token);
     return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
     

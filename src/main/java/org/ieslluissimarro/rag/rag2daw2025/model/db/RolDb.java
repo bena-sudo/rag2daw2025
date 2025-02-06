@@ -31,6 +31,6 @@ public class RolDb {
     @Column(nullable = false, unique = true, length = 255)
     private RolNombre nombre;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<UsuarioDb> usuarios;
+    //@ManyToMany(mappedBy = "roles")
+    //private Set<UsuarioDb> usuarios;
 }

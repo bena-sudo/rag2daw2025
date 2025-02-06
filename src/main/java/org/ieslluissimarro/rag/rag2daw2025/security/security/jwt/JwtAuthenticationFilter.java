@@ -44,7 +44,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
     jwt = authHeader.substring(7);
     try { //Hay token y lo procesamos
-      nickname = jwtService.getNicknameUsuarioFromToken(jwt);
+      nickname = jwtService.getEmailUsuarioFromToken(jwt);
       // Comprueba si el token es valido para permitir el acceso al recurso
       if (nickname != null && SecurityContextHolder.getContext().getAuthentication() == null) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(nickname);

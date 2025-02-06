@@ -148,8 +148,9 @@ CREATE TABLE IF NOT EXISTS auditoria_eventos (
 
 SELECT * FROM usuarios;
 SELECT * FROM roles;
+SELECT * FROM usuarios_roles;
 
-
+INSERT INTO usuarios_roles VALUES (9,2)
 
 
 -- Funciona bien con todos los campos
@@ -165,4 +166,4 @@ VALUES (
   'activo'
 );
 
-INSERT INTO roles(nombre) VALUES ('USUARIO')
+INSERT INTO roles(nombre) VALUES ('ADMINISTRADOR')

@@ -51,7 +51,7 @@ public class UsuarioPrincipal implements UserDetails {//Clase encargarda de gene
 
     @Override
     public String getUsername() {
-        return nickname;
+        return email;
     }
 
     @Override
@@ -76,6 +76,10 @@ public class UsuarioPrincipal implements UserDetails {//Clase encargarda de gene
 
     public String getNombreCompleto() {
         return nombreCompleto;
+    }
+
+    public String getNickname() {
+        return nickname;
     }
 
     public String getEmail() {
