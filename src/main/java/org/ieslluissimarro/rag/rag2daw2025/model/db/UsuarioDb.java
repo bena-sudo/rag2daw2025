@@ -4,16 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -44,12 +37,15 @@ public class UsuarioDb {
     @Column(length = 15)
     private String telefono;
 
+    @Column(name = "fecha_nacimiento", nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate fechaNacimiento;
 
     @Column(nullable = false, length = 20)
-    private String estado;
+    private String estado = "pendiente";
 
-    private LocalDateTime fechaCreacion = LocalDateTime.now();
+    @Column(name = "fecha_creacion", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime fechaCreacion;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -67,14 +63,14 @@ public class UsuarioDb {
     )
     private Set<PermisoDb> permisos;
 
-
     public UsuarioDb(@NotNull String nombre, @NotNull String nickname, @NotNull String email,
-    @NotNull String password, @NotNull String telefono, @NotNull LocalDate fechaNacimiento) {
-    this.nombre = nombre;
-    this.nickname = nickname;
-    this.email = email;
-    this.password = password;
-    this.telefono = telefono;
-    this.fechaNacimiento = fechaNacimiento;
-}
+                     @NotNull String password, @NotNull String telefono, @NotNull LocalDate fechaNacimiento) {
+        this.nombre = nombre;
+        this.nickname = nickname;
+        this.email = email;
+        this.password = password;
+        this.telefono = telefono;
+        this.fechaNacimiento = fechaNacimiento;
+        this.fechaCreacion = LocalDateTime.now();
+    }
 }

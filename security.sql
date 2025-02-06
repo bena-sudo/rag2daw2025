@@ -24,7 +24,6 @@ CREATE TABLE IF NOT EXISTS usuarios (
   nickname VARCHAR(255) NOT NULL UNIQUE, 
   email VARCHAR(255) NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL, -- Hash de la contraseña
-  password_salt VARCHAR(255), -- Salt para fortalecer el hash
   telefono VARCHAR(15),
   fecha_nacimiento DATE,
   estado VARCHAR(20) CHECK (estado IN ('activo', 'inactivo', 'pendiente', 'suspendido')) DEFAULT 'pendiente',
@@ -166,4 +165,8 @@ VALUES (
   'activo'
 );
 
+
 INSERT INTO roles(nombre) VALUES ('ADMINISTRADOR')
+ALTER TABLE usuarios DROP COLUMN fechacreacion;
+ALTER TABLE usuarios DROP COLUMN fechanacimiento;
+SELECT column_name FROM information_schema.columns WHERE table_name = 'usuarios';
