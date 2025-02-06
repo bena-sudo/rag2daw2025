@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "etiqueta")
+@Table(name = "etiquetas")
 public class EtiquetaEditDB implements Serializable {
     private static final long serialVersionUID = 1L;
 
