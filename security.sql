@@ -165,5 +165,9 @@ VALUES (
   'activo'
 );
 
+
 INSERT INTO roles(nombre) VALUES ('USUARIO')
 INSERT INTO roles(nombre) VALUES ('ADMINISTRADOR')
+ALTER TABLE usuarios DROP COLUMN fechacreacion;
+ALTER TABLE usuarios DROP COLUMN fechanacimiento;
+SELECT column_name FROM information_schema.columns WHERE table_name = 'usuarios';
