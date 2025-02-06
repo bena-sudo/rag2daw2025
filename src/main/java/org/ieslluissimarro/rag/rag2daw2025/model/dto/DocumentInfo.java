@@ -11,15 +11,17 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class DocumentInfo {
 
-    private Long id;
-    private String dni;
-    private String nombreFichero;
-    private String comentario;
-    private String base64Documento;
-    private String extensionDocumento;
-    private String contentTypeDocumento;
-    private String estadoDocumento;
-    private LocalDateTime fechaCreacion;
-    private LocalDateTime fechaRevision;
-    
+   private Long id;
+   private Integer idDocRag;
+   //private String dni;
+   private String nombreFichero;
+   private String comentario;
+   private String base64Documento;
+   private String extensionDocumento;
+   private String contentTypeDocumento;
+   private String estadoDocumento;
+   private LocalDateTime fechaCreacion;
+   private LocalDateTime fechaRevision;
+  
+
 }

@@ -16,38 +16,51 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "documento")
+
+@Table(name = "documentos")
 public class DocumentDb {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private Long id;
 
-    @Column(name = "dni", nullable = false)
-    private String dni;
+   @Column(name = "id_doc_rag")
+   private Integer idDocRag;
 
-    @Column(name = "nombre_fichero", nullable = false)
-    private String nombreFichero;
+   // @Column(name = "dni", nullable = false)
+   // private String dni;
 
-    @Column(name = "comentario")
-    private String comentario;
 
-    @Column(name = "base64_documento") 
-    private String base64Documento;
+   @Column(name = "nombre_fichero", nullable = false)
+   private String nombreFichero;
 
-    @Column(name = "extension_documento")
-    private String extensionDocumento;
 
-    @Column(name = "content_type_documento")
-    private String contentTypeDocumento;
+   @Column(name = "comentario")
+   private String comentario;
 
-    @Column(name = "estado_documento", nullable = false)
-    private String estadoDocumento = "pendiente";
 
-    @Column(name = "fecha_creacion", nullable = false)
-    private LocalDateTime fechaCreacion = LocalDateTime.now();
+   @Column(name = "base64_documento")
+   private String base64Documento;
 
-    @Column(name = "fecha_revision")
-    private LocalDateTime fechaRevision;
+
+   @Column(name = "extension_documento")
+   private String extensionDocumento;
+
+
+   @Column(name = "content_type_documento")
+   private String contentTypeDocumento;
+
+
+   @Column(name = "estado_documento", nullable = false)
+   private String estadoDocumento = "pendiente";
+
+
+   @Column(name = "fecha_creacion", nullable = false)
+   private LocalDateTime fechaCreacion;
+
+   @Column(name = "fecha_revision")
+   private LocalDateTime fechaRevision;
+
 
 }
+

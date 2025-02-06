@@ -9,11 +9,12 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class DocumentList {
 
-    private Long id;
-    private String dni;
-    private String nombreFichero;
-    private String estadoDocumento;
-    private String extensionDocumento;
-    private String contentTypeDocumento;
-    
+   private Long id;
+   private Integer idDocRag;
+   //private String dni;
+   private String nombreFichero;
+   private String estadoDocumento;
+   private String extensionDocumento;
+   private String contentTypeDocumento;
+
 }

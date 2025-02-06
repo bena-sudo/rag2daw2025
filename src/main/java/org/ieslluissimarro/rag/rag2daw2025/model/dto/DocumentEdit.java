@@ -9,12 +9,13 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class DocumentEdit {
 
-    private Long id;
-    private String comentario;
-    private String estadoDocumento;
-    private String nombreFichero;
-    private String extensionDocumento;
-    private String contentTypeDocumento;
+   private Long id;
+   private Integer idDocRag;
+   private String comentario;
+   private String estadoDocumento;
+   private String nombreFichero;
+   private String extensionDocumento;
+   private String contentTypeDocumento;
 
 }
 

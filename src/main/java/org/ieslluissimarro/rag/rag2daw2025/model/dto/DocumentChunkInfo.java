@@ -14,8 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class DocumentChunkEdit implements Serializable{
-
+public class DocumentChunkInfo implements Serializable{
     private static final long serialVersionUID = 1L;
     private Long id;
     
@@ -34,6 +33,8 @@ public class DocumentChunkEdit implements Serializable{
     private String chunkedBy;
     
     private EstadoChunk estado;
+
+    private LocalDateTime fechaCreacion;
     
     private LocalDateTime fechaModificacion;
 }
