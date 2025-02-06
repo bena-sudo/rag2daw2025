@@ -1,14 +1,20 @@
 package org.ieslluissimarro.rag.rag2daw2025.controller;
 
+import org.ieslluissimarro.rag.rag2daw2025.exception.FiltroException;
+import org.ieslluissimarro.rag.rag2daw2025.filters.model.FiltroBusqueda;
+import org.ieslluissimarro.rag.rag2daw2025.filters.model.PaginaResponse;
+import org.ieslluissimarro.rag.rag2daw2025.filters.model.PeticionListadoFiltrado;
 import org.ieslluissimarro.rag.rag2daw2025.helpers.BindingResultHelper;
 import org.ieslluissimarro.rag.rag2daw2025.model.IdEntityLong;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.EtiquetaEdit;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.EtiquetaList;
 import org.ieslluissimarro.rag.rag2daw2025.srv.EtiquetaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
@@ -50,4 +56,10 @@ public class EtiquetaController {
         etiquetaService.delete(new IdEntityLong(id).getValue());
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/etiquetas")
+        public ResponseEntity<PaginaResponse<EtiquetaList>> getAllDocsPOST(
+                        @Valid @RequestBody PeticionListadoFiltrado peticionListadoFiltrado) throws FiltroException {
+                return ResponseEntity.ok(etiquetaService.findAll(peticionListadoFiltrado));
+        }
 }
