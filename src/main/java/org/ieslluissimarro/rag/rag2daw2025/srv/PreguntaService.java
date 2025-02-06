@@ -12,7 +12,7 @@ import io.micrometer.common.lang.NonNull;
 
 public interface PreguntaService {
 
-    public PreguntaInfo create(Long idChat, String textoPregunta, String user);
+    public PreguntaEdit create(Long idChat, String textoPregunta, String user);
 
     public PreguntaEdit responderPreguntaChat(Long idPregunta, String user);
 

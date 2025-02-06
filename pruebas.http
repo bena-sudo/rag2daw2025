@@ -6,3 +6,17 @@ Content-Type: application/json
     "usuario": "Usuar2",
     "contexto": 1
  }
+
+#########
+//////
+POST http://localhost:8090/api/rag/v1/createQuestionChat HTTP/1.1
+Content-Type: application/json
+
+{
+    "idChat": 2,
+    "usuario": "Usuar2",
+    "textoPregunta": "¿Hola como estas 2?" 
+}
+
+
+ 

@@ -52,12 +52,12 @@ public class PreguntaServiceImpl implements PreguntaService{
     }
 
     @Override
-    public PreguntaInfo create(Long idChat, String textoPregunta, String user) {
+    public PreguntaEdit create(Long idChat, String textoPregunta, String user) {
             PreguntaEdit preguntaEdit = new PreguntaEdit(null, idChat, user, textoPregunta, "", "NORMAL", false);
             PreguntaDb entity = PreguntaMapper.INSTANCE.PreguntaEditAPreguntaDb(preguntaEdit);
             entity = preguntaRepository.save(entity);
 
-            return PreguntaMapper.INSTANCE.PreguntaDbAPreguntaInfo(entity);
+            return PreguntaMapper.INSTANCE.PreguntaDbAPreguntaEdit(entity);
 
     }
 

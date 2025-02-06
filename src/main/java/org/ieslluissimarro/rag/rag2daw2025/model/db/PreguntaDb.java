@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,9 +31,9 @@ public class PreguntaDb {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pregunta")
     private Long idPregunta;
-    @Column(name = "id_chat")
-    private Long idChat;
-    @Column(name = "user")
+    /*@Column(name = "id_chat")
+    private Long idChat;*/
+    @Column(name = "\"user\"")
     private String usuario;
     @Column(name = "texto_pregunta")
     private String textoPregunta;
@@ -42,6 +43,11 @@ public class PreguntaDb {
     private String feedback;
     @Column(name = "valorado")
     private Boolean valorado;
+
+    @ManyToOne
+    @JoinColumn(name = "id_chat", nullable = false)
+    private ChatDb idChat;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "pregunta_documentchunks", joinColumns =
      @JoinColumn(name="id_pregunta"), inverseJoinColumns = @JoinColumn(name="id_documentchunk"))

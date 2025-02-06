@@ -60,6 +60,12 @@ public class ChatController {
         return ResponseEntity.ok(chatService.findAllChatList());
     }
 
+    @GetMapping("returnChatById")
+    public ResponseEntity<ChatInfo> devuelveChatById(@RequestParam Long param) {
+        
+        return ResponseEntity.ok(chatService.getChatInfoById(param));
+    }
+
     @DeleteMapping("deleteChat")
     public ResponseEntity<Void> delete(@RequestParam Long idChat) {
         // alumnoService.delete(new DniString(dni).getValue());

@@ -45,7 +45,7 @@ public class PreguntaController {
                                         @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) })
         })
         @PostMapping("createQuestionChat")
-        public ResponseEntity<PreguntaInfo> createPregunta(@Valid @RequestBody PreguntaEdit preguntaEdit,
+        public ResponseEntity<PreguntaEdit> createPregunta(@Valid @RequestBody PreguntaEdit preguntaEdit,
                         BindingResult bindingResult) {
 
                 BindingResultHelper.validationBindingResult(bindingResult, "PREGUNTA_CREATE_VALIDATION");

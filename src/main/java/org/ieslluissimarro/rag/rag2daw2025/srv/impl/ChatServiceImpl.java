@@ -3,30 +3,34 @@ package org.ieslluissimarro.rag.rag2daw2025.srv.impl;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityIllegalArgumentException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityNotFoundException;
 import org.ieslluissimarro.rag.rag2daw2025.model.db.ChatDb;
+import org.ieslluissimarro.rag.rag2daw2025.model.db.PreguntaDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatList;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.PreguntaInfo;
 import org.ieslluissimarro.rag.rag2daw2025.repository.ChatRepository;
+import org.ieslluissimarro.rag.rag2daw2025.repository.PreguntaRepository;
 import org.ieslluissimarro.rag.rag2daw2025.srv.ChatService;
 import org.ieslluissimarro.rag.rag2daw2025.srv.mappers.ChatMapper;
+import org.ieslluissimarro.rag.rag2daw2025.srv.mappers.PreguntaMapper;
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
+@RequiredArgsConstructor
 @Service
 public class ChatServiceImpl implements ChatService {
 
     private final ChatRepository chatRepository;
-
-    public ChatServiceImpl(ChatRepository chatRepository) {
-        this.chatRepository = chatRepository;
-    }
+    private final PreguntaRepository preguntaRepository;
+ 
 
     @Override
     public ChatInfo create(ChatList chatList) {
-        
 
         ChatDb entity = ChatMapper.INSTANCE.ChatListToChatDb(chatList);
         ChatDb savedEntity = chatRepository.save(entity);
@@ -35,12 +39,19 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public ChatInfo getChatInfoById(Long id) {
+    public List<PreguntaInfo> getChatInfoById(Long id) {
         ChatDb chatDb = chatRepository.findById(id)
                 .orElseThrow(
-                        () -> new EntityNotFoundException("CHAT_NOT_FOUND", "No se encontro el chat ocn ID " + id));
+                        () -> new EntityNotFoundException("CHAT_NOT_FOUND", "No se encontro el chat con ID " + id));
 
-        return ChatMapper.INSTANCE.ChatDbToChatInfo(chatDb);
+        List<PreguntaDb> preguntasDb = preguntaRepository.findByChatIdChat(id);
+
+        PreguntaMapper preguntaMapper;
+
+        return preguntasDb.stream()
+                .map(preguntaMapper::PreguntaDbAPreguntaInfo)
+                .collect(Collectors.toList());
+
     }
 
     @Override
