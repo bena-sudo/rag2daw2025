@@ -1,0 +1,102 @@
+###
+## crear nuevo usuario edgar ok
+POST http://localhost:8090/auth/nuevo HTTP/1.1
+Content-Type: application/json
+
+{
+    "nickname": "edgartormo14",
+    "nombre": "Edgar Tormo Jornet",
+    "email": "edgartormo@gmail.com",
+    "password": "TeLoDigo@2",
+    "telefono": "123456789",
+    "fecha_nacimiento": "1234-12-12"
+}
+
+###
+## login error datos incorrectos
+POST http://localhost:8090/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "edgar.alumno5@gmail",
+    "password": "TeLoDigo@2"
+}
+
+###
+## login OK
+POST http://localhost:8090/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "edgar.alumno4@gmail.com",
+    "password": "TeLoDigo@2"
+}
+
+
+###
+## getAll porteros con JWT
+GET http://localhost:8090/api/usuarios/usuarios HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlZGdhcnRvcm1vam9ybmV0NiIsImlhdCI6MTczODg0MzAyNCwiZXhwIjoxNzM4ODc5MDI0fQ.ADccc7tnbhStbOz0ExLwrvziGK5s2OUW-eHRSmlNUzA
+
+
+
+
+
+###
+## comprobarLogin OK
+POST http://localhost:8090/api/usuarios/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "nickname": "Edgar123",
+    "password": "Edgar1234"
+}
+###
+## comprobarLogin NO OK
+POST http://localhost:8090/api/usuarios/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "nickname": "joserra",
+    "password": "Passwordjoserra@2"
+}
+###
+## comprobarLogin INCOMPLETO
+POST http://localhost:8090/api/usuarios/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "nickname": "jose",
+    "password": "Passwor"
+}
+###
+## getUsuarioInfo
+GET http://localhost:8090/api/usuarios/byNickname/Edgar123 HTTP/1.1
+Content-Type: application/json
+
+
+
+###
+## nuevo incorrecto
+POST http://localhost:8090/auth/nuevo HTTP/1.1
+Content-Type: application/json
+
+{
+    "nickname": "prueba",
+    "email": "@",
+    "password": "a",
+    "roles": ["ROLE_ADMIN"]
+}
+
+###
+## crear nuevo usuario joserra ok
+POST http://localhost:8090/auth/nuevo HTTP/1.1
+Content-Type: application/json
+
+{
+    "nickname": "joseramon",
+    "nombre": "Profesor Jose Ramón",
+    "email": "joseramon.profesor@gmail.com",
+    "password": "NoTeLoDigo@1",
+    "roles": ["ROLE_USER"]
+}
