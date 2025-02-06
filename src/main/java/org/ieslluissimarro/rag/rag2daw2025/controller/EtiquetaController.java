@@ -45,7 +45,7 @@ public class EtiquetaController {
         return ResponseEntity.ok(etiquetaService.update(new IdEntityLong(id).getValue(), etiquetaEdit));
     }
 
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id) {
         etiquetaService.delete(new IdEntityLong(id).getValue());
         return ResponseEntity.noContent().build();

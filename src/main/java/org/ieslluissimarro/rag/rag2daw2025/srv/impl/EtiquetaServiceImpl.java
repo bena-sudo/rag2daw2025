@@ -7,14 +7,15 @@ import org.ieslluissimarro.rag.rag2daw2025.model.dto.EtiquetaEdit;
 import org.ieslluissimarro.rag.rag2daw2025.repository.EtiquetaRepository;
 import org.ieslluissimarro.rag.rag2daw2025.srv.EtiquetaService;
 import org.ieslluissimarro.rag.rag2daw2025.srv.mapper.EtiquetaMapper;
+import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
 public class EtiquetaServiceImpl implements EtiquetaService {
 
     private final EtiquetaRepository etiquetaRepository;
-
-    public EtiquetaServiceImpl(EtiquetaRepository etiquetaRepository) {
-        this.etiquetaRepository = etiquetaRepository;
-    }
 
     @Override
     public EtiquetaEdit create(EtiquetaEdit etiquetaEdit) {
@@ -23,7 +24,7 @@ public class EtiquetaServiceImpl implements EtiquetaService {
                     "El ID debe ser nulo al crear una nueva etiqueta.");
         }
         EtiquetaDB entity = EtiquetaMapper.INSTANCE.etiquetaEditToEtiquetaDB(etiquetaEdit);
-        return EtiquetaMapper.INSTANCE.etiquetaDBToEtiquetaEdit(entity);
+        return EtiquetaMapper.INSTANCE.etiquetaDBToEtiquetaEdit(etiquetaRepository.save(entity));
     }
 
     @Override
