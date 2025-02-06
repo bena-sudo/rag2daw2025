@@ -44,8 +44,8 @@ public class DocumentoChunkDB implements Serializable{
 
     @NotNull(message = "El texto del chunk no puede estar vacío.")
     @Size(min = 1)
-    @Column(name = "chunk_text")
     @Lob
+    @Column(name = "chunk_text", columnDefinition = "TEXT")
     private String chunkText;
 
     @Column(name = "chunked_by")
