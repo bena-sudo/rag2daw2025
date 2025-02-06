@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EtiquetaList implements Serializable {
+public class EtiquetaInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    
+
     private String nombre;
 }

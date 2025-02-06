@@ -2,11 +2,7 @@ package org.ieslluissimarro.rag.rag2daw2025.model.db;
 
 import java.io.Serializable;
 
-import org.ieslluissimarro.rag.rag2daw2025.enums.EtiquetaNombre;
-
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,6 +25,5 @@ public class EtiquetaEditDB implements Serializable {
     private Long id;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
-    private EtiquetaNombre nombre;
+    private String nombre;
 }
