@@ -1,3 +1,45 @@
+###
+## crear nuevo usuario edgar ok
+POST http://localhost:8090/auth/nuevo HTTP/1.1
+Content-Type: application/json
+
+{
+    "nickname": "edgartormo14",
+    "nombre": "Edgar Tormo Jornet",
+    "email": "edgartormo@gmail.com",
+    "password": "TeLoDigo@2",
+    "telefono": "123456789",
+    "fecha_nacimiento": "1234-12-12"
+}
+
+###
+## login error datos incorrectos
+POST http://localhost:8090/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "edgar.alumno5@gmail",
+    "password": "TeLoDigo@2"
+}
+
+###
+## login OK
+POST http://localhost:8090/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "edgar.alumno4@gmail.com",
+    "password": "TeLoDigo@2"
+}
+
+
+###
+## getAll porteros con JWT
+GET http://localhost:8090/api/usuarios/usuarios HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlZGdhcnRvcm1vam9ybmV0NiIsImlhdCI6MTczODg0MzAyNCwiZXhwIjoxNzM4ODc5MDI0fQ.ADccc7tnbhStbOz0ExLwrvziGK5s2OUW-eHRSmlNUzA
+
+
+
 
 
 ###
@@ -58,36 +100,3 @@ Content-Type: application/json
     "password": "NoTeLoDigo@1",
     "roles": ["ROLE_USER"]
 }
-
-###
-## crear nuevo usuario edgar ok
-POST http://localhost:8090/auth/nuevo HTTP/1.1
-Content-Type: application/json
-
-{
-    "nickname": "edgartormojornet",
-    "nombre": "Edgar Tormo Jornet",
-    "email": "edgar.alumno2@gmail.com",
-    "password": "TeLoDigo@2",
-    "telefono": "123456789",
-    "fecha_nacimiento": "2004-12-12"
-}
-
-###
-## login ok
-POST http://localhost:8090/auth/login HTTP/1.1
-Content-Type: application/json
-
-{
-    "nickname": "Edgar123",
-    "password": "Edgar1234"
-}
-
-
-###
-## getAll porteros con JWT
-GET http://localhost:8090/api/v1/porteros HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlZGdhcnRvcm1vIiwiaWF0IjoxNzM3NjQ3OTQxLCJleHAiOjE3Mzc2ODM5NDF9.sPfF5AeiZjJyw_kFWfU99kfpGuKo0MorTsIWiTCXIAo
-
-
-

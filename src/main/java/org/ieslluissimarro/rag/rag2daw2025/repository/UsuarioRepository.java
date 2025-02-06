@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UsuarioRepository extends JpaRepository<UsuarioDb, Long>{
     Optional<UsuarioDb> findByNickname(String nickname);
+    Optional<UsuarioDb> findByEmail(String email);
     boolean existsByNickname(String nickname);
     boolean existsByEmail(String email);
 }

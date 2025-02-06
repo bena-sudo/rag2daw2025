@@ -20,6 +20,10 @@ public class UsuarioService {
         return usuarioRepository.findByNickname(nickname);
     }
 
+    public Optional<UsuarioDb> getByEmail(String email){
+        return usuarioRepository.findByEmail(email);
+    }
+
     public boolean existsByNickname(String nickname){
         return usuarioRepository.existsByNickname(nickname);
     }

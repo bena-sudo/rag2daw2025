@@ -17,11 +17,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     UsuarioService usuarioService;
 
     @Override
-    public UserDetails loadUserByUsername(String nickname) throws UsernameNotFoundException {
-        //Método que debemos sobreescribir  (debe tener este nombre) de la interfaz UserDetailsService.
-        //En nuestro caso buscamos por nickname en la BD y devolvemos un UsuarioPrincipal,
-        //que es una implementación de la interfaz UserDetails.
-        UsuarioDb usuario = usuarioService.getByNickName(nickname).get();
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UsuarioDb usuario = usuarioService.getByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con email: " + email));
+        
         return UsuarioPrincipal.build(usuario);
     }
 }

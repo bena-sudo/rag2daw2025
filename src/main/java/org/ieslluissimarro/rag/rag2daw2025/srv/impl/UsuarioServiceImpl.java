@@ -4,10 +4,14 @@ import java.util.Optional;
 
 import org.ieslluissimarro.rag.rag2daw2025.model.db.UsuarioDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.LoginUsuario;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.PaginaDto;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioInfo;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioList;
 import org.ieslluissimarro.rag.rag2daw2025.repository.UsuarioRepository;
 import org.ieslluissimarro.rag.rag2daw2025.srv.UsuarioService;
 import org.ieslluissimarro.rag.rag2daw2025.srv.mapper.UsuarioMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -42,12 +46,25 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     @Override
     public boolean comprobarLogin(LoginUsuario loginUsuario) {
-        Optional<UsuarioDb> usuarioDbOpcional = usuarioRepository.findByNickname(loginUsuario.getNickname());
+        Optional<UsuarioDb> usuarioDbOpcional = usuarioRepository.findByNickname(loginUsuario.getEmail());
         if (usuarioDbOpcional.isPresent()) {
             UsuarioDb usuarioDb = usuarioDbOpcional.get();
             return usuarioDb.getPassword().equals(loginUsuario.getPassword());
         }
         return false;
+    }
+
+
+    @Override
+    public PaginaDto<UsuarioList> findAll(Pageable paging) {
+        Page<UsuarioDb> paginaUsuarioDb=usuarioRepository.findAll(paging);
+        return new PaginaDto<UsuarioList>(
+            paginaUsuarioDb.getNumber(),
+            paginaUsuarioDb.getSize(),
+            paginaUsuarioDb.getTotalElements(),
+            paginaUsuarioDb.getTotalPages(),
+            UsuarioMapper.INSTANCE.usuariosDbTousuariosList(paginaUsuarioDb.getContent()),
+            paginaUsuarioDb.getSort());
     }
 
     

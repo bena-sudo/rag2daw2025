@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -72,7 +73,8 @@ public class AuthController {
         
         // Asignar automáticamente el rol de USUARIO
         Set<RolDb> rolesDb = new HashSet<>();
-        rolesDb.add(rolService.getByRolNombre(RolNombre.USUARIO).orElseThrow(() -> new RuntimeException("Rol no encontrado")));
+        Optional<RolDb> rol = rolService.getByRolNombre(RolNombre.USUARIO);
+        rolesDb.add(rol.orElseThrow(() -> new RuntimeException("Rol no encontrado")));
         
         usuarioDb.setRoles(rolesDb);
         usuarioService.save(usuarioDb);
@@ -88,7 +90,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje("Datos incorrectos"));
         Authentication authentication =
                 authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginUsuario.getNickname(), loginUsuario.getPassword()));
+                    new UsernamePasswordAuthenticationToken(loginUsuario.getEmail(), loginUsuario.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtProvider.generateToken(authentication);
         UserDetails userDetails = (UserDetails)authentication.getPrincipal();

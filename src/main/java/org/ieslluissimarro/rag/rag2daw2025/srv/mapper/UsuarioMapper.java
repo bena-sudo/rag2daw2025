@@ -1,7 +1,10 @@
 package org.ieslluissimarro.rag.rag2daw2025.srv.mapper;
 
+import java.util.List;
+
 import org.ieslluissimarro.rag.rag2daw2025.model.db.UsuarioDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioInfo;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioList;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -14,4 +17,7 @@ public interface UsuarioMapper {
 
     @Mapping(target = "roles", source = "roles")
     UsuarioInfo usuarioDbToUsuarioInfo(UsuarioDb usuarioDb);
+
+
+    List<UsuarioList> usuariosDbTousuariosList(List<UsuarioDb> usuariosDb);
 }
