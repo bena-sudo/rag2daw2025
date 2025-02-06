@@ -44,8 +44,8 @@ public class DocumentoChunkDB implements Serializable{
 
     @NotNull(message = "El texto del chunk no puede estar vacío.")
     @Size(min = 1)
-    @Column(name = "chunk_text")
     @Lob
+    @Column(name = "chunk_text", columnDefinition = "TEXT")
     private String chunkText;
 
     @Column(name = "chunked_by")
@@ -55,7 +55,7 @@ public class DocumentoChunkDB implements Serializable{
     @Column(length = 20, columnDefinition = "VARCHAR(20) DEFAULT 'pendiente'")
     private EstadoChunk estado;
 
-    @Column(name = "fecha_creacion", updatable = false, nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "fecha_creacion", insertable=false , updatable = false, nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime fechaCreacion;
 
     @Column(name = "fecha_modificacion")
