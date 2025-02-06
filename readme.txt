@@ -1,30 +1,10 @@
-Taules 
+METODOS Y ESTANDARES
 
--- Chats
-- Long idChat 
-- String user 
-- LocalDate date
+metodo que devuelva lista de ChatList (con page y filtros)
 
--- Questions
-- Long idQuestion
-- Long idChat
-- String user 
-- String text
-- List<ImportantIdDocumentChunkList> answerDocumentChunks
+metodo que devuelva la lista de preguntas del chat 
 
--- DocumentChunk
-- Long idDocumentChunk
-- ?
-- ?
+metodo para enviar preguntas
 
--- Answers
-- Long idAnswer
-- Long idQuestion
-- Long idChat
-- String user
-- String text
+metodo para hacer update del mensaje (cambiar valoracion y si ha sido valorado)
 
--- Feedback
-- Long idAnswer 
-- String user 
-- String feedback

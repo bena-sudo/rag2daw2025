@@ -1,9 +1,11 @@
 package org.ieslluissimarro.rag.rag2daw2025.srv;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatInfo;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatList;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 
@@ -39,7 +41,12 @@ public interface ChatService {
 	 */
 	public ChatInfo update(Long id, ChatEdit chatEdit);
 
-	//public List<ChatList> findAllChatList();
+	/*
+	 * Muestra un mensaje predeterminado al iniciar el chat.
+	 */
+	public ChatInfo initialMessageChat(String mENSAJE_INICIAL);
+
+	public List<ChatList> findAllChatList();
 	//public List<ChatList> findAllChatList(Sort sort);
 	//public @NonNull List<ChatDb> findByTitleContaining( String title,  Sort sort);
 }

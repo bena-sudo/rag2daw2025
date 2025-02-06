@@ -1,8 +1,12 @@
 package org.ieslluissimarro.rag.rag2daw2025.controller;
 
+import java.util.List;
+
 import org.ieslluissimarro.rag.rag2daw2025.exception.CustomErrorResponse;
 import org.ieslluissimarro.rag.rag2daw2025.helper.BindingResultHelper;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatEdit;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatInfo;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatList;
 import org.ieslluissimarro.rag.rag2daw2025.srv.ChatService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +24,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -42,7 +48,7 @@ public class ChatController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) })
     })
     @PostMapping("createChat")
-    public ResponseEntity<ChatEdit> createChat(@Valid @RequestBody ChatEdit chatEdit, BindingResult bindingResult) {
+    public ResponseEntity<ChatInfo> createChat(@Valid @RequestBody ChatEdit chatEdit, BindingResult bindingResult) {
 
         BindingResultHelper.validationBindingResult(bindingResult, "CHAT_CREATE_VALIDATION");
 
@@ -50,12 +56,16 @@ public class ChatController {
     }
 
 
-
-
     @GetMapping("initialMessageChat")
-    public ResponseEntity<ChatEdit> initialMessagechat() {
+    public ResponseEntity<ChatInfo> initialMessagechat() {
         return ResponseEntity.ok(chatService.initialMessageChat(MENSAJE_INICIAL));
     }
 
     
+    @GetMapping("returnChats")
+    public ResponseEntity<List<ChatList>> devuelveListaDeChatList(@RequestParam String param) {
+        return ResponseEntity.ok(chatService.findAllChatList());
+    }
+    
+
 }

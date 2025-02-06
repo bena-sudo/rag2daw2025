@@ -1,14 +1,11 @@
 package org.ieslluissimarro.rag.rag2daw2025.model.dto;
 
-<<<<<<< HEAD
 import java.time.LocalDate;
 import java.util.List;
 
 import org.ieslluissimarro.rag.rag2daw2025.model.db.PreguntaDb;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-=======
->>>>>>> fa6fc34 (ChatService)
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +16,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class ChatEdit {
 
-<<<<<<< HEAD
     @Schema(example = "1234", description = "Id numérica del chat")
     @NotNull
     private Long idChat;
@@ -33,9 +29,4 @@ public class ChatEdit {
     
     @Schema(description = "Listado de las preguntas asociadas al chat")
     private List<PreguntaDb> preguntas;
-=======
-    private Long idChat;
-
-    private String usuario;
->>>>>>> fa6fc34 (ChatService)
 }
