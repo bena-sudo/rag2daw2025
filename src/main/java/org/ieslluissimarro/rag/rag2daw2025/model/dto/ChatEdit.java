@@ -1,6 +1,7 @@
 package org.ieslluissimarro.rag.rag2daw2025.model.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.ieslluissimarro.rag.rag2daw2025.model.db.PreguntaDb;
@@ -27,13 +28,10 @@ public class ChatEdit {
 
     @Nullable
     @Schema(example = "DD/MM/YYYY HH:MM:SS", description = "Fecha de tipo LocalDate de la creación del chat")
-    private LocalDate fecha;
+    private LocalDateTime fecha;
 
     @Schema(description = "1")
     @NotNull
     private Integer contexto;
-    /* 
-    @Schema(description = "Listado de las preguntas asociadas al chat")
-    private List<PreguntaDb> preguntas;
-    */
+
 }

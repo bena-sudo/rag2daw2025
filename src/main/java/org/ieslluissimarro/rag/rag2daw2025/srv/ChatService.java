@@ -25,7 +25,7 @@ public interface ChatService {
 	 * @throws EntityAlreadyExistsException    Si ya existe un documento con el>
 	 * @throws DataIntegrityViolationException Si hay errores al almacenar e>
 	 */
-	public ChatInfo create(ChatEdit chatEdit);
+	public ChatInfo create(ChatList chatEdit);
 
 	/**
 	 * Devuelve la informacion de un chat por su id

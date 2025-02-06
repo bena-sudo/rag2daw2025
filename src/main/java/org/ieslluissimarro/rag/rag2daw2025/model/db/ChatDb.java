@@ -1,6 +1,9 @@
 package org.ieslluissimarro.rag.rag2daw2025.model.db;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+
+
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
@@ -16,6 +19,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -27,16 +33,13 @@ public class ChatDb {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_chat")
     private Long idChat;
-    @Column(name = "user")
+    @Column(name = "\"user\"")
     private String usuario;
-    @Column(name = "fecha")
-    private LocalDate fecha;
+    @Generated(GenerationTime.INSERT)
+    @Column(name = "fecha", insertable = false,  updatable = false)
+    private LocalDateTime fecha;
     @Column(name = "contexto")
     @NotNull
     private Integer contexto;
-/*
-    @OneToMany
-    @JoinColumn(name="preguntas", referencedColumnName = "id_pregunta")
-    private List<PreguntaDb> preguntas;
- */
+
 }

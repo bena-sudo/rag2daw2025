@@ -48,7 +48,7 @@ public class ChatController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) })
     })
     @PostMapping("createChat")
-    public ResponseEntity<ChatInfo> createChat(@Valid @RequestBody ChatEdit chatEdit, BindingResult bindingResult) {
+    public ResponseEntity<ChatInfo> createChat(@Valid @RequestBody ChatList chatEdit, BindingResult bindingResult) {
 
         BindingResultHelper.validationBindingResult(bindingResult, "CHAT_CREATE_VALIDATION");
 

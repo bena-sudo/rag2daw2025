@@ -25,10 +25,10 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public ChatInfo create(ChatEdit chatEdit) {
+    public ChatInfo create(ChatList chatList) {
+        
 
-
-        ChatDb entity = ChatMapper.INSTANCE.ChatEditToChatDb(chatEdit);
+        ChatDb entity = ChatMapper.INSTANCE.ChatListToChatDb(chatList);
         ChatDb savedEntity = chatRepository.save(entity);
 
         return ChatMapper.INSTANCE.ChatDbToChatInfo(savedEntity);
