@@ -7,11 +7,11 @@ import lombok.AllArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DocumentList {
+public class DocumentoList {
 
    private Long id;
    private Integer idDocRag;
-   //private String dni;
+   // private String dni;
    private String nombreFichero;
    private String estadoDocumento;
    private String extensionDocumento;

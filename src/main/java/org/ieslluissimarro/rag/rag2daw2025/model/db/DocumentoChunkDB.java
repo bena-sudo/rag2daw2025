@@ -24,25 +24,25 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "documents_chunks")
-public class DocumentChunkDB implements Serializable{
+@Table(name = "documentos_chunks")
+public class DocumentoChunkDB implements Serializable{
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "El id del documento no puede ser nulo")
+    @NotNull(message = "El id del documento no puede ser nulo.")
     @Column(name = "id_documento")
     private Long idDocumento;
 
     @Column(name = "id_doc_rag")
     private Integer idDocRag;
 
-    @NotNull(message = "El orden del chunk no puede ser nulo")
+    @NotNull(message = "El orden del chunk no puede ser nulo.")
     @Column(name = "chunk_order")
     private Integer chunkOrder;
 
-    @NotNull(message = "El texto del chunk no puede estar vacío")
+    @NotNull(message = "El texto del chunk no puede estar vacío.")
     @Size(min = 1)
     @Column(name = "chunk_text")
     @Lob
