@@ -2,6 +2,8 @@ package org.ieslluissimarro.rag.rag2daw2025.model.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,11 +12,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class PreguntaEdit {
-
+    @NotNull
     @Schema(example = "1234", description = "ID numérica de la pregunta")
     private Long idPregunta;
+    @NotNull
+
     @Schema(example = "1234", description = "ID numérica del chat")
     private Long idChat;
+    @NotNull
     @Schema(example = "Manolo", description = "Nombre del usuario que realiza la pregunta")
     private String usuario;
     @Schema(example = "Pregunta...", description = "Texto que el usuario envia al RAG")

@@ -45,7 +45,7 @@ public class PreguntaController {
         BindingResultHelper.validationBindingResult(bindingResult, "PREGUNTA_CREATE_VALIDATION");
 
         return ResponseEntity.status(HttpStatus.CREATED).body(preguntaService.create(
-                preguntaEdit.getIdChat(), preguntaEdit.getTexto(), preguntaEdit.getUsuario()));
+                preguntaEdit.getIdChat(), preguntaEdit.getTextoPregunta(), preguntaEdit.getUsuario()));
     }
 
    @GetMapping("answerQuestionChat")
