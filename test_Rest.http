@@ -15,11 +15,11 @@ GET http://localhost:8090/api/v1/chunk/6
 Accept: application/json
 
 ### 📌 3️⃣ Actualizar un Documento Chunk por ID
-PUT http://localhost:8090/api/v1/chunk/3
+PUT http://localhost:8090/api/v1/chunk/6
 Content-Type: application/json
 
 {
-    "id":3,
+    "id":6,
   "idDocumento": 2,
   "chunkOrder": 1,
   "chunkText": "Este es un fragmento de texto actualizado.",
@@ -33,7 +33,7 @@ DELETE http://localhost:8090/api/v1/chunk/7
 
 
 ### Obtener todos los documentos con paginación y filtros opcionales
-GET http://localhost:8090/api/v1/chunks?page=0&size=3&sort=id
+GET http://localhost:8090/api/v1/chunks?filter=chunkedBy:1001&page=0&size=3&sort=id
 Accept: application/json
 
 ### Obtener documentos con filtros avanzados (POST)

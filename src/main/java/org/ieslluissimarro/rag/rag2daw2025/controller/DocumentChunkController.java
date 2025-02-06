@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,11 +33,11 @@ import lombok.RequiredArgsConstructor;
 public class DocumentChunkController {
     private final DocumentoChunkService documentChunkService;
 
-    @PostMapping
+    @PostMapping("/chunk")
     public ResponseEntity<DocumentoChunkEdit> create(@Valid @RequestBody DocumentoChunkEdit alumnoEdit, BindingResult bindingResult) {
         // Comprueba errores de validación y si los hay lanza una BindingResultException
         // con el errorCode
-        BindingResultHelper.validateBindingResult(bindingResult, "STUDENT_CREATE_VALIDATION");
+        BindingResultHelper.validateBindingResult(bindingResult, "CHUNK_CREATE_VALIDATION");
         // No hay error de validación y procedemos a crear el nuevo registro
         return ResponseEntity.status(HttpStatus.CREATED).body(documentChunkService.create(alumnoEdit));
     }
@@ -50,7 +49,7 @@ public class DocumentChunkController {
     @PutMapping("/chunk/{id}")
     public ResponseEntity<DocumentoChunkEdit> update(@PathVariable String id,
                     @Valid @RequestBody DocumentoChunkEdit documentoChunkEdit, BindingResult bindingResult) {
-            BindingResultHelper.validateBindingResult(bindingResult, "DOC_ALUMNO_UPDATE_VALIDATION");
+            BindingResultHelper.validateBindingResult(bindingResult, "CHUNK_UPDATE_VALIDATION");
             return ResponseEntity.ok(documentChunkService.update(new IdEntityLong(id).getValue(), documentoChunkEdit));
     }
 
@@ -61,7 +60,7 @@ public class DocumentChunkController {
     }
 
     @GetMapping("/chunks")
-    public ResponseEntity<PaginaResponse<DocumentoChunkList>> getAllDocsGET(
+    public ResponseEntity<PaginaResponse<DocumentoChunkList>> getAllChunksGET(
                     @RequestParam(required = false) List<String> filter,
                     @RequestParam(defaultValue = "0") int page,
                     @RequestParam(defaultValue = "3") int size,
@@ -70,7 +69,7 @@ public class DocumentChunkController {
     }
 
     @PostMapping("/chunks")
-    public ResponseEntity<PaginaResponse<DocumentoChunkList>> getAllDocsPOST(
+    public ResponseEntity<PaginaResponse<DocumentoChunkList>> getAllChunksPOST(
                     @Valid @RequestBody PeticionListadoFiltrado peticionListadoFiltrado) throws FiltroException {
             return ResponseEntity.ok(documentChunkService.findAll(peticionListadoFiltrado));
     }
