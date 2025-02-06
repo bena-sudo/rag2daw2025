@@ -1,0 +1,48 @@
+### 📌 1️⃣ Crear un nuevo Documento Chunk
+POST http://localhost:8090/api/v1/chunk
+Content-Type: application/json
+
+{
+  "idDocumento": 1,
+  "chunkOrder": 1,
+  "chunkText": "Este es el primer fragmento de texto.",
+  "chunkedBy": 1001,
+  "estado": "PENDIENTE"
+}
+
+### 📌 2️⃣ Obtener un Documento Chunk por ID
+GET http://localhost:8090/api/v1/chunk/6
+Accept: application/json
+
+### 📌 3️⃣ Actualizar un Documento Chunk por ID
+PUT http://localhost:8090/api/v1/chunk/3
+Content-Type: application/json
+
+{
+    "id":3,
+  "idDocumento": 2,
+  "chunkOrder": 1,
+  "chunkText": "Este es un fragmento de texto actualizado.",
+  "chunkedBy": 1001,
+  "estado": "PENDIENTE"
+}
+
+### 📌 4️⃣ Eliminar un Documento Chunk por ID
+DELETE http://localhost:8090/api/v1/chunk/7
+
+
+
+### Obtener todos los documentos con paginación y filtros opcionales
+GET http://localhost:8090/api/v1/chunks?page=0&size=3&sort=id
+Accept: application/json
+
+### Obtener documentos con filtros avanzados (POST)
+POST http://localhost:8090/api/v1/chunks
+Content-Type: application/json
+Accept: application/json
+
+{
+    "page": 0,
+    "size": 3,
+    "sort": ["id"]
+}

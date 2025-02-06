@@ -1,7 +1,17 @@
 package org.ieslluissimarro.rag.rag2daw2025.srv.mapper;
 
+import java.util.List;
+
+import org.ieslluissimarro.rag.rag2daw2025.filters.model.FiltroBusqueda;
+import org.ieslluissimarro.rag.rag2daw2025.filters.model.PaginaResponse;
+import org.ieslluissimarro.rag.rag2daw2025.model.db.DocumentoChunkDB;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoChunkEdit;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoChunkInfo;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoChunkList;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Page;
 
 @Mapper
 public interface DocumentoChunkMapper {
@@ -9,7 +19,25 @@ public interface DocumentoChunkMapper {
 
     DocumentoChunkEdit documentoChunkDBToDocumentoChunkEdit(DocumentoChunkDB documentoChunkDB);
     
-    AlumnoEditDb alumnoEditToAlumnoEditDb(AlumnoEdit alumnoEdit);
+    DocumentoChunkDB documentoChunkEditToDocumentoChunkDB(DocumentoChunkEdit documentoChunkEdit);
 
-    void updateAlumnoEditDbFromAlumnoEdit(AlumnoEdit alumnoEdit, @MappingTarget AlumnoEditDb alumnoEditDb);
+    DocumentoChunkInfo documentoChunkDBToDocumentoChunkInfo(DocumentoChunkDB documentoChunkDB);
+
+    List<DocumentoChunkList> documentoChunkDBToDocumentoChunkList(List<DocumentoChunkDB> docAlumnosDb);
+
+    void updateDocumentoChunkDBFromDocumentoChunkEdit(DocumentoChunkEdit documentoChunkEdit, @MappingTarget DocumentoChunkDB documentoChunkDB);
+
+    static PaginaResponse<DocumentoChunkList> pageToPaginaResponseAlumnoList(
+            Page<DocumentoChunkDB> page,
+            List<FiltroBusqueda> filtros,
+            List<String> ordenaciones) {
+        return new PaginaResponse<>(
+                page.getNumber(),
+                page.getSize(),
+                page.getTotalElements(),
+                page.getTotalPages(),
+                INSTANCE.documentoChunkDBToDocumentoChunkList(page.getContent()),
+                filtros,
+                ordenaciones);
+    }
 }
