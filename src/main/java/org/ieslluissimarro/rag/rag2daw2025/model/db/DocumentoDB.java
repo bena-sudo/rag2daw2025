@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "documentos")
-public class DocumentDB {
+public class DocumentoDB {
   
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)

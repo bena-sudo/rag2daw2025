@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "estadisticas_documental")
-public class EstadisticasDocumentalDB implements Serializable{
+public class EstadisticaDocumentalDB implements Serializable{
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
