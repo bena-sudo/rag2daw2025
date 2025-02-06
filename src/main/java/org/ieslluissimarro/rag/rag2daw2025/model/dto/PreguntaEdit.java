@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class PreguntaEdit {
-    @NotNull
+    
     @Schema(example = "1234", description = "ID numérica de la pregunta")
     private Long idPregunta;
     @NotNull

@@ -56,16 +56,19 @@ public class ChatServiceImpl implements ChatService {
         // Terminar la función
     }
 
-    @Override
-    public ChatInfo initialMessageChat(String mensaje) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initialMessageChat'");
-    }
+    
 
     @Override
     public List<ChatList> findAllChatList() {
         List<ChatDb> listaChatList = chatRepository.findAll();
         return ChatMapper.INSTANCE.chatsToChatList(listaChatList);
     }
-    
+
+    @Override
+    public void delete(Long id) {
+        if(chatRepository.existsById(id)){
+            chatRepository.deleteById(id);
+        }
+    }
+
 }

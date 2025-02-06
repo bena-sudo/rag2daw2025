@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,15 +27,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
-
-
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("api/rag/v1/")
 public class ChatController {
 
-    public static  String MENSAJE_INICIAL = "Mensaje inicial del rga";
 
     private final ChatService chatService;
 
@@ -56,16 +53,17 @@ public class ChatController {
     }
 
 
-    @GetMapping("initialMessageChat")
-    public ResponseEntity<ChatInfo> initialMessagechat() {
-        return ResponseEntity.ok(chatService.initialMessageChat(MENSAJE_INICIAL));
-    }
 
-    
     @GetMapping("returnChats")
     public ResponseEntity<List<ChatList>> devuelveListaDeChatList(@RequestParam String param) {
         return ResponseEntity.ok(chatService.findAllChatList());
     }
-    
+
+    @DeleteMapping("deleteChat")
+    public ResponseEntity<Void> delete(@RequestParam Long idChat) {
+        //alumnoService.delete(new DniString(dni).getValue());
+        chatService.delete(idChat);
+        return ResponseEntity.noContent().build();
+    }
 
 }
