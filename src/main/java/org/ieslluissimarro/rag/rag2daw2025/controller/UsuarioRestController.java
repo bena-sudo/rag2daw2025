@@ -40,7 +40,7 @@ public class UsuarioRestController {
 
 
 
-    @PreAuthorize("hasRole('ADMINISTRADOR')")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     @GetMapping("/usuarios")
     public ResponseEntity<ListadoRespuesta<UsuarioList>> getAllUsuarios(
         @RequestParam(defaultValue = "0") int page,

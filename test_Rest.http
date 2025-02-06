@@ -60,10 +60,12 @@ Content-Type: application/json
 ###
 ## getAll usuarios con JWT
 GET http://localhost:8090/api/usuarios HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODg1NTA4MywiZXhwIjoxNzM4ODkxMDgzfQ.UjVO_CsNcuCI4FEjg1EJ0G1XTa92ft63AUQEGlS85h4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODg1NTk1OSwiZXhwIjoxNzM4ODkxOTU5fQ.pN2sWALvf6pb7Jq-u8z-3iTl-QjsBRhgGJtFR2UwJcs
 
 
-
+###
+## get T
+GET http://localhost:8090/api/byNickname/administrador@gmail.com HTTP/1.1
 
 
 ###
