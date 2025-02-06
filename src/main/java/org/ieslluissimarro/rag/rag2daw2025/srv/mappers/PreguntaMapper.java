@@ -7,6 +7,7 @@ import org.ieslluissimarro.rag.rag2daw2025.model.dto.PreguntaEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PreguntaInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PreguntaList;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
@@ -18,4 +19,5 @@ public interface PreguntaMapper {
     PreguntaEdit PreguntaDbAPreguntaEdit(PreguntaDb preguntaDb);
     PreguntaDb PreguntaEditAPreguntaDb(PreguntaEdit preguntaEdit);
     List<PreguntaList> preguntasAPreguntaList(List<PreguntaDb> preguntasDb);
+    void updatePreguntaDbFromPreguntaEdit(PreguntaEdit preguntaEdit, @MappingTarget PreguntaDb existingEnity);
 }

@@ -3,6 +3,7 @@ package org.ieslluissimarro.rag.rag2daw2025.srv.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.ieslluissimarro.rag.rag2daw2025.exception.EntityIllegalArgumentException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityNotFoundException;
 import org.ieslluissimarro.rag.rag2daw2025.model.db.PreguntaDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PreguntaEdit;
@@ -70,6 +71,19 @@ public class PreguntaServiceImpl implements PreguntaService{
     public PreguntaInfo initialMessageChat(String mENSAJE_INICIAL) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'initialMessageChat'");
+    }
+
+    @Override
+    public PreguntaEdit update(Long id, PreguntaEdit preguntaEdit) {
+        if (!id.equals(preguntaEdit.getIdPregunta())) {
+            throw new EntityIllegalArgumentException("ID_PREGUNTA_MISMATCH", "El id proporcionado no coincide con el id de la pregunta");
+        }
+
+        PreguntaDb existingEnity = preguntaRepository.findById(id)
+        .orElseThrow(()-> new EntityNotFoundException("PREGUNTA_NOT_FOUND", "No se puede actualizar, el chat con el id:"+ id +" no existe."));
+
+        PreguntaMapper.INSTANCE.updatePreguntaDbFromPreguntaEdit(preguntaEdit,existingEnity);
+        return PreguntaMapper.INSTANCE.PreguntaDbAPreguntaEdit(preguntaRepository.save(existingEnity));
     }
     
 }

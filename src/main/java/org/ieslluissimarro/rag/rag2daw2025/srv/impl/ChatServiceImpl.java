@@ -1,5 +1,6 @@
 package org.ieslluissimarro.rag.rag2daw2025.srv.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +15,6 @@ import org.ieslluissimarro.rag.rag2daw2025.srv.ChatService;
 import org.ieslluissimarro.rag.rag2daw2025.srv.mappers.ChatMapper;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class ChatServiceImpl implements ChatService {
 
@@ -26,6 +26,8 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public ChatInfo create(ChatEdit chatEdit) {
+
+
         ChatDb entity = ChatMapper.INSTANCE.ChatEditToChatDb(chatEdit);
         ChatDb savedEntity = chatRepository.save(entity);
 
@@ -35,28 +37,27 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public ChatInfo getChatInfoById(Long id) {
         ChatDb chatDb = chatRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("CHAT_NOT_FOUND", "No se encontro el chat ocn ID " + id));
+                .orElseThrow(
+                        () -> new EntityNotFoundException("CHAT_NOT_FOUND", "No se encontro el chat ocn ID " + id));
 
-        return ChatMapper.INSTANCE.ChatDbToChatInfo(chatDb);        
+        return ChatMapper.INSTANCE.ChatDbToChatInfo(chatDb);
     }
 
     @Override
-    public ChatInfo update(Long id, ChatEdit chatEdit) {
+    public ChatEdit update(Long id, ChatEdit chatEdit) {
 
         if (!id.equals(chatEdit.getIdChat())) {
-            throw new EntityIllegalArgumentException("CHAT_ID_MISSMATCH", "El id del chat que se ha dado no corresponde con ninguno en la base de datos.");
+            throw new EntityIllegalArgumentException("CHAT_ID_MISSMATCH",
+                    "El id del chat que se ha dado no corresponde con ninguno en la base de datos.");
         }
 
         ChatDb existingEntity = chatRepository.findById(id)
-        .orElseThrow(()-> new EntityNotFoundException("CHAT_NOT_FOUND", "No se ha econtrado el chat"));
-        
-        ChatMapper.INSTANCE.updateChatDbFromChatEdit(chatEdit, existingEntity);
-        return ChatMapper.INSTANCE.ChatDbToChatInfo(existingEntity);
-        
-        // Terminar la función
-    }
+                .orElseThrow(() -> new EntityNotFoundException("CHAT_NOT_FOUND", "No se ha econtrado el chat"));
 
-    
+        ChatMapper.INSTANCE.updateChatDbFromChatEdit(chatEdit, existingEntity);
+        return ChatMapper.INSTANCE.ChatDbToChatEdit(existingEntity);
+
+    }
 
     @Override
     public List<ChatList> findAllChatList() {
@@ -66,7 +67,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public void delete(Long id) {
-        if(chatRepository.existsById(id)){
+        if (chatRepository.existsById(id)) {
             chatRepository.deleteById(id);
         }
     }

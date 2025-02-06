@@ -43,7 +43,7 @@ public interface ChatService {
 	 * @param chatEdit La nueva información a introducir
 	 * @return El objeto DTO modificado
 	 */
-	public ChatInfo update(Long id, ChatEdit chatEdit);
+	public ChatEdit update(Long id, ChatEdit chatEdit);
 
 	/*
 	 * Borra un chat de la base de datos

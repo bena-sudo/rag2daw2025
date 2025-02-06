@@ -16,6 +16,8 @@ public interface PreguntaService {
 
     public PreguntaEdit responderPreguntaChat(Long idPregunta, String user);
 
+    public PreguntaEdit update(Long id, PreguntaEdit preguntaEdit);
+
     public PreguntaInfo getPreguntaInfoById(Long id);
 
     public List<PreguntaList> findAllPreguntaList();

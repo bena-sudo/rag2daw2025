@@ -20,4 +20,5 @@ public interface ChatMapper {
     ChatDb ChatEditToChatDb(ChatEdit chatEdit);
     List<ChatList> chatsToChatList(List<ChatDb> chatsDb);
     void updateChatDbFromChatEdit(ChatEdit chatEdit, @MappingTarget ChatDb existingEntity);
+    ChatDb ChatListToChatDb(ChatList chatList);
 }

@@ -1,5 +1,6 @@
 package org.ieslluissimarro.rag.rag2daw2025.controller;
 
+import org.ieslluissimarro.rag.rag2daw2025.exception.BindingResultErrorsResponse;
 import org.ieslluissimarro.rag.rag2daw2025.exception.CustomErrorResponse;
 import org.ieslluissimarro.rag.rag2daw2025.helper.BindingResultHelper;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatInfo;
@@ -11,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,7 +45,7 @@ public class PreguntaController {
                                         @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) })
         })
         @PostMapping("createQuestionChat")
-        public ResponseEntity<PreguntaEdit> createPregunta(@Valid @RequestBody PreguntaEdit preguntaEdit,
+        public ResponseEntity<PreguntaInfo> createPregunta(@Valid @RequestBody PreguntaEdit preguntaEdit,
                         BindingResult bindingResult) {
 
                 BindingResultHelper.validationBindingResult(bindingResult, "PREGUNTA_CREATE_VALIDATION");
@@ -61,5 +64,29 @@ public class PreguntaController {
         @GetMapping("initialMessageChat")
         public ResponseEntity<PreguntaInfo> initialMessagechat() {
                 return ResponseEntity.ok(preguntaService.initialMessageChat(MENSAJE_INICIAL));
+        }
+
+
+
+        @Operation(summary = "Actualiza los datos de una pregunta existente en el sistema.")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "OK: Pregunta actualizada con éxito", content = {
+                                        @Content(mediaType = "application/json", schema = @Schema(implementation = PreguntaEdit.class)) }),
+                        @ApiResponse(responseCode = "400", description = "Bad Request: Errores de validación en los datos proporcionados (errorCode='PREGUNTA_UPDATE_VALIDATION')", content = {
+                                        @Content(mediaType = "application/json", schema = @Schema(implementation = BindingResultErrorsResponse.class)) }),
+                        @ApiResponse(responseCode = "400", description = "Bad Request: Errores de validación en el ID proporcionado (errorCodes='ID_FORMAT_INVALID','ID_PREGUNTA_MISMATCH')", content = {
+                                        @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) }),
+                        @ApiResponse(responseCode = "404", description = "Not Found: No se encontró el chat con el ID proporcionado (errorCode='PREGUNTA_NOT_FOUND_FOR_UPDATE')", content = {
+                                        @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) }),
+                        @ApiResponse(responseCode = "409", description = "Conflict: Error al intentar actualizar un 'Chat' (errorCodes: 'FOREIGN_KEY_VIOLATION', 'UNIQUE_CONSTRAINT_VIOLATION', 'DATA_INTEGRITY_VIOLATION')", content = {
+                                        @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) })
+        })
+        @PutMapping("/updatePregunta/{id}")
+        public ResponseEntity<PreguntaEdit> update(@PathVariable Long id, @Valid @RequestBody PreguntaEdit preguntaEdit,
+                        BindingResult bindingResult) {
+
+                BindingResultHelper.validationBindingResult(bindingResult, "PREGUNTA_UPDATE_VALIDATION");
+
+                return ResponseEntity.ok(preguntaService.update(id, preguntaEdit));
         }
 }

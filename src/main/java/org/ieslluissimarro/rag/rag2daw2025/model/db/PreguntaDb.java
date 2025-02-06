@@ -39,7 +39,6 @@ public class PreguntaDb {
     @Column(name = "texto_respuesta")
     private String textoRespuesta;
     @Column(name = "feedback")
-    @Enumerated(EnumType.STRING)
     private String feedback;
     @Column(name = "valorado")
     private Boolean valorado;
