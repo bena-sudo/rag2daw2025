@@ -60,69 +60,62 @@ Content-Type: application/json
 ###
 ## getAll usuarios con JWT
 GET http://localhost:8090/api/usuarios HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODg1NTk1OSwiZXhwIjoxNzM4ODkxOTU5fQ.pN2sWALvf6pb7Jq-u8z-3iTl-QjsBRhgGJtFR2UwJcs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODg2MzE0OCwiZXhwIjoxNzM4ODk5MTQ4fQ.QbG8mIGqDhKIhYC8d_Gq4B4m_wZWiSV8f_lRZ3Nk0TY
+
+
 
 
 ###
-## get T
-GET http://localhost:8090/api/byNickname/administrador@gmail.com HTTP/1.1
+## getAllUsuarios con ordenación sin filtros
+GET http://localhost:8090/api/v1/usuarios?sort=fechaCreacion,asc&sort=nombre,asc&page=0&size=10 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODg2MzE0OCwiZXhwIjoxNzM4ODk5MTQ4fQ.QbG8mIGqDhKIhYC8d_Gq4B4m_wZWiSV8f_lRZ3Nk0TY
+
+###
+## getAllUsuarios con ordenación sin filtros
+GET http://localhost:8090/api/v1/usuarios?sort=fechaCreacion,desc&sort=nombre,asc&page=0&size=1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODg2MzE0OCwiZXhwIjoxNzM4ODk5MTQ4fQ.QbG8mIGqDhKIhYC8d_Gq4B4m_wZWiSV8f_lRZ3Nk0TY
+
+###
+## getAllUsuarios con CONTIENE (Usuarios cuyo nombre contenga un valor)
+GET http://localhost:8090/api/v1/usuarios?filter=nombre:CONTIENE:Edgar&sort=nombre,asc&page=0&size=10 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODg2MzE0OCwiZXhwIjoxNzM4ODk5MTQ4fQ.QbG8mIGqDhKIhYC8d_Gq4B4m_wZWiSV8f_lRZ3Nk0TY
+
+###
+GET http://localhost:8090/api/v1/usuarios?nombre=Edgar
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODg2MzE0OCwiZXhwIjoxNzM4ODk5MTQ4fQ.QbG8mIGqDhKIhYC8d_Gq4B4m_wZWiSV8f_lRZ3Nk0TY
 
 
 ###
-## comprobarLogin OK
-POST http://localhost:8090/api/usuarios/login HTTP/1.1
-Content-Type: application/json
+## getAllUsuarios FILTRO POST val
+POST http://localhost:8090/api/v1/usuarios HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODg2MzE0OCwiZXhwIjoxNzM4ODk5MTQ4fQ.QbG8mIGqDhKIhYC8d_Gq4B4m_wZWiSV8f_lRZ3Nk0TY
 
 {
-    "nickname": "Edgar123",
-    "password": "Edgar1234"
-}
-###
-## comprobarLogin NO OK
-POST http://localhost:8090/api/usuarios/login HTTP/1.1
-Content-Type: application/json
-
-{
-    "nickname": "joserra",
-    "password": "Passwordjoserra@2"
-}
-###
-## comprobarLogin INCOMPLETO
-POST http://localhost:8090/api/usuarios/login HTTP/1.1
-Content-Type: application/json
-
-{
-    "nickname": "jose",
-    "password": "Passwor"
-}
-###
-## getUsuarioInfo
-GET http://localhost:8090/api/usuarios/byNickname/Edgar123 HTTP/1.1
-Content-Type: application/json
-
-
-
-###
-## nuevo incorrecto
-POST http://localhost:8090/auth/nuevo HTTP/1.1
-Content-Type: application/json
-
-{
-    "nickname": "prueba",
-    "email": "@",
-    "password": "a",
-    "roles": ["ROLE_ADMIN"]
+    "listaFiltros": [
+        {
+            "atributo": "estado",
+            "operacion": "IGUAL",
+            "valor": "ACTIVO"
+        },
+        {
+            "atributo": "fechaCreacion",
+            "operacion": "MAYOR_QUE",
+            "valor": "2023-01-01T00:00:00"
+        }
+    ],
+    "page": 0,
+    "size": 10,
+    "sort": [
+        "fechaCreacion,desc"
+    ]
 }
 
 ###
-## crear nuevo usuario joserra ok
-POST http://localhost:8090/auth/nuevo HTTP/1.1
-Content-Type: application/json
+## getAllUsuarios FILTRO POST sin ordenación ni filtro
+POST http://localhost:8090/api/v1/usuarios HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODg2MzE0OCwiZXhwIjoxNzM4ODk5MTQ4fQ.QbG8mIGqDhKIhYC8d_Gq4B4m_wZWiSV8f_lRZ3Nk0TY
 
 {
-    "nickname": "joseramon",
-    "nombre": "Profesor Jose Ramón",
-    "email": "joseramon.profesor@gmail.com",
-    "password": "NoTeLoDigo@1",
-    "roles": ["ROLE_USER"]
+    "page": 0,
+    "size": 10
 }
