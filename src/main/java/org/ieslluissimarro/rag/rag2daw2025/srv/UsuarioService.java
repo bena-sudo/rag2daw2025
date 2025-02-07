@@ -8,6 +8,7 @@ import org.ieslluissimarro.rag.rag2daw2025.model.dto.LoginUsuario;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PaginaDto;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PaginaResponse;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PeticionListadoFiltrado;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioList;
 import org.springframework.data.domain.Pageable;
@@ -41,4 +42,16 @@ public interface UsuarioService {
          * @throws FiltroException Si hay errores en los filtros o la ordenación (errorCodes: 'BAD_OPERATOR_FILTER','BAD_ATTRIBUTE_ORDER','BAD_ATTRIBUTE_FILTER','BAD_FILTER')
          */
         public PaginaResponse<UsuarioList> findAll(PeticionListadoFiltrado peticionListadoFiltrado) throws FiltroException;
+
+
+
+
+        public UsuarioEdit create(UsuarioEdit usuarioEdit);
+        public UsuarioEdit read(Long id);
+        public UsuarioEdit update(Long id,UsuarioEdit usuarioEdit);
+        public void delete(Long id);
+
+
+
+
 }

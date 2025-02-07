@@ -5,10 +5,12 @@ import java.util.List;
 import org.ieslluissimarro.rag.rag2daw2025.model.db.UsuarioDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.FiltroBusqueda;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PaginaResponse;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioList;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 
@@ -42,4 +44,12 @@ public interface UsuarioMapper {
                 ordenaciones
         );
     }
+
+
+    // Devuelve un objeto de tido 'UsuarioEdit' a partir de un objeto de tipo 'UsuarioDb'
+    UsuarioEdit UsuarioDbToUsuarioEdit(UsuarioDb UsuarioDb);
+    // Devuelve un objeto de tido 'UsuarioDb' a partir de un objeto de tipo 'UsuarioEdit'
+    UsuarioDb UsuarioEditToUsuarioDb(UsuarioEdit UsuarioEdit);
+    // Actualiza un objeto de tipo 'UsuarioDb' con los datos de un objeto de tipo 'UsuarioEdit'
+    void updateUsuarioDbFromUsuarioEdit(UsuarioEdit UsuarioEdit, @MappingTarget UsuarioDb UsuarioDb);
 }

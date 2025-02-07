@@ -3,6 +3,9 @@ package org.ieslluissimarro.rag.rag2daw2025.srv.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.ieslluissimarro.rag.rag2daw2025.exception.EntityAlreadyExistsException;
+import org.ieslluissimarro.rag.rag2daw2025.exception.EntityIllegalArgumentException;
+import org.ieslluissimarro.rag.rag2daw2025.exception.EntityNotFoundException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.FiltroException;
 import org.ieslluissimarro.rag.rag2daw2025.helper.PaginationFactory;
 import org.ieslluissimarro.rag.rag2daw2025.helper.PeticionListadoFiltradoConverter;
@@ -11,6 +14,7 @@ import org.ieslluissimarro.rag.rag2daw2025.model.dto.LoginUsuario;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PaginaDto;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PaginaResponse;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PeticionListadoFiltrado;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioList;
 import org.ieslluissimarro.rag.rag2daw2025.repository.UsuarioRepository;
@@ -153,6 +157,58 @@ public class UsuarioServiceImpl implements UsuarioService{
             UsuarioMapper.INSTANCE.usuariosDbToUsuariosList(paginaUsuarioDb.getContent()),
             paginaUsuarioDb.getSort());
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @Override
+    public UsuarioEdit create(UsuarioEdit usuarioEdit) {
+        if (usuarioRepository.existsById(usuarioEdit.getId())) {
+            throw new EntityAlreadyExistsException("USER_ALREADY_EXIST",
+            "El usuario con ID " + usuarioEdit.getId() + " ya existe");
+        }
+        UsuarioDb entity = UsuarioMapper.INSTANCE.UsuarioEditToUsuarioDb(usuarioEdit);
+        return UsuarioMapper.INSTANCE.UsuarioDbToUsuarioEdit(usuarioRepository.save(entity));
+    }
+
+    @Override
+    public UsuarioEdit read(Long id) {
+        UsuarioDb entity = usuarioRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("USER_NOT_FOUND", 
+                "No se encontró el usuario con ID " + id));
+        return UsuarioMapper.INSTANCE.UsuarioDbToUsuarioEdit(entity);
+    }
+
+    @Override
+    public UsuarioEdit update(Long id, UsuarioEdit usuarioEdit) {
+        if (!id.equals(usuarioEdit.getId())) {
+            throw new EntityIllegalArgumentException("USER_ID_MISMATCH", 
+                "El ID proporcionado no coincide con el ID del usuario.");
+        }
+        UsuarioDb existingEntity = usuarioRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("USER_NOT_FOUND_FOR_UPDATE", 
+                "No se puede actualizar. El usuario con ID " + id + " no existe"));
+        
+        UsuarioMapper.INSTANCE.updateUsuarioDbFromUsuarioEdit(usuarioEdit, existingEntity);
+        return UsuarioMapper.INSTANCE.UsuarioDbToUsuarioEdit(usuarioRepository.save(existingEntity));
+    }
+
+    @Override
+    public void delete(Long id) {
+        if (usuarioRepository.existsById(id)) {
+            usuarioRepository.deleteById(id);
+        }
+    }
+
 }
     
 
