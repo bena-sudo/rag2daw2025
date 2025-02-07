@@ -29,5 +29,4 @@ public interface PreguntaService {
     /*
      * Muestra un mensaje predeterminado al iniciar el chat.
      */
-    public PreguntaInfo initialMessageChat(String mENSAJE_INICIAL);
 }

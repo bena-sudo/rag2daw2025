@@ -62,8 +62,8 @@ public class PreguntaController {
         }
 
         @GetMapping("initialMessageChat")
-        public ResponseEntity<PreguntaInfo> initialMessagechat() {
-                return ResponseEntity.ok(preguntaService.initialMessageChat(MENSAJE_INICIAL));
+        public ResponseEntity<String> initialMessagechat() {
+                return ResponseEntity.ok(MENSAJE_INICIAL);
         }
 
 

@@ -15,10 +15,29 @@ Content-Type: application/json
 {
     "idChat": 7,
     "usuario": "Usuar2",
-    "textoPregunta": "¿Hola como estas 2?" 
+    "textoPregunta": "¿Hola comoASDASDASDAS estas 2?" 
 }
 
 
 #########/////
 
 GET http://localhost:8090/api/rag/v1/returnPreguntasByIdChat?idChat=2 HTTP/1.1
+
+
+#########/////
+
+GET http://localhost:8090/api/rag/v1/initialMessageChat HTTP/1.1
+
+##########
+//////
+PUT http://localhost:8090/api/rag/v1/updatePregunta/3 HTTP/1.1
+Content-Type: application/json
+
+{
+    "idChat": 5,
+    "idPregunta": 3,
+    "usuario": "Usuar2",
+    "textoPregunta": "¿Hola como estas 2?" ,
+    "feedback": "FALSE"
+    
+}

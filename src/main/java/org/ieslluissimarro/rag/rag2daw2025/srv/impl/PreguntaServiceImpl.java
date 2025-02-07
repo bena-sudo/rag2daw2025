@@ -68,12 +68,6 @@ public class PreguntaServiceImpl implements PreguntaService{
     }
 
     @Override
-    public PreguntaInfo initialMessageChat(String mENSAJE_INICIAL) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initialMessageChat'");
-    }
-
-    @Override
     public PreguntaEdit update(Long id, PreguntaEdit preguntaEdit) {
         if (!id.equals(preguntaEdit.getIdPregunta())) {
             throw new EntityIllegalArgumentException("ID_PREGUNTA_MISMATCH", "El id proporcionado no coincide con el id de la pregunta");
