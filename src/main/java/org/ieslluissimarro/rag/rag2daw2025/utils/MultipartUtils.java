@@ -1,9 +1,7 @@
 package org.ieslluissimarro.rag.rag2daw2025.utils;
 
-
 import java.io.IOException;
 import java.util.Base64;
-
 
 import org.ieslluissimarro.rag.rag2daw2025.exception.responseHelpers.MultipartProcessingException;
 import org.springframework.web.multipart.MultipartFile;
@@ -80,4 +78,5 @@ public class MultipartUtils {
        byte[] bytes = multipartToBytes(file);
        return Base64.getEncoder().encodeToString(bytes); // Codifica en Base64 para su envío como texto
    }
+
 }
