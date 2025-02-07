@@ -8,6 +8,7 @@ import org.ieslluissimarro.rag.rag2daw2025.exception.EntityAlreadyExistsExceptio
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatList;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.PreguntaInfo;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 
@@ -34,7 +35,7 @@ public interface ChatService {
 	 * @return Un optional que contiene el chat si lo encuentra, en caso contrario
 	 *         contiene vacio
 	 */
-	public ChatInfo getChatInfoById(Long id);
+	public List<PreguntaInfo> getChatPreguntasByIdChat(Long id);
 
 	/**
 	 * Actualiza un chat existente en el sistema.

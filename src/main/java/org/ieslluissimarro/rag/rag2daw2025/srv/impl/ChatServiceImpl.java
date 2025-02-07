@@ -39,18 +39,16 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public List<PreguntaInfo> getChatInfoById(Long id) {
+    public List<PreguntaInfo> getChatPreguntasByIdChat(Long id) {
         ChatDb chatDb = chatRepository.findById(id)
                 .orElseThrow(
                         () -> new EntityNotFoundException("CHAT_NOT_FOUND", "No se encontro el chat con ID " + id));
 
-        List<PreguntaDb> preguntasDb = preguntaRepository.findByChatIdChat(id);
+        List<PreguntaDb> preguntasDb = preguntaRepository.findByIdChat_IdChat(id);
 
-        PreguntaMapper preguntaMapper;
+        return PreguntaMapper.INSTANCE.preguntasAPreguntaInfo(preguntasDb);
 
-        return preguntasDb.stream()
-                .map(preguntaMapper::PreguntaDbAPreguntaInfo)
-                .collect(Collectors.toList());
+
 
     }
 

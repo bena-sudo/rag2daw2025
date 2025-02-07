@@ -48,10 +48,11 @@ public class PreguntaDb {
     @JoinColumn(name = "id_chat", nullable = false)
     private ChatDb idChat;
 
+    /* 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "pregunta_documentchunks", joinColumns =
      @JoinColumn(name="id_pregunta"), inverseJoinColumns = @JoinColumn(name="id_documentchunk"))
     private Set<DocumentChunksDb> documentchunksImportantes = new HashSet<>();
-
+*/
 
 }

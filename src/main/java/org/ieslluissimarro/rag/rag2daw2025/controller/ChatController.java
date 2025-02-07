@@ -9,6 +9,7 @@ import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatList;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PreguntaEdit;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.PreguntaInfo;
 import org.ieslluissimarro.rag.rag2daw2025.srv.ChatService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,15 +61,15 @@ public class ChatController {
         return ResponseEntity.ok(chatService.findAllChatList());
     }
 
-    @GetMapping("returnChatById")
-    public ResponseEntity<ChatInfo> devuelveChatById(@RequestParam Long param) {
+    @Operation(summary = "Devuelve un listado de PreguntaInfo dado un idChat.")
+    @GetMapping("returnPreguntasByIdChat")
+    public ResponseEntity<List<PreguntaInfo>> devuelvePreguntasByIdChat(@RequestParam Long idChat) {
         
-        return ResponseEntity.ok(chatService.getChatInfoById(param));
+        return ResponseEntity.ok(chatService.getChatPreguntasByIdChat(idChat));
     }
 
     @DeleteMapping("deleteChat")
     public ResponseEntity<Void> delete(@RequestParam Long idChat) {
-        // alumnoService.delete(new DniString(dni).getValue());
         chatService.delete(idChat);
         return ResponseEntity.noContent().build();
     }

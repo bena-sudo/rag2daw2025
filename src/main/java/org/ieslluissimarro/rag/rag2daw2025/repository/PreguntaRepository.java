@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface PreguntaRepository extends JpaRepository<PreguntaDb, Long>, JpaSpecificationExecutor<PreguntaDb> {
 
-    List<PreguntaDb> findByChatIdChat(Long id);
+    List<PreguntaDb> findByIdChat_IdChat(Long id);
 
 }

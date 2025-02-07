@@ -3,7 +3,7 @@ POST http://localhost:8090/api/rag/v1/createChat HTTP/1.1
 Content-Type: application/json
 
 {
-    "usuario": "Usuar2",
+    "usuario": "Chatprueba",
     "contexto": 1
  }
 
@@ -13,10 +13,12 @@ POST http://localhost:8090/api/rag/v1/createQuestionChat HTTP/1.1
 Content-Type: application/json
 
 {
-    "idChat": 2,
+    "idChat": 7,
     "usuario": "Usuar2",
     "textoPregunta": "¿Hola como estas 2?" 
 }
 
 
- 
+#########/////
+
+GET http://localhost:8090/api/rag/v1/returnPreguntasByIdChat?idChat=2 HTTP/1.1
