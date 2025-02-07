@@ -1,0 +1,121 @@
+###
+## crear nuevo usuario edgar ok
+POST http://localhost:8090/auth/nuevo HTTP/1.1
+Content-Type: application/json
+
+{
+    "nickname": "edgartodffdsrmrfgyyuyuytryhgdso1411t",
+    "nombre": "Edgar Tormo Jorfgyuiuytgrynfsdsdettt",
+    "email": "edgartormoyrtfgssfyiyudsghtd1@gmail.com",
+    "password": "TeLoDigo@2",
+    "telefono": "123456789",
+    "fecha_nacimiento": "2023-12-12"
+}
+
+###
+## crear nuevo usuario ADMINISTRADOR ok
+POST http://localhost:8090/auth/nuevo HTTP/1.1
+Content-Type: application/json
+
+{
+    "nickname": "Administrador",
+    "nombre": "Administrador",
+    "email": "administrador@gmail.com",
+    "password": "Administrador@2",
+    "telefono": "123456789",
+    "fecha_nacimiento": "1234-12-12"
+}
+
+
+###
+## login error datos incorrectos
+POST http://localhost:8090/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "edgar.t@gmail",
+    "password": "TeLoDigo@2"
+}
+
+###
+## login OK
+POST http://localhost:8090/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "edgartormo@gmail.com",
+    "password": "TeLoDigo@2"
+}
+
+###
+## login OK ADMINISTRADOR
+POST http://localhost:8090/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "administrador@gmail.com",
+    "password": "Administrador@2"
+}
+
+###
+## getAll usuarios con JWT
+GET http://localhost:8090/api/usuarios HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODg2MzE0OCwiZXhwIjoxNzM4ODk5MTQ4fQ.QbG8mIGqDhKIhYC8d_Gq4B4m_wZWiSV8f_lRZ3Nk0TY
+
+
+
+
+###
+## getAllUsuarios con ordenación sin filtros
+GET http://localhost:8090/api/v1/usuarios?sort=fechaCreacion,asc&sort=nombre,asc&page=0&size=10 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODg2MzE0OCwiZXhwIjoxNzM4ODk5MTQ4fQ.QbG8mIGqDhKIhYC8d_Gq4B4m_wZWiSV8f_lRZ3Nk0TY
+
+###
+## getAllUsuarios con ordenación sin filtros
+GET http://localhost:8090/api/v1/usuarios?sort=fechaCreacion,desc&sort=nombre,asc&page=0&size=1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODg2MzE0OCwiZXhwIjoxNzM4ODk5MTQ4fQ.QbG8mIGqDhKIhYC8d_Gq4B4m_wZWiSV8f_lRZ3Nk0TY
+
+###
+## getAllUsuarios con CONTIENE (Usuarios cuyo nombre contenga un valor)
+GET http://localhost:8090/api/v1/usuarios?filter=nombre:CONTIENE:Edgar&sort=nombre,asc&page=0&size=10 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODg2MzE0OCwiZXhwIjoxNzM4ODk5MTQ4fQ.QbG8mIGqDhKIhYC8d_Gq4B4m_wZWiSV8f_lRZ3Nk0TY
+
+###
+GET http://localhost:8090/api/v1/usuarios?nombre=Edgar
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODg2MzE0OCwiZXhwIjoxNzM4ODk5MTQ4fQ.QbG8mIGqDhKIhYC8d_Gq4B4m_wZWiSV8f_lRZ3Nk0TY
+
+
+###
+## getAllUsuarios FILTRO POST val
+POST http://localhost:8090/api/v1/usuarios HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODg2MzE0OCwiZXhwIjoxNzM4ODk5MTQ4fQ.QbG8mIGqDhKIhYC8d_Gq4B4m_wZWiSV8f_lRZ3Nk0TY
+
+{
+    "listaFiltros": [
+        {
+            "atributo": "estado",
+            "operacion": "IGUAL",
+            "valor": "ACTIVO"
+        },
+        {
+            "atributo": "fechaCreacion",
+            "operacion": "MAYOR_QUE",
+            "valor": "2023-01-01T00:00:00"
+        }
+    ],
+    "page": 0,
+    "size": 10,
+    "sort": [
+        "fechaCreacion,desc"
+    ]
+}
+
+###
+## getAllUsuarios FILTRO POST sin ordenación ni filtro
+POST http://localhost:8090/api/v1/usuarios HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODg2MzE0OCwiZXhwIjoxNzM4ODk5MTQ4fQ.QbG8mIGqDhKIhYC8d_Gq4B4m_wZWiSV8f_lRZ3Nk0TY
+
+{
+    "page": 0,
+    "size": 10
+}
