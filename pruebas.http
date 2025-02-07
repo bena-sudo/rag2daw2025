@@ -1,4 +1,4 @@
-
+## create chats
 POST http://localhost:8090/api/rag/v1/createChat HTTP/1.1
 Content-Type: application/json
 
@@ -41,3 +41,20 @@ Content-Type: application/json
     "feedback": "FALSE"
     
 }
+
+
+###
+## returnChats
+GET http://localhost:8090/api/rag/v1/returnChats? HTTP/1.1
+Content-Type: application/json
+###
+
+###
+##  returnChats con size
+GET http://localhost:8090/api/rag/v1/returnChats?size=10 HTTP/1.1
+Content-Type: application/json
+
+###
+##  returnChats con size
+GET http://localhost:8090/api/rag/v1/returnChats?page=1 HTTP/1.1
+Content-Type: application/json

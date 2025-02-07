@@ -1,15 +1,20 @@
 package org.ieslluissimarro.rag.rag2daw2025.srv;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.ieslluissimarro.rag.rag2daw2025.exception.BindingResultException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityAlreadyExistsException;
+import org.ieslluissimarro.rag.rag2daw2025.exception.FiltroException;
+import org.ieslluissimarro.rag.rag2daw2025.helper.FiltroBusqueda;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatList;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.PaginaDto;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.PaginaResponse;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.PeticionListadoFiltrado;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PreguntaInfo;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 
 public interface ChatService {
@@ -52,8 +57,30 @@ public interface ChatService {
 	public void delete(Long idchat);
 
 
+	/**
+	 * Lista filtrada de chats list
+	 * 
+	 * @param filter 
+	 * @param page
+	 * @param size
+	 * @param sort
+	 * @return la pagina con los chatslist
+	 * @throws FiltroException
+	 */
+	public PaginaResponse<ChatList> findAll(String[] filter, int page, int size, String[] sort) throws FiltroException;
+
+
+	/**
+	 * @param peticionListadoFiltrado
+	 * @return
+	 * @throws FiltroException
+	 */
+	public PaginaResponse<ChatList> findAll(PeticionListadoFiltrado peticionListadoFiltrado) throws FiltroException;
+
 
 	public List<ChatList> findAllChatList();
 	// public List<ChatList> findAllChatList(Sort sort);
 	// public @NonNull List<ChatDb> findByTitleContaining( String title, Sort sort);
+
+	PaginaDto<ChatList> findAllPageChatInfo(List<FiltroBusqueda> listaFiltros, Pageable pageable);
 }
