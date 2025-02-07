@@ -1,5 +1,7 @@
 package org.ieslluissimarro.rag.rag2daw2025.srv.impl;
 
+import java.util.List;
+
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityIllegalArgumentException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityNotFoundException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.FiltroException;
@@ -7,6 +9,7 @@ import org.ieslluissimarro.rag.rag2daw2025.filters.model.PaginaResponse;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PeticionListadoFiltrado;
 import org.ieslluissimarro.rag.rag2daw2025.filters.specification.FiltroBusquedaSpecification;
 import org.ieslluissimarro.rag.rag2daw2025.filters.utils.PaginationFactory;
+import org.ieslluissimarro.rag.rag2daw2025.filters.utils.PeticionListadoFiltradoConverter;
 import org.ieslluissimarro.rag.rag2daw2025.model.db.EtiquetaDB;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.EtiquetaEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.EtiquetaList;
@@ -29,6 +32,7 @@ public class EtiquetaServiceImpl implements EtiquetaService {
 
     private final EtiquetaRepository etiquetaRepository;
     private final PaginationFactory paginationFactory;
+    private final PeticionListadoFiltradoConverter peticionConverter;
 
     @Override
     public EtiquetaEdit create(EtiquetaEdit etiquetaEdit) {
@@ -70,7 +74,8 @@ public class EtiquetaServiceImpl implements EtiquetaService {
 
     @SuppressWarnings("null")
     @Override
-    public PaginaResponse<EtiquetaList> findAll(PeticionListadoFiltrado peticionListadoFiltrado) throws FiltroException {
+    public PaginaResponse<EtiquetaList> findAll(PeticionListadoFiltrado peticionListadoFiltrado)
+            throws FiltroException {
         try {
             Pageable pageable = paginationFactory.createPageable(peticionListadoFiltrado);
             // Configurar criterio de filtrado con Specification
@@ -100,5 +105,13 @@ public class EtiquetaServiceImpl implements EtiquetaService {
             throw new FiltroException("BAD_ATTRIBUTE_FILTER", "Error: Posiblemente no existe el atributo en la tabla",
                     e.getMessage());
         }
+    }
+
+    @Override
+    public PaginaResponse<EtiquetaList> findAll(String[] filter, int page, int size, String[] sort)
+            throws FiltroException {
+        PeticionListadoFiltrado peticion = peticionConverter.convertFromParams(List.of(filter), page, size,
+                List.of(sort));
+        return findAll(peticion);
     }
 }

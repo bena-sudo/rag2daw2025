@@ -1,7 +1,6 @@
 package org.ieslluissimarro.rag.rag2daw2025.controller;
 
 import org.ieslluissimarro.rag.rag2daw2025.exception.FiltroException;
-import org.ieslluissimarro.rag.rag2daw2025.filters.model.FiltroBusqueda;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PaginaResponse;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PeticionListadoFiltrado;
 import org.ieslluissimarro.rag.rag2daw2025.helpers.BindingResultHelper;
@@ -13,18 +12,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequiredArgsConstructor
@@ -58,8 +56,17 @@ public class EtiquetaController {
     }
 
     @PostMapping("/etiquetas")
-        public ResponseEntity<PaginaResponse<EtiquetaList>> getAllDocsPOST(
-                        @Valid @RequestBody PeticionListadoFiltrado peticionListadoFiltrado) throws FiltroException {
-                return ResponseEntity.ok(etiquetaService.findAll(peticionListadoFiltrado));
-        }
+    public ResponseEntity<PaginaResponse<EtiquetaList>> getAll(
+            @Valid @RequestBody PeticionListadoFiltrado peticionListadoFiltrado) throws FiltroException {
+        return ResponseEntity.ok(etiquetaService.findAll(peticionListadoFiltrado));
+    }
+
+    @GetMapping("/etiquetas")
+    public ResponseEntity<PaginaResponse<EtiquetaList>> getAll(
+            @RequestParam(required = false) String[] filter,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String[] sort) throws FiltroException {
+        return ResponseEntity.ok(etiquetaService.findAll(filter, page, size, sort));
+    }
 }

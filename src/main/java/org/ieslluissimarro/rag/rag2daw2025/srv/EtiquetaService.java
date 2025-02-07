@@ -16,4 +16,7 @@ public interface EtiquetaService {
     public void delete(Long id);
 
     PaginaResponse<EtiquetaList> findAll(PeticionListadoFiltrado peticionListadoFiltrado) throws FiltroException;
+
+    public PaginaResponse<EtiquetaList> findAll(String[] filter, int page, int size, String[] sort)
+            throws FiltroException;
 }

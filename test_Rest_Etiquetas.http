@@ -47,3 +47,13 @@ Content-Type: application/json
     ]
 }
 ###
+
+## Filtro
+GET http://localhost:8090/api/v1/etiqueta/etiquetas?filter=id:IGUAL:1 HTTP/1.1
+Content-Type: application/json
+###
+
+## Filtro
+GET http://localhost:8090/api/v1/etiqueta/etiquetas?filter=nombre:CONTIENE:OF HTTP/1.1
+Content-Type: application/json
+###
