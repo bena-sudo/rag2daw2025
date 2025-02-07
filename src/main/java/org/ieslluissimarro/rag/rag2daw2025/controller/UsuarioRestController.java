@@ -101,7 +101,7 @@ public class UsuarioRestController {
             @ApiResponse(responseCode = "400", description = "Bad Request: Errores de filtrado u ordenación (errorCodes: 'BAD_OPERATOR_FILTER','BAD_ATTRIBUTE_ORDER','BAD_ATTRIBUTE_FILTER','BAD_FILTER'", 
             content = { @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) }), 
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")  })
-            @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+        @PreAuthorize("hasAuthority('ADMINISTRADOR')")
         @GetMapping("/v1/usuarios")
         public ResponseEntity<PaginaResponse<UsuarioList>> getAllUsuarios(
             @RequestParam(required = false) String[] filter,
@@ -134,7 +134,3 @@ public class UsuarioRestController {
                 peticionListadoFiltrado));
         }
     }
-
-    
-    
-
