@@ -1,0 +1,198 @@
+###
+## crear nuevo usuario edgar ok
+POST http://localhost:8090/auth/nuevo HTTP/1.1
+Content-Type: application/json
+
+{
+    "nickname": "edgartodf",
+    "nombre": "Edgar Tormo Jorfgyuiuytgrynfsdsdettt",
+    "email": "edgartormosghtd1@gmail.com",
+    "password": "TeLoDigo@2",
+    "telefono": "123456789",
+    "fecha_nacimiento": "2023-12-12"
+}
+
+###
+## crear nuevo usuario ADMINISTRADOR ok
+POST http://localhost:8090/auth/nuevo HTTP/1.1
+Content-Type: application/json
+
+{
+    "nickname": "Administrador",
+    "nombre": "Administrador",
+    "email": "administrador@gmail.com",
+    "password": "Administrador@2",
+    "telefono": "123456789",
+    "fecha_nacimiento": "1234-12-12"
+}
+
+
+###
+## login error datos incorrectos
+POST http://localhost:8090/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "edgar.t@gmail",
+    "password": "TeLoDigo@2"
+}
+
+###
+## login OK
+POST http://localhost:8090/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "edgartormosghtd1@gmail.com",
+    "password": "TeLoDigo@2"
+}
+
+###
+## login OK ADMINISTRADOR
+POST http://localhost:8090/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "administrador@gmail.com",
+    "password": "Administrador@2"
+}
+
+###
+## getAll usuarios con JWT
+GET http://localhost:8090/api/usuarios HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODk1MTIyMywiZXhwIjoxNzM4OTg3MjIzfQ.xYStGqnZMSYSECwXPrhobKpwIu3uDsR6hwa27JNQSkY
+
+
+
+
+###
+## getAllUsuarios con ordenación sin filtros
+GET http://localhost:8090/api/v1/usuarios?sort=fechaCreacion,asc&sort=nombre,asc&page=0&size=10 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODk1MTIyMywiZXhwIjoxNzM4OTg3MjIzfQ.xYStGqnZMSYSECwXPrhobKpwIu3uDsR6hwa27JNQSkY
+
+###
+## getAllUsuarios con ordenación sin filtros
+GET http://localhost:8090/api/v1/usuarios?sort=fechaCreacion,desc&sort=nombre,asc&page=0&size=1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODk1MTIyMywiZXhwIjoxNzM4OTg3MjIzfQ.xYStGqnZMSYSECwXPrhobKpwIu3uDsR6hwa27JNQSkY
+
+
+
+
+
+
+
+###
+## getAllusuarios con CONTIENE
+GET http://localhost:8090/api/v1/usuarios?filter=nombre:CONTIENE:ormo&sort=id&page=0&size=10 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODk1MTIyMywiZXhwIjoxNzM4OTg3MjIzfQ.xYStGqnZMSYSECwXPrhobKpwIu3uDsR6hwa27JNQSkY
+
+
+
+###
+## getAllUsuarios con CONTIENE (Usuarios cuyo nombre contenga un valor)
+GET http://localhost:8090/api/v1/usuarios?filter=nombre:CONTIENE:Edgar&sort=nombre&page=0&size=10 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODk1MTIyMywiZXhwIjoxNzM4OTg3MjIzfQ.xYStGqnZMSYSECwXPrhobKpwIu3uDsR6hwa27JNQSkY
+
+###
+GET http://localhost:8080/usuarios?sort=nombre,asc&page=0&size=10 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODk1MTIyMywiZXhwIjoxNzM4OTg3MjIzfQ.xYStGqnZMSYSECwXPrhobKpwIu3uDsR6hwa27JNQSkY
+
+
+###
+## getAllUsuarios FILTRO POST val
+POST http://localhost:8090/api/v1/usuarios HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODk1MTIyMywiZXhwIjoxNzM4OTg3MjIzfQ.xYStGqnZMSYSECwXPrhobKpwIu3uDsR6hwa27JNQSkY
+
+{
+    "listaFiltros": [
+        {
+            "atributo": "nombre",
+            "operacion": "CONTIENE",
+            "valor": "Tormo"
+        }
+    ],
+    "page": 0,
+    "size": 10,
+    "sort": [
+    ]
+}
+
+###
+## getAllUsuarios FILTRO POST sin ordenación ni filtro
+POST http://localhost:8090/api/v1/usuarios HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODk1MTIyMywiZXhwIjoxNzM4OTg3MjIzfQ.xYStGqnZMSYSECwXPrhobKpwIu3uDsR6hwa27JNQSkY
+
+{
+    "page": 0,
+    "size": 10
+}
+
+
+
+
+
+
+
+
+###
+##  read
+GET http://localhost:8090/api/read/3 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODk1MTIyMywiZXhwIjoxNzM4OTg3MjIzfQ.xYStGqnZMSYSECwXPrhobKpwIu3uDsR6hwa27JNQSkY
+###
+##  "errorCode": "DNI_FORMAT_INVALID"
+GET http://localhost:8090/api/read/123213123213123123123123213123 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODk1MTIyMywiZXhwIjoxNzM4OTg3MjIzfQ.xYStGqnZMSYSECwXPrhobKpwIu3uDsR6hwa27JNQSkY
+###
+##  "errorCode": "STUDENT_NOT_FOUND"
+GET http://localhost:8090/api/read/4 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODk1MTIyMywiZXhwIjoxNzM4OTg3MjIzfQ.xYStGqnZMSYSECwXPrhobKpwIu3uDsR6hwa27JNQSkY
+
+
+
+###
+##  update
+PUT  http://localhost:8090/api/update/3 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODk1MTIyMywiZXhwIjoxNzM4OTg3MjIzfQ.xYStGqnZMSYSECwXPrhobKpwIu3uDsR6hwa27JNQSkY
+
+{
+    "nombre": "Pepito Flautas",
+    "nickname": "PeterTheBest",
+    "email": "pepito@gmail.com",
+    "telefono": "123456789",
+    "fechaNacimiento": "2025-02-06",
+    "estado": "pendiente",
+    "roles": [
+        {
+        "nombre": "USUARIO"
+        }
+    ],
+    "permisosIds": null
+ }
+
+
+###
+##  create
+POST  http://localhost:8090/api/usuarios HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODk1MTIyMywiZXhwIjoxNzM4OTg3MjIzfQ.xYStGqnZMSYSECwXPrhobKpwIu3uDsR6hwa27JNQSkY
+
+{
+    "nombre": "Pepito Flautas",
+    "nickname": "PeterTheBest",
+    "email": "pepito@gmail.com",
+    "telefono": "123456789",
+    "fechaNacimiento": "2025-02-06",
+    "estado": "pendiente",
+    "roles": [
+        {
+        "nombre": "USUARIO"
+        }
+    ],
+    "permisosIds": null
+ }
+
+
+
+###
+## delete
+DELETE  http://localhost:8090/api/delete/1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczODk1MTIyMywiZXhwIjoxNzM4OTg3MjIzfQ.xYStGqnZMSYSECwXPrhobKpwIu3uDsR6hwa27JNQSkY
