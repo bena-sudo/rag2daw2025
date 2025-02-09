@@ -122,3 +122,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsL
 ###
 GET http://localhost:8090/api/v1/usuarios
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjaHJpc3RpYW5jaXNjYXJAaG90bWFpbC5jb20iLCJpYXQiOjE3Mzg5NTI3NzUsImV4cCI6MTczODk4ODc3NX0.-HeIxUL_-kMe0uK8P2tCt4cW4aUr7b47nUOwtemqRhI
+###
+POST http://localhost:8090/auth/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjaHJpc3RpYW5jaXNjYXJAaG90bWFpbC5jb20iLCJpYXQiOjE3MzkwNTg3MjAsImV4cCI6MTczOTA5NDcyMH0.7GufyY7UGKpxEf6kzv2lXRIZnjYJe2hfR4RXOi86uFw

@@ -26,17 +26,24 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static org.hibernate.internal.CoreLogging.logger;
+
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin
 public class AuthController {
-    
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -125,19 +132,29 @@ public class AuthController {
     @PostMapping("/logout")
     public ResponseEntity<?> logout(@RequestHeader("Authorization") String token) {
         if (token.startsWith("Bearer ")) {
-            token = token.substring(7); // Eliminar el prefijo "Bearer "
+            token = token.substring(7);
         }
-
+    
+        logger.info("Token recibido en logout: " + token);
+    
         Optional<SesionActiva> sesion = sesionActivaRepository.findByTokenSesion(token);
-        if (sesion.isPresent()) {
-            sesionActivaRepository.deleteByTokenSesion(token);
-            return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Sesión cerrada correctamente"));
+        if (sesion.isEmpty()) {
+            logger.warn("Token inválido o sesión no encontrada");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje("Token inválido o sesión no encontrada"));
         }
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje("Token inválido o sesión no encontrada"));
-    }
     
+        UsuarioDb usuario = sesion.get().getUsuario();
+        logger.info("Usuario encontrado: " + usuario.getEmail());
     
+        try {
+            sesionActivaRepository.deleteByUsuarioId(usuario.getId());
+            logger.info("Todas las sesiones del usuario eliminadas");
+            return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Todas las sesiones del usuario han sido cerradas correctamente"));
+        } catch (Exception e) {
+            logger.error("Error al eliminar sesiones del usuario: ", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Mensaje("Error al cerrar sesión"));
+        }
+    } 
     
     
     /* 
