@@ -3,7 +3,7 @@ package org.ieslluissimarro.rag.rag2daw2025.security.service.impl;
 import org.ieslluissimarro.rag.rag2daw2025.model.db.RolDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.enums.RolNombre;
 import org.ieslluissimarro.rag.rag2daw2025.repository.RolRepository;
-import org.ieslluissimarro.rag.rag2daw2025.security.service.RolService;
+import org.ieslluissimarro.rag.rag2daw2025.security.service.RolDeteilsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 @Transactional//Mantiene la coherencia de la BD si hay varios accesos de escritura concurrentes
-public class RolServiceImpl implements RolService {
+public class RolDetailsServiceImpl implements RolDeteilsService {
 
     @Autowired
     RolRepository rolRepository;

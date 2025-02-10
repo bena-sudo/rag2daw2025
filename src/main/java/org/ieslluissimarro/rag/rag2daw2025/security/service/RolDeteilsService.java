@@ -7,7 +7,7 @@ import org.ieslluissimarro.rag.rag2daw2025.model.enums.RolNombre;
 import org.springframework.lang.NonNull;
 
 
-public interface RolService {
+public interface RolDeteilsService {
     public Optional<RolDb> getByRolNombre(RolNombre rolNombre);
     public void save(@NonNull RolDb rol);
 }

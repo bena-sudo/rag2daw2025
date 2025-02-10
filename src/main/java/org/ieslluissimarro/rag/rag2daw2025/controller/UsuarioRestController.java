@@ -21,12 +21,13 @@ import org.ieslluissimarro.rag.rag2daw2025.exception.DataValidationException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityAlreadyExistsException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityIllegalArgumentException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.FiltroException;
+import org.ieslluissimarro.rag.rag2daw2025.filters.model.PaginaResponse;
+import org.ieslluissimarro.rag.rag2daw2025.filters.model.PeticionListadoFiltrado;
 import org.ieslluissimarro.rag.rag2daw2025.helper.BindingResultHelper;
 import org.ieslluissimarro.rag.rag2daw2025.helper.PaginationHelper;
+import org.ieslluissimarro.rag.rag2daw2025.model.IdEntityLong;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ListadoRespuesta;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PaginaDto;
-import org.ieslluissimarro.rag.rag2daw2025.model.dto.PaginaResponse;
-import org.ieslluissimarro.rag.rag2daw2025.model.dto.PeticionListadoFiltrado;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioList;
 import org.ieslluissimarro.rag.rag2daw2025.srv.UsuarioService;
@@ -107,7 +108,7 @@ public class UsuarioRestController {
         @PreAuthorize("hasAuthority('ADMINISTRADOR')")
         @GetMapping("/v1/usuarios")
         public ResponseEntity<PaginaResponse<UsuarioList>> getAllUsuarios(
-            @RequestParam(required = false) String[] filter,
+            @RequestParam(required = false) List<String> filter,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "3") int size,
             @RequestParam(defaultValue = "id,asc") List<String> sort) throws FiltroException {
@@ -130,7 +131,7 @@ public class UsuarioRestController {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
         })
         @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-        @PostMapping("/v1/usuarios")
+        @PostMapping("/v1/usuarios/x")
         public ResponseEntity<PaginaResponse<UsuarioList>> getAllUsuariosPost(
             @Valid @RequestBody PeticionListadoFiltrado peticionListadoFiltrado) throws FiltroException {
             return ResponseEntity.ok(usuarioService.findAll(
@@ -171,7 +172,7 @@ public class UsuarioRestController {
                 @ApiResponse(responseCode = "409", description = "Conflict: Error al intentar crear un 'usuario' (errorCodes: 'USER_ALREADY_EXIST', 'FOREIGN_KEY_VIOLATION', 'UNIQUE_CONSTRAINT_VIOLATION', 'DATA_INTEGRITY_VIOLATION')", 
                         content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) })
         })
-        @PostMapping("/usuarios")
+        @PostMapping("/v1/usuarios")
         public ResponseEntity<UsuarioEdit> create(@Valid @RequestBody UsuarioEdit usuarioEdit, BindingResult bindingResult) {
             // Comprueba errores de validación y si los hay lanza una BindingResultException
             // con el errorCode
@@ -199,9 +200,9 @@ public class UsuarioRestController {
                 @ApiResponse(responseCode = "404", description = "Not Found: No se encontró el usuario con el ID proporcionado (errorCode='USER_NOT_FOUND')", content = {
                         @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) })
         })
-        @GetMapping("/read/{id}")
-        public ResponseEntity<UsuarioEdit> read(@PathVariable Long id) {
-            return ResponseEntity.ok(usuarioService.read(id));
+        @GetMapping("/v1/usuarios/{id}")
+        public ResponseEntity<UsuarioEdit> read(@PathVariable String id) {
+            return ResponseEntity.ok(usuarioService.read(new IdEntityLong(id).getValue()));
         }
 
         /**
@@ -240,14 +241,14 @@ public class UsuarioRestController {
                 @ApiResponse(responseCode = "409", description = "Conflict: Error al intentar actualizar un 'usuario' (errorCodes: 'FOREIGN_KEY_VIOLATION', 'UNIQUE_CONSTRAINT_VIOLATION', 'DATA_INTEGRITY_VIOLATION')", content = {
                         @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) })
         })
-        @PutMapping("update/{id}")
+        @PutMapping("/v1/usuarios/{id}")
         public ResponseEntity<UsuarioEdit> update(@PathVariable Long id, @Valid @RequestBody UsuarioEdit usuarioEdit,
                 BindingResult bindingResult) {
             // Comprueba errores de validación y si los hay lanza una BindingResultException
             // con el errorCode
             BindingResultHelper.validateBindingResult(bindingResult, "USER_UPDATE_VALIDATION");
             // No hay error de validación y procedemos a modificar el registro
-            return ResponseEntity.ok(usuarioService.update(id, usuarioEdit));
+            return ResponseEntity.ok(usuarioService.update(new IdEntityLong(id).getValue(), usuarioEdit));
         }
 
         /**
@@ -263,7 +264,7 @@ public class UsuarioRestController {
                 @ApiResponse(responseCode = "400", description = "Bad Request: Error de validación en el ID proporcionado (errorCode='ID_FORMAT_INVALID')", content = {
                         @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) })
         })
-        @DeleteMapping("delete/{id}")
+        @DeleteMapping("/v1/usuarios/{id}")
         public ResponseEntity<Void> delete(@PathVariable Long id) {
             usuarioService.delete(id);
             return ResponseEntity.noContent().build();

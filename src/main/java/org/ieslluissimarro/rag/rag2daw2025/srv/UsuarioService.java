@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.ieslluissimarro.rag.rag2daw2025.exception.FiltroException;
+import org.ieslluissimarro.rag.rag2daw2025.filters.model.PaginaResponse;
+import org.ieslluissimarro.rag.rag2daw2025.filters.model.PeticionListadoFiltrado;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.LoginUsuario;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PaginaDto;
-import org.ieslluissimarro.rag.rag2daw2025.model.dto.PaginaResponse;
-import org.ieslluissimarro.rag.rag2daw2025.model.dto.PeticionListadoFiltrado;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioList;
@@ -33,7 +33,7 @@ public interface UsuarioService {
          * @return PaginaResponse con la lista de jugadores filtrada y paginada
          * @throws FiltroException Si hay errores en los filtros o la ordenación (errorCodes: 'BAD_OPERATOR_FILTER','BAD_ATTRIBUTE_ORDER','BAD_ATTRIBUTE_FILTER','BAD_FILTER')
          */
-        public PaginaResponse<UsuarioList> findAll(String[] filter, int page, int size, List<String> sort) throws FiltroException;
+        public PaginaResponse<UsuarioList> findAll(List<String> filter, int page, int size, List<String> sort) throws FiltroException;
         /**
          * Busca jugadores aplicando filtros, paginación y ordenación a partir de una petición estructurada.
          * 

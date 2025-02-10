@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
   nombre VARCHAR(255) NOT NULL,
   nickname VARCHAR(255) NOT NULL UNIQUE, 
   email VARCHAR(255) NOT NULL UNIQUE,
-  password VARCHAR(255) NOT NULL, -- Hash de la contraseña
+  password VARCHAR(255) NOT NULL,
   telefono VARCHAR(15),
   fecha_nacimiento DATE,
   estado VARCHAR(20) CHECK (estado IN ('activo', 'inactivo', 'pendiente', 'suspendido')) DEFAULT 'pendiente',

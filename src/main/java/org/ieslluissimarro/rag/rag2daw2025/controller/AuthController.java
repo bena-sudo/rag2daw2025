@@ -8,7 +8,7 @@ import org.ieslluissimarro.rag.rag2daw2025.model.enums.RolNombre;
 import org.ieslluissimarro.rag.rag2daw2025.security.dto.JwtDto;
 import org.ieslluissimarro.rag.rag2daw2025.security.dto.NuevoUsuario;
 import org.ieslluissimarro.rag.rag2daw2025.security.service.JwtService;
-import org.ieslluissimarro.rag.rag2daw2025.security.service.RolService;
+import org.ieslluissimarro.rag.rag2daw2025.security.service.RolDeteilsService;
 import org.ieslluissimarro.rag.rag2daw2025.security.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,7 +43,7 @@ public class AuthController {
     UsuarioService usuarioService;
 
     @Autowired
-    RolService rolService;
+    RolDeteilsService rolService;
 
     @Autowired
     JwtService jwtProvider;

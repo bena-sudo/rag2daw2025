@@ -2,9 +2,9 @@ package org.ieslluissimarro.rag.rag2daw2025.srv.mapper;
 
 import java.util.List;
 
+import org.ieslluissimarro.rag.rag2daw2025.filters.model.FiltroBusqueda;
+import org.ieslluissimarro.rag.rag2daw2025.filters.model.PaginaResponse;
 import org.ieslluissimarro.rag.rag2daw2025.model.db.UsuarioDb;
-import org.ieslluissimarro.rag.rag2daw2025.model.dto.FiltroBusqueda;
-import org.ieslluissimarro.rag.rag2daw2025.model.dto.PaginaResponse;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioList;

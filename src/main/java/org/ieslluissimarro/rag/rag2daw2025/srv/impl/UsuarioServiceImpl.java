@@ -7,18 +7,18 @@ import org.ieslluissimarro.rag.rag2daw2025.exception.EntityAlreadyExistsExceptio
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityIllegalArgumentException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityNotFoundException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.FiltroException;
-import org.ieslluissimarro.rag.rag2daw2025.helper.PaginationFactory;
-import org.ieslluissimarro.rag.rag2daw2025.helper.PeticionListadoFiltradoConverter;
+import org.ieslluissimarro.rag.rag2daw2025.filters.model.PaginaResponse;
+import org.ieslluissimarro.rag.rag2daw2025.filters.model.PeticionListadoFiltrado;
+import org.ieslluissimarro.rag.rag2daw2025.filters.specification.FiltroBusquedaSpecification;
+import org.ieslluissimarro.rag.rag2daw2025.filters.utils.PaginationFactory;
+import org.ieslluissimarro.rag.rag2daw2025.filters.utils.PeticionListadoFiltradoConverter;
 import org.ieslluissimarro.rag.rag2daw2025.model.db.UsuarioDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.LoginUsuario;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PaginaDto;
-import org.ieslluissimarro.rag.rag2daw2025.model.dto.PaginaResponse;
-import org.ieslluissimarro.rag.rag2daw2025.model.dto.PeticionListadoFiltrado;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioList;
 import org.ieslluissimarro.rag.rag2daw2025.repository.UsuarioRepository;
-import org.ieslluissimarro.rag.rag2daw2025.specification.FiltroBusquedaSpecification;
 import org.ieslluissimarro.rag.rag2daw2025.srv.UsuarioService;
 import org.ieslluissimarro.rag.rag2daw2025.srv.mapper.UsuarioMapper;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -48,7 +48,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     }
 
     @Override
-    public PaginaResponse<UsuarioList> findAll(String[] filter, int page, int size, List<String> sort) 
+    public PaginaResponse<UsuarioList> findAll(List<String> filter, int page, int size, List<String> sort) 
             throws FiltroException {
         /** 'peticionConverter' está en el constructor del service porque utilizando una buena arquitectura
         toda clase externa al Service que contenga un método a ejecutar debería ser testeable de manera
