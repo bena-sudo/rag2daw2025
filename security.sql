@@ -173,3 +173,21 @@ ALTER TABLE usuarios DROP COLUMN fechanacimiento;
 SELECT column_name FROM information_schema.columns WHERE table_name = 'usuarios';
 SELECT * FROM sesiones_activas;
 DELETE FROM sesiones_activas WHERE usuario_id = (SELECT id FROM usuarios WHERE email = 'christianciscar@hotmail.com');
+
+CREATE TABLE IF NOT EXISTS refresh_tokens (
+    id SERIAL PRIMARY KEY,
+    usuario_id BIGINT NOT NULL,
+    token VARCHAR(500) UNIQUE NOT NULL,
+    expiracion TIMESTAMP NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);
+
+INSERT INTO usuarios_roles (id_usuario, id_rol)
+VALUES ((SELECT id FROM usuarios WHERE email = 'christianciscar@hotmail.com'),
+        (SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'));
+
+SELECT u.email, r.nombre 
+FROM usuarios u
+JOIN usuarios_roles ur ON u.id = ur.id_usuario
+JOIN roles r ON ur.id_rol = r.id
+WHERE u.email = 'christianciscar@hotmail.com';

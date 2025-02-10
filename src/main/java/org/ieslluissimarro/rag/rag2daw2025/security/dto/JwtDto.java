@@ -13,12 +13,14 @@ import lombok.NoArgsConstructor;
 @Data
 public class JwtDto {
     private String token;
+    private String refreshToken;
     private String bearer = "Bearer";
     private String email;
     private Collection<? extends GrantedAuthority> authorities;
-    //Constructor sin el atributo 'bearer'
-    public JwtDto(String token, String email, Collection<? extends GrantedAuthority> authorities) {
+
+    public JwtDto(String token, String refreshToken, String email, Collection<? extends GrantedAuthority> authorities) {
         this.token = token;
+        this.refreshToken = refreshToken;
         this.email = email;
         this.authorities = authorities;
     }

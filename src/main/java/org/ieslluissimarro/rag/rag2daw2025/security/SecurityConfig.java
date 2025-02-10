@@ -44,6 +44,7 @@ public class SecurityConfig {
     }
 
     private static final String[] WHITE_LIST_URL = {"/auth/**",
+            "api/v1/usuarios",
             "/auth/login",    // Permitir login sin autenticación
             "/auth/nuevo",    // Permitir registro sin autenticación
             "/api-docs/**",
@@ -59,6 +60,7 @@ public class SecurityConfig {
                                 .disable())
                         .authorizeHttpRequests(authRequest -> authRequest
                                 .requestMatchers(WHITE_LIST_URL).permitAll()
+                                .requestMatchers("/api/v1/usuarios").hasAnyAuthority("ADMINISTRADOR", "USUARIO") 
                                 .anyRequest().authenticated())
                         .sessionManagement(sessionManager -> sessionManager
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

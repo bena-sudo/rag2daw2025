@@ -2,10 +2,12 @@ package org.ieslluissimarro.rag.rag2daw2025.security.service.impl;
 
 import io.jsonwebtoken.*;
 
+import org.ieslluissimarro.rag.rag2daw2025.model.db.UsuarioDb;
 import org.ieslluissimarro.rag.rag2daw2025.security.entity.UsuarioPrincipal;
 import org.ieslluissimarro.rag.rag2daw2025.security.service.JwtService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import io.jsonwebtoken.io.Decoders;
@@ -22,6 +24,9 @@ public class JwtServiceImpl implements JwtService{ // Se encargará de generar e
     private String secret;
     @Value("${security.jwt.expiration-time}")// valor en application.properties
     private int expiration;
+    @Value("${security.jwt.refresh-expiration-time}")// valor en application.properties
+    private int refreshExpirationTime;
+    
     @Override
     public String generateToken(Authentication authentication) { // genera el token
         // Obtenemos el usuario principal (UserDetails)
@@ -35,6 +40,29 @@ public class JwtServiceImpl implements JwtService{ // Se encargará de generar e
                 .compact();
     }
     
+    @Override
+    public String generateToken(UserDetails userDetails) {
+        return Jwts.builder()
+                .setSubject(userDetails.getUsername())
+                .claim("authorities", userDetails.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .toList())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    @Override
+    public String generateRefreshToken(UserDetails userDetails) {
+        return Jwts.builder()
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + refreshExpirationTime * 1000))
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
     @Override
     public String getEmailUsuarioFromToken(String token) {// extrae el nickname del token
         return extractClaim(token, Claims::getSubject);
@@ -58,6 +86,15 @@ public class JwtServiceImpl implements JwtService{ // Se encargará de generar e
     final String username = getEmailUsuarioFromToken(token);
     return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
+    @Override
+    public String generateTokenFromUsuario(UsuarioDb usuario) {
+    return Jwts.builder()
+            .setSubject(usuario.getEmail()) // El sub es el email
+            .setIssuedAt(new Date())
+            .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
+            .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+            .compact();
+}
     
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());

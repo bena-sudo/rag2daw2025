@@ -1,6 +1,5 @@
 package org.ieslluissimarro.rag.rag2daw2025.security.entity;
 
-
 import org.ieslluissimarro.rag.rag2daw2025.model.db.UsuarioDb;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,20 +8,21 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-public class UsuarioPrincipal implements UserDetails {//Clase encargarda de generar la seguridad: Implementa los privilegios de cada usuario
+public class UsuarioPrincipal implements UserDetails {
+
     private String nombreCompleto;
     private String nickname;
     private String email;
     private String password;
     private String telefono;
     private LocalDate fechaNacimiento;
-
-
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UsuarioPrincipal(String nombreCompleto, String nickname, String email, String password, String telefono, LocalDate fechaNacimiento, Collection<? extends GrantedAuthority> authorities) {
+    public UsuarioPrincipal(String nombreCompleto, String nickname, String email, String password, 
+                            String telefono, LocalDate fechaNacimiento, Collection<? extends GrantedAuthority> authorities) {
         this.nombreCompleto = nombreCompleto;
         this.nickname = nickname;
         this.email = email;
@@ -32,11 +32,15 @@ public class UsuarioPrincipal implements UserDetails {//Clase encargarda de gene
         this.authorities = authorities;
     }
 
-    public static UsuarioPrincipal build(UsuarioDb usuarioDb){ //Convertimos un UsuarioDb es un UsuarioPrincipal con sus privilegios
-        List<GrantedAuthority> authorities =
-                usuarioDb.getRoles().stream().map(rol -> new SimpleGrantedAuthority(rol
-                .getNombre().name())).collect(Collectors.toList()); //Convertimos los roles de la BD en una lista de 'GrantedAuthority'
-        return new UsuarioPrincipal(usuarioDb.getNombre(), usuarioDb.getNickname(), usuarioDb.getEmail(), usuarioDb.getPassword(), usuarioDb.getTelefono(), usuarioDb.getFechaNacimiento(), authorities);
+    public static UsuarioPrincipal build(UsuarioDb usuarioDb) {
+        // Convertimos los roles de la BD en una lista de `GrantedAuthority`
+        List<GrantedAuthority> authorities = usuarioDb.getRoles().stream()
+                .map(rol -> new SimpleGrantedAuthority(rol.getNombre().name())) // Asignamos los nombres de los roles
+                .collect(Collectors.toList());
+
+        return new UsuarioPrincipal(
+                usuarioDb.getNombre(), usuarioDb.getNickname(), usuarioDb.getEmail(), usuarioDb.getPassword(),
+                usuarioDb.getTelefono(), usuarioDb.getFechaNacimiento(), authorities);
     }
 
     @Override
