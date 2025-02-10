@@ -88,4 +88,8 @@ public class SQLHelper {
         return String.format("SELECT COUNT(*) FROM %s WHERE %s = '%s' AND %s = '%s'",
                 tableName, filterBy, valor1, filterBy2, valor2);
     }
+
+    public static String selectContextoCountGrouped(String campo) {
+        return String.format("SELECT contexto, COUNT(*) AS total FROM %s GROUP BY contexto ORDER BY total DESC ",campo);
+    }
 }
