@@ -6,7 +6,9 @@ import org.ieslluissimarro.rag.rag2daw2025.filters.model.FiltroBusqueda;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PaginaResponse;
 import org.ieslluissimarro.rag.rag2daw2025.model.db.DocumentoDB;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoEdit;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoList;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoNew;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
@@ -19,9 +21,13 @@ public interface DocumentoMapper {
 
     DocumentoEdit documentoDBToDocumentoEdit(DocumentoDB documentoDb);
 
+    DocumentoInfo documentoDBToDocumentoInfo(DocumentoDB documentoDb);
+
     DocumentoList documentoDBToDocumentoList(DocumentoDB documentoDb);
 
-    DocumentoDB documentoEditToDocumentoDB(DocumentoEdit documentoEdit);
+    DocumentoNew documentoDBToDocumentoNew(DocumentoDB documentoDb);
+
+    DocumentoDB documentoNewToDocumentoDB(DocumentoNew documentoNew);
 
     List<DocumentoList> documentoDBToDocumentoList(List<DocumentoDB> documentoDb);
 

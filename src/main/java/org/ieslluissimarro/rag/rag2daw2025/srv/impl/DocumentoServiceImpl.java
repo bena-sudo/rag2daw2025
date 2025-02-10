@@ -12,7 +12,9 @@ import org.ieslluissimarro.rag.rag2daw2025.filters.utils.PaginationFactory;
 import org.ieslluissimarro.rag.rag2daw2025.filters.utils.PeticionListadoFiltradoConverter;
 import org.ieslluissimarro.rag.rag2daw2025.model.db.DocumentoDB;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoEdit;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoList;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoNew;
 import org.ieslluissimarro.rag.rag2daw2025.repository.DocumentoRepository;
 import org.ieslluissimarro.rag.rag2daw2025.srv.DocumentoService;
 import org.ieslluissimarro.rag.rag2daw2025.srv.mapper.DocumentoMapper;
@@ -35,19 +37,19 @@ public class DocumentoServiceImpl implements DocumentoService {
     private final PeticionListadoFiltradoConverter peticionConverter;
 
     @Override
-    public DocumentoEdit create(DocumentoEdit documentoEdit) {
-        if (documentoEdit.getId() != null) {
+    public DocumentoNew create(DocumentoNew documentoNew) {
+        if (documentoNew.getId() != null) {
             throw new EntityIllegalArgumentException("DOCUMENT_ID_MISSMATCH", "El ID debe ser nulo al crear un nuevo documento");
         }
-        DocumentoDB entity = DocumentoMapper.INSTANCE.documentoEditToDocumentoDB(documentoEdit);
-        return DocumentoMapper.INSTANCE.documentoDBToDocumentoEdit(documentoRepository.save(entity));
+        DocumentoDB entity = DocumentoMapper.INSTANCE.documentoNewToDocumentoDB(documentoNew);
+        return DocumentoMapper.INSTANCE.documentoDBToDocumentoNew(documentoRepository.save(entity));
     }
 
     @Override
-    public DocumentoEdit read(Long id) {
+    public DocumentoInfo read(Long id) {
         DocumentoDB entity = documentoRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("DOCUMENT_ID_MISMATCH", "El documento con ID " + id + " no existe"));
-        return DocumentoMapper.INSTANCE.documentoDBToDocumentoEdit(entity);
+        return DocumentoMapper.INSTANCE.documentoDBToDocumentoInfo(entity);
     }
 
     @Override

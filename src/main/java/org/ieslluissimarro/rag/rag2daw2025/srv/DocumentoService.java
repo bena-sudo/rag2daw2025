@@ -6,12 +6,14 @@ import org.ieslluissimarro.rag.rag2daw2025.exception.FiltroException;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PaginaResponse;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PeticionListadoFiltrado;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoEdit;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoList;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoNew;
 
 public interface DocumentoService {
     
-    DocumentoEdit create(DocumentoEdit documentoEdit);
-    DocumentoEdit read(Long id);
+    DocumentoNew create(DocumentoNew documentoNew);
+    DocumentoInfo read(Long id);
     DocumentoEdit update(Long id, DocumentoEdit documentoEdit);
     void delete(Long id);
     PaginaResponse<DocumentoList> findAll(List<String> filter, int page, int size, List<String> sort) throws FiltroException;

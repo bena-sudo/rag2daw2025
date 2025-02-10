@@ -59,6 +59,7 @@ public class DocumentoDB {
    private String contentTypeDocumento;
 
    @Size(max = 50, message = "El tipo de documento debe tener como máximo 50 caracteres")
+   @Column(name = "tipodocumento")
    private String tipoDocumento;
 
    @Enumerated(EnumType.STRING)

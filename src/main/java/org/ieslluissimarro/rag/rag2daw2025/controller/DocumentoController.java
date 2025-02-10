@@ -7,7 +7,9 @@ import org.ieslluissimarro.rag.rag2daw2025.filters.model.PaginaResponse;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PeticionListadoFiltrado;
 import org.ieslluissimarro.rag.rag2daw2025.helper.BindingResultHelper;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoEdit;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoList;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoNew;
 import org.ieslluissimarro.rag.rag2daw2025.srv.DocumentoService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,14 +37,14 @@ public class DocumentoController {
     private final DocumentoService documentoService;
 
     @PostMapping("/documento")
-    public ResponseEntity<DocumentoEdit> create(@RequestBody DocumentoEdit documentoEdit, BindingResult bindingResult) {
+    public ResponseEntity<DocumentoNew> create(@RequestBody DocumentoNew documentoNew, BindingResult bindingResult) {
         BindingResultHelper.validateBindingResult(bindingResult, "DOCUMENT_CREATE_VALIDATION");
         
-        return ResponseEntity.status(HttpStatus.CREATED).body(documentoService.create(documentoEdit));
+        return ResponseEntity.status(HttpStatus.CREATED).body(documentoService.create(documentoNew));
     }
 
     @GetMapping("/documento/{id}")
-    public ResponseEntity<DocumentoEdit> read(@PathVariable Long id) {
+    public ResponseEntity<DocumentoInfo> read(@PathVariable Long id) {
         return ResponseEntity.ok(documentoService.read(id));
     }
     
