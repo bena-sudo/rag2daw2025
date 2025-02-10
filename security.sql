@@ -171,3 +171,5 @@ INSERT INTO roles(nombre) VALUES ('ADMINISTRADOR')
 ALTER TABLE usuarios DROP COLUMN fechacreacion;
 ALTER TABLE usuarios DROP COLUMN fechanacimiento;
 SELECT column_name FROM information_schema.columns WHERE table_name = 'usuarios';
+SELECT * FROM sesiones_activas;
+DELETE FROM sesiones_activas WHERE usuario_id = (SELECT id FROM usuarios WHERE email = 'christianciscar@hotmail.com');

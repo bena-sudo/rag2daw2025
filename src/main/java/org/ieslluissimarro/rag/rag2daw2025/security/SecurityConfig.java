@@ -20,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -43,6 +44,8 @@ public class SecurityConfig {
     }
 
     private static final String[] WHITE_LIST_URL = {"/auth/**",
+            "/auth/login",    // Permitir login sin autenticación
+            "/auth/nuevo",    // Permitir registro sin autenticación
             "/api-docs/**",
             "/swagger-ui/**",
             "/webjars/**"};

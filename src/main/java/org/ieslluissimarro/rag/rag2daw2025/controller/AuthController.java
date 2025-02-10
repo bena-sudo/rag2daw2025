@@ -5,8 +5,10 @@ import org.ieslluissimarro.rag.rag2daw2025.model.db.UsuarioDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.LoginUsuario;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.Mensaje;
 import org.ieslluissimarro.rag.rag2daw2025.model.enums.RolNombre;
+import org.ieslluissimarro.rag.rag2daw2025.repository.SesionActivaRepository;
 import org.ieslluissimarro.rag.rag2daw2025.security.dto.JwtDto;
 import org.ieslluissimarro.rag.rag2daw2025.security.dto.NuevoUsuario;
+import org.ieslluissimarro.rag.rag2daw2025.security.entity.SesionActiva;
 import org.ieslluissimarro.rag.rag2daw2025.security.service.JwtService;
 import org.ieslluissimarro.rag.rag2daw2025.security.service.RolDeteilsService;
 import org.ieslluissimarro.rag.rag2daw2025.security.service.UsuarioService;
@@ -22,16 +24,25 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static org.hibernate.internal.CoreLogging.logger;
 
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin
 public class AuthController {
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -48,6 +59,12 @@ public class AuthController {
     @Autowired
     JwtService jwtProvider;
 
+    @Autowired
+    SesionActivaRepository sesionActivaRepository;
+
+    /**
+     * Registro de un nuevo usuario
+     */
     @PostMapping("/nuevo")
     public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -60,8 +77,10 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje("El email del usuario ya existe"));
         }
 
+        // Manejo de fecha de nacimiento si no se proporciona
         LocalDate fechaNacimiento = nuevoUsuario.getFechaNacimiento() != null ? nuevoUsuario.getFechaNacimiento() : LocalDate.now();
 
+        // Creación del usuario
         UsuarioDb usuarioDb = new UsuarioDb(
             nuevoUsuario.getNombre(),
             nuevoUsuario.getNickname(),
@@ -70,8 +89,8 @@ public class AuthController {
             nuevoUsuario.getTelefono(),
             fechaNacimiento
         );
-        
-         // Asignar automáticamente el rol de USUARIO
+
+        // Asignar automáticamente el rol de USUARIO
         Set<RolDb> rolesDb = new HashSet<>();
         Optional<RolDb> rol = rolService.getByRolNombre(RolNombre.USUARIO);
         rolesDb.add(rol.orElseThrow(() -> new RuntimeException("Rol no encontrado")));
@@ -82,17 +101,60 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Usuario creado"));
     }
 
+    /**
+     * Login de usuario
+     */
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult){
-        if(bindingResult.hasErrors())
+    public ResponseEntity<?> login(@Valid @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje("Datos incorrectos"));
-        Authentication authentication =
-                authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginUsuario.getEmail(), loginUsuario.getPassword()));
+
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginUsuario.getEmail(), loginUsuario.getPassword()));
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtProvider.generateToken(authentication);
-        UserDetails userDetails = (UserDetails)authentication.getPrincipal();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
         JwtDto jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
+
+        // Guardar la sesión activa en la BD
+        UsuarioDb usuario = usuarioService.getByEmail(loginUsuario.getEmail()).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        SesionActiva sesion = new SesionActiva(usuario, jwt);
+        sesionActivaRepository.save(sesion);
+
         return ResponseEntity.status(HttpStatus.OK).body(jwtDto);
     }
+
+    /**
+     * Logout de usuario
+     */
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestHeader("Authorization") String token) {
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+    
+        logger.info("Token recibido en logout: " + token);
+    
+        Optional<SesionActiva> sesion = sesionActivaRepository.findByTokenSesion(token);
+        if (sesion.isEmpty()) {
+            logger.warn("Token inválido o sesión no encontrada");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje("Token inválido o sesión no encontrada"));
+        }
+    
+        UsuarioDb usuario = sesion.get().getUsuario();
+        logger.info("Usuario encontrado: " + usuario.getEmail());
+    
+        try {
+            sesionActivaRepository.deleteByUsuarioId(usuario.getId());
+            logger.info("Todas las sesiones del usuario eliminadas");
+            return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Todas las sesiones del usuario han sido cerradas correctamente"));
+        } catch (Exception e) {
+            logger.error("Error al eliminar sesiones del usuario: ", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Mensaje("Error al cerrar sesión"));
+        }
+    } 
+    
+    
 }

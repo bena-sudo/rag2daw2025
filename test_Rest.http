@@ -4,10 +4,10 @@ POST http://localhost:8090/auth/nuevo HTTP/1.1
 Content-Type: application/json
 
 {
-    "nickname": "edgartodf",
-    "nombre": "Edgar Tormo Jorfgyuiuytgrynfsdsdettt",
-    "email": "edgartormosghtd1@gmail.com",
-    "password": "TeLoDigo@2",
+    "nickname": "christianciscar",
+    "nombre": "christianciscar",
+    "email": "christianciscar@hotmail.com",
+    "password": "Telocuento1@",
     "telefono": "123456789",
     "fecha_nacimiento": "2023-12-12"
 }
@@ -43,8 +43,8 @@ POST http://localhost:8090/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "edgartormosghtd1@gmail.com",
-    "password": "TeLoDigo@2"
+    "email": "christianciscar@hotmail.com",
+    "password": "Telocuento1@"
 }
 
 ###
@@ -339,3 +339,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsL
 ## Obtener usuarios por rol 
 GET http://localhost:8090/api/v1/roles/ADMINISTRADOR/usuarios HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTE4NTAzMywiZXhwIjoxNzM5MjIxMDMzfQ.G0MJSsn0sjBotTet64oCFjsv2fLtUalVluSLjPETOuU
+###
+GET http://localhost:8090/api/v1/usuarios
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjaHJpc3RpYW5jaXNjYXJAaG90bWFpbC5jb20iLCJpYXQiOjE3Mzg5NTI3NzUsImV4cCI6MTczODk4ODc3NX0.-HeIxUL_-kMe0uK8P2tCt4cW4aUr7b47nUOwtemqRhI
+###
+POST http://localhost:8090/auth/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjaHJpc3RpYW5jaXNjYXJAaG90bWFpbC5jb20iLCJpYXQiOjE3MzkwNTg3MjAsImV4cCI6MTczOTA5NDcyMH0.7GufyY7UGKpxEf6kzv2lXRIZnjYJe2hfR4RXOi86uFw
