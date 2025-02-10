@@ -82,5 +82,9 @@ public interface ChatService {
 	// public List<ChatList> findAllChatList(Sort sort);
 	// public @NonNull List<ChatDb> findByTitleContaining( String title, Sort sort);
 
-	PaginaDto<ChatList> findAllPageChatInfo(List<FiltroBusqueda> listaFiltros, Pageable pageable);
+	public PaginaDto<ChatList> findAllPageChatInfo(List<FiltroBusqueda> listaFiltros, Pageable pageable);
+
+    public ChatInfo findById(Long idChat);
+
+
 }

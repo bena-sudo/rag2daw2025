@@ -89,11 +89,6 @@ public class ChatController {
         return ResponseEntity.ok(respuesta);
     }
 
-    @GetMapping("returnChatsInfo")
-    public ResponseEntity<List<ChatInfo>> devuelveListaDeChatInfoList() {
-        return ResponseEntity.ok(chatService.findAllChatInfoList());
-    }
-
     @GetMapping("returnChatInfo")
     public ResponseEntity<ChatInfo> devuelveChatInfo(@RequestParam Long idChat) {
         return ResponseEntity.ok(chatService.findById(idChat));

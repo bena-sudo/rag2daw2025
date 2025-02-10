@@ -18,10 +18,12 @@ import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatList;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PaginaDto;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PaginaResponse;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PeticionListadoFiltrado;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.PreguntaInfo;
 import org.ieslluissimarro.rag.rag2daw2025.repository.ChatRepository;
 import org.ieslluissimarro.rag.rag2daw2025.repository.PreguntaRepository;
 import org.ieslluissimarro.rag.rag2daw2025.srv.ChatService;
 import org.ieslluissimarro.rag.rag2daw2025.srv.mappers.ChatMapper;
+import org.ieslluissimarro.rag.rag2daw2025.srv.mappers.PreguntaMapper;
 import org.ieslluissimarro.rag.rag2daw2025.srv.specification.FiltroBusquedaSpecification;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.Page;
@@ -40,16 +42,7 @@ public class ChatServiceImpl implements ChatService {
 	private final ChatRepository chatRepository;
 	private final PaginationFactory paginationFactory;
 	private final PeticionListadoFiltradoConverter peticionConverter;
-
-	public ChatServiceImpl(
-		ChatRepository chatRepository,
-		PaginationFactory paginationFactory,
-		PeticionListadoFiltradoConverter peticionConverter
-	) {
-		this.chatRepository = chatRepository;
-		this.paginationFactory = paginationFactory;
-		this.peticionConverter = peticionConverter;
-	}
+	private final PreguntaRepository preguntaRepository;
 
 	@Override
 	public ChatInfo create(ChatList chatList) {
@@ -167,12 +160,6 @@ public class ChatServiceImpl implements ChatService {
 						paginaChatRelaciones.getSort()
 				);
 	}
-
-    @Override
-    public List<ChatInfo> findAllChatInfoList() {
-        List<ChatDb> listaChatList = chatRepository.findAll();
-        return ChatMapper.INSTANCE.chatsToChatInfo(listaChatList);
-    }
 
     @Override
     public ChatInfo findById(Long idChat) {
