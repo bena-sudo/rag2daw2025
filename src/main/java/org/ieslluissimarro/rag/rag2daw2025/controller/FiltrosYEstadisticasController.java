@@ -29,7 +29,7 @@ public class FiltrosYEstadisticasController {
     //http.....com/api/rag/v1/chats/filter?operacion=rango&filterBy=fecha&valor1=20-01-2024&valor2=5-2-2025     mostrar los chats en el rango de valor1 y valor2
     //http.....com/api/rag/v1/chats/filter?operacion=rango&filterBy=fecha&valor1=20-01-2024     aqui falta el valor2 por lo que será default el dia actual
     //http.....com/api/rag/v1/chats/filter?operacion=count&filterBy=user&valor1=pepe        recuento simple
-    
+
 
     @GetMapping("chats/filter")
     public ResponseEntity<?> getDatosFiltradosChat(@RequestParam Map<String,String> parametros) {
@@ -57,5 +57,7 @@ public class FiltrosYEstadisticasController {
         }
 
     }
+
+
 
 }
