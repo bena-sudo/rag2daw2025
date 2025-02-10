@@ -78,3 +78,8 @@ Content-Type: application/json
 ##  returnChats con size
 GET http://localhost:8090/api/rag/v1/returnChats?page=1 HTTP/1.1
 Content-Type: application/json
+######
+## #
+//return lista de users con distinct
+GET http://localhost:8090/api/rag/v1/getListUsuarios HTTP/1.1
+Content-Type: application/json

@@ -70,7 +70,7 @@ public class ChatController {
     public ResponseEntity<ListadoRespuesta<ChatList>> devuelveListaDeChatList(
 		@RequestParam(required = false) String[] filter,
     	@RequestParam(defaultValue = "0") int page,
-    	@RequestParam(defaultValue = "3") int size,
+    	@RequestParam(defaultValue = "50") int size,
     	@RequestParam(defaultValue = "idChat,asc") String[] sort
 	) throws FiltroException {
 

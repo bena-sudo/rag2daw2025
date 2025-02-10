@@ -23,24 +23,23 @@ public class SQLHelper {
         String valor1 = params.get("valor1");
         String valor2 = params.get("valor2");
 
-
         if (operacion == null || filterBy == null || valor1 == null) {
-            throw new IllegalArgumentException("Parámetros incompletos. Se requieren 'operacion', 'filterBy' y 'valor1'.");
+            throw new IllegalArgumentException(
+                    "Parámetros incompletos. Se requieren 'operacion', 'filterBy' y 'valor1'.");
         }
 
         if (!operacion.equals("rango")) {
             if ((filterBy2 != null && valor2 == null) || (filterBy2 == null && valor2 != null)) {
-                throw new IllegalArgumentException("Parámetros incompletos. Se requieren los parámetros secundarios estén completos.");
+                throw new IllegalArgumentException(
+                        "Parámetros incompletos. Se requieren los parámetros secundarios estén completos.");
             }
         }
 
- 
-
-        if ( filterBy != null && filterBy.matches("user")) {
+        if (filterBy != null && filterBy.matches("user")) {
             filterBy = "\"user\"";
         }
 
-        if (filterBy2 != null &&  filterBy2.matches("user")) {
+        if (filterBy2 != null && filterBy2.matches("user")) {
             filterBy2 = "\"user\"";
         }
 
@@ -51,24 +50,27 @@ public class SQLHelper {
                 return buildRangeQuery(tableName, filterBy, valor1, valor2);
             case "count":
 
-                if (valor2==null || filterBy2== null) {
+                if (valor2 == null || filterBy2 == null) {
                     return buildCountQuery(tableName, filterBy, valor1);
                 }
                 return buildCountQuery(tableName, filterBy, filterBy2, valor1, valor2);
 
-                
             default:
                 throw new IllegalArgumentException("Operación no válida: " + operacion);
         }
-       
+
     }
 
 
 
-        private static String buildFilterQuery(String tableName, String filterBy, String valor1) {
+    public static String selectDistinctString(String tableName, String column){
+        return String.format("SELECT DISTINCT %s FROM %s", column, tableName);
+    }
+
+
+    private static String buildFilterQuery(String tableName, String filterBy, String valor1) {
         return String.format("SELECT * FROM %s WHERE %s = '%s'", tableName, filterBy, valor1);
     }
-
 
     private static String buildRangeQuery(String tableName, String filterBy, String valor1, String valor2) {
         if (valor2 == null) {
@@ -80,9 +82,10 @@ public class SQLHelper {
     private static String buildCountQuery(String tableName, String filterBy, String valor1) {
         return String.format("SELECT COUNT(*) FROM %s WHERE %s = '%s'", tableName, filterBy, valor1);
     }
-    
-    private static String buildCountQuery(String tableName, String filterBy, String filterBy2, String valor1, String valor2) {
-        return String.format("SELECT COUNT(*) FROM %s WHERE %s = '%s' AND %s = '%s'", 
-                             tableName, filterBy, valor1, filterBy2, valor2);
+
+    private static String buildCountQuery(String tableName, String filterBy, String filterBy2, String valor1,
+            String valor2) {
+        return String.format("SELECT COUNT(*) FROM %s WHERE %s = '%s' AND %s = '%s'",
+                tableName, filterBy, valor1, filterBy2, valor2);
     }
 }

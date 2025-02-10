@@ -59,5 +59,16 @@ public class FiltrosYEstadisticasController {
     }
 
 
+    @GetMapping("getListUsuarios")
+    public ResponseEntity<?> getListUsuarios() {
+        try {
+            String query = SQLHelper.selectDistinctString("chats", "\"user\"");
 
+            return ResponseEntity.ok().body(service.executeQuery(query));
+
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("ILLEGAL_ARGUMENT_EXCEPTION");
+        }
+
+    }
 }
