@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class EstadisticaList {
+public class EstadisticasDocumentalList {
     private Long id;
     private Long idDocumento;
     private Long idChunk;

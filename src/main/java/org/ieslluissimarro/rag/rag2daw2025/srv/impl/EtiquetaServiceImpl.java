@@ -108,10 +108,9 @@ public class EtiquetaServiceImpl implements EtiquetaService {
     }
 
     @Override
-    public PaginaResponse<EtiquetaList> findAll(String[] filter, int page, int size, String[] sort)
+    public PaginaResponse<EtiquetaList> findAll(List<String> filter, int page, int size, List<String> sort)
             throws FiltroException {
-        PeticionListadoFiltrado peticion = peticionConverter.convertFromParams(List.of(filter), page, size,
-                List.of(sort));
+        PeticionListadoFiltrado peticion = peticionConverter.convertFromParams(filter, page, size, sort);
         return findAll(peticion);
     }
 }

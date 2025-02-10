@@ -1,5 +1,7 @@
 package org.ieslluissimarro.rag.rag2daw2025.srv;
 
+import java.util.List;
+
 import org.ieslluissimarro.rag.rag2daw2025.exception.FiltroException;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PaginaResponse;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PeticionListadoFiltrado;
@@ -17,6 +19,6 @@ public interface EtiquetaService {
 
     PaginaResponse<EtiquetaList> findAll(PeticionListadoFiltrado peticionListadoFiltrado) throws FiltroException;
 
-    public PaginaResponse<EtiquetaList> findAll(String[] filter, int page, int size, String[] sort)
+    public PaginaResponse<EtiquetaList> findAll(List<String> filter, int page, int size, List<String> sort)
             throws FiltroException;
 }
