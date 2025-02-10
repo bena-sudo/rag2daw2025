@@ -14,3 +14,6 @@ Frontend
 -Los componentes deben mostrar los datos recibidos.
 
 -Funcionalidad de los filtros 
+
+Estadisticas
+

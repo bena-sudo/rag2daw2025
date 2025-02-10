@@ -168,4 +168,20 @@ public class ChatServiceImpl implements ChatService {
 				);
 	}
 
+    @Override
+    public List<ChatInfo> findAllChatInfoList() {
+        List<ChatDb> listaChatList = chatRepository.findAll();
+        return ChatMapper.INSTANCE.chatsToChatInfo(listaChatList);
+    }
+
+    @Override
+    public ChatInfo findById(Long idChat) {
+        ChatDb existingEntity = chatRepository.findById(idChat)
+        .orElseThrow(() -> new EntityNotFoundException("CHAT_NOT_FOUND", "No se ha econtrado el chat"));
+
+        return ChatMapper.INSTANCE.ChatDbToChatInfo(existingEntity);
+
+
+    }
+
 }

@@ -89,6 +89,16 @@ public class ChatController {
         return ResponseEntity.ok(respuesta);
     }
 
+    @GetMapping("returnChatsInfo")
+    public ResponseEntity<List<ChatInfo>> devuelveListaDeChatInfoList() {
+        return ResponseEntity.ok(chatService.findAllChatInfoList());
+    }
+
+    @GetMapping("returnChatInfo")
+    public ResponseEntity<ChatInfo> devuelveChatInfo(@RequestParam Long idChat) {
+        return ResponseEntity.ok(chatService.findById(idChat));
+    }
+
     @Operation(summary = "Devuelve un listado de PreguntaInfo dado un idChat.")
     @GetMapping("returnPreguntasByIdChat")
     public ResponseEntity<List<PreguntaInfo>> devuelvePreguntasByIdChat(@RequestParam Long idChat) {
@@ -123,5 +133,7 @@ public class ChatController {
 
 	return ResponseEntity.ok(chatService.update(id, chatEdit));
     }
+
+    
 
 }

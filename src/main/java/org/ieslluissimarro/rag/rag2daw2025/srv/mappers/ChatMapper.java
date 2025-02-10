@@ -24,6 +24,7 @@ public interface ChatMapper {
     ChatEdit ChatDbToChatEdit(ChatDb chatDb);
     ChatDb ChatEditToChatDb(ChatEdit chatEdit);
     List<ChatList> chatsToChatList(List<ChatDb> chatsDb);
+    List<ChatInfo> chatsToChatInfo(List<ChatDb> chatsDb);
     void updateChatDbFromChatEdit(ChatEdit chatEdit, @MappingTarget ChatDb existingEntity);
     
     @Mapping(target = "idChat", ignore = true) // No mapeamos el idChat porque es autogenerado
