@@ -1,11 +1,9 @@
 package org.ieslluissimarro.rag.rag2daw2025.model.dto;
 
-import java.time.LocalDate;
 import java.util.Set;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.Pattern;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -18,7 +16,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class UsuarioEdit {
     
-    @NotNull
     @Schema(example = "12345", description = "ID único del usuario")
     private Long id;
 
@@ -43,17 +40,19 @@ public class UsuarioEdit {
     @Schema(example = "+34123456789", description = "Número de teléfono del usuario (con o sin prefijo de país)")
     private String telefono;
     
+    /*
     @NotNull
     @Schema(example = "1990-04-25", description = "Fecha de nacimiento del usuario (formato yyyy-MM-dd)")
     private LocalDate fechaNacimiento;
+    */
     
     @NotBlank
     @Size(max = 20, message = "El estado no puede tener más de 20 caracteres")
     @Schema(example = "Activo", description = "Estado del usuario (ej. Activo, Inactivo)")
     private String estado;
     
-    @Schema(description = "Roles asociados al usuario")
-    private Set<RolInfo> roles;
+    @Schema(description = "IDs de los roles asociados al usuario")
+    private Set<Long> roleIds;
     
     @Schema(description = "IDs de los permisos asociados al usuario")
     private Set<Long> permisosIds;

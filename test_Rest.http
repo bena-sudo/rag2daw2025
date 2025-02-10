@@ -4,12 +4,11 @@ POST http://localhost:8090/auth/nuevo HTTP/1.1
 Content-Type: application/json
 
 {
-    "nickname": "edgartodf",
+    "nickname": "edgartodf3f",
     "nombre": "Edgar Tormo Jorfgyuiuytgrynfsdsdettt",
-    "email": "edgartormosghtd1@gmail.com",
+    "email": "edgartogergrmosghtd1@gmail.com",
     "password": "TeLoDigo@2",
-    "telefono": "123456789",
-    "fecha_nacimiento": "2023-12-12"
+    "telefono": "123456789"
 }
 
 ###
@@ -22,8 +21,7 @@ Content-Type: application/json
     "nombre": "Administrador",
     "email": "administrador@gmail.com",
     "password": "Administrador@2",
-    "telefono": "123456789",
-    "fecha_nacimiento": "1234-12-12"
+    "telefono": "123456789"
 }
 
 
@@ -86,22 +84,27 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsL
 GET http://localhost:8090/api/v1/usuarios?filter=nombre:CONTIENE:ormo&sort=id&page=0&size=10 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTE4NTAzMywiZXhwIjoxNzM5MjIxMDMzfQ.G0MJSsn0sjBotTet64oCFjsv2fLtUalVluSLjPETOuU
 
-
-
 ###
-## getAllUsuarios con CONTIENE (Usuarios cuyo nombre contenga un valor)
-GET http://localhost:8090/api/v1/usuarios?filter=nombre:CONTIENE:Edgar&sort=nombre&page=0&size=10 HTTP/1.1
+## getAllusuarios filtrado por rol con CONTIENE
+GET http://localhost:8090/api/v1/usuarios?filter=roles.nombre:CONTIENE:USUARIO&sort=id&page=0&size=10 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTE4NTAzMywiZXhwIjoxNzM5MjIxMDMzfQ.G0MJSsn0sjBotTet64oCFjsv2fLtUalVluSLjPETOuU
+###
+GET http://localhost:8090/api/v1/usuarios?filter=roles:CONTIENE:USUARIO&sort=id&page=0&size=10 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTE4NTAzMywiZXhwIjoxNzM5MjIxMDMzfQ.G0MJSsn0sjBotTet64oCFjsv2fLtUalVluSLjPETOuU
 
+
+
 ###
-GET http://localhost:8080/usuarios?sort=nombre,asc&page=0&size=10 HTTP/1.1
+## getAllUsuarios con CONTIENE (Usuarios cuyo nombre contenga un valor) NO FUNCIONA (POR HACER)
+GET http://localhost:8090/api/v1/usuarios?filter=nombre:CONTIENE:Edgar&sort=nombre&page=0&size=10 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTE4NTAzMywiZXhwIjoxNzM5MjIxMDMzfQ.G0MJSsn0sjBotTet64oCFjsv2fLtUalVluSLjPETOuU
 
 
 ###
 ## getAllUsuarios FILTRO POST val
-POST http://localhost:8090/api/v1/usuarios HTTP/1.1
+POST http://localhost:8090/api/v1/usuarios/x HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTE4NTAzMywiZXhwIjoxNzM5MjIxMDMzfQ.G0MJSsn0sjBotTet64oCFjsv2fLtUalVluSLjPETOuU
+Content-Type: application/json
 
 {
     "listaFiltros": [
@@ -119,8 +122,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsL
 
 ###
 ## getAllUsuarios FILTRO POST sin ordenación ni filtro
-POST http://localhost:8090/api/v1/usuarios HTTP/1.1
+POST http://localhost:8090/api/v1/usuarios/x HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTE4NTAzMywiZXhwIjoxNzM5MjIxMDMzfQ.G0MJSsn0sjBotTet64oCFjsv2fLtUalVluSLjPETOuU
+Content-Type: application/json
 
 {
     "page": 0,
@@ -130,62 +134,61 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsL
 
 
 
-###
-##  create
-POST  http://localhost:8090/api/v1/usuarios HTTP/1.1
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTE4NTAzMywiZXhwIjoxNzM5MjIxMDMzfQ.G0MJSsn0sjBotTet64oCFjsv2fLtUalVluSLjPETOuU
+# ###
+# ##  create
+# POST  http://localhost:8090/api/v1/usuarios HTTP/1.1
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTE4NTAzMywiZXhwIjoxNzM5MjIxMDMzfQ.G0MJSsn0sjBotTet64oCFjsv2fLtUalVluSLjPETOuU
 
-{
-  "id": 4,
-  "nombre": "Juan Pérez",
-  "nickname": "juanperez",
-  "email": "juan.perez@example.com",
-  "telefono": "555123456",
-  "fechaNacimiento": "1990-01-01",
-  "estado": "activo"
-}
-###
-##  create errorCode: USER_ALREADY_EXIST
-POST  http://localhost:8090/api/v1/usuarios HTTP/1.1
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTE4NTAzMywiZXhwIjoxNzM5MjIxMDMzfQ.G0MJSsn0sjBotTet64oCFjsv2fLtUalVluSLjPETOuU
+# {
+#   "nombre": "Juan Pérez",
+#   "nickname": "juanperez",
+#   "email": "juan.perez@example.com",
+#   "telefono": "555123456",
+#   "estado": "activo",
+#   "roleIds": [1, 2]
+# }
+# ###
+# ##  create errorCode: USER_ALREADY_EXIST
+# POST  http://localhost:8090/api/v1/usuarios HTTP/1.1
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTE4NTAzMywiZXhwIjoxNzM5MjIxMDMzfQ.G0MJSsn0sjBotTet64oCFjsv2fLtUalVluSLjPETOuU
 
-{
-  "id": 2,
-  "nombre": "Juan Pérez",
-  "nickname": "juanperez",
-  "email": "juan.perez@example.com",
-  "telefono": "555123456",
-  "fechaNacimiento": "1990-01-01",
-  "estado": "activo",
-  "roles": [
-    {
-      "nombre": "ADMINISTRADOR"
-    }
-  ],
-  "permisosIds": [1, 2, 3]
-}
-###
-##  create errorCode: USER_CREATE_VALIDATION
-POST  http://localhost:8090/api/v1/usuarios HTTP/1.1
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTE4NTAzMywiZXhwIjoxNzM5MjIxMDMzfQ.G0MJSsn0sjBotTet64oCFjsv2fLtUalVluSLjPETOuU
+# {
+#   "id": 2,
+#   "nombre": "Juan Pérez",
+#   "nickname": "juanperez",
+#   "email": "juan.perez@example.com",
+#   "telefono": "555123456",
+#   "fechaNacimiento": "1990-01-01",
+#   "estado": "activo",
+#   "roles": [
+#     {
+#       "nombre": "ADMINISTRADOR"
+#     }
+#   ],
+#   "permisosIds": [1, 2, 3]
+# }
+# ###
+# ##  create errorCode: USER_CREATE_VALIDATION
+# POST  http://localhost:8090/api/v1/usuarios HTTP/1.1
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTE4NTAzMywiZXhwIjoxNzM5MjIxMDMzfQ.G0MJSsn0sjBotTet64oCFjsv2fLtUalVluSLjPETOuU
 
-{
-  "nombre": "Juan Pérez",
-  "nickname": "juanperez",
-  "email": "juan.perez@example.com",
-  "telefono": "555123456",
-  "fechaNacimiento": "1990-01-01",
-  "estado": "activo",
-  "roles": [
-    {
-      "nombre": "ADMINISTRADOR"
-    }
-  ],
-  "permisosIds": [1, 2, 3]
-}
+# {
+#   "nombre": "Juan Pérez",
+#   "nickname": "juanperez",
+#   "email": "juan.perez@example.com",
+#   "telefono": "555123456",
+#   "fechaNacimiento": "1990-01-01",
+#   "estado": "activo",
+#   "roleIds": [1, 2],
+#   "permisosIds": [1, 2, 3]
+# }
+
+
+
+
 
 
 
@@ -230,7 +233,8 @@ Content-Type: application/json
     "email": "pepito@gmail.com",
     "telefono": "123456789",
     "fechaNacimiento": "2025-02-06",
-    "estado": "pendiente"
+    "estado": "pendiente",
+    "roleIds": [1, 2]
 }
 /*
     "roles": [
@@ -339,3 +343,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsL
 ## Obtener usuarios por rol 
 GET http://localhost:8090/api/v1/roles/ADMINISTRADOR/usuarios HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTE4NTAzMywiZXhwIjoxNzM5MjIxMDMzfQ.G0MJSsn0sjBotTet64oCFjsv2fLtUalVluSLjPETOuU
+
+
+
+
+
+### Asignar roles a un usuario
+POST http://localhost:8090/api/v1/usuarios/3/roles HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTE4NTAzMywiZXhwIjoxNzM5MjIxMDMzfQ.G0MJSsn0sjBotTet64oCFjsv2fLtUalVluSLjPETOuU
+Content-Type: application/json
+
+[
+    1, 2, 4, 5
+]

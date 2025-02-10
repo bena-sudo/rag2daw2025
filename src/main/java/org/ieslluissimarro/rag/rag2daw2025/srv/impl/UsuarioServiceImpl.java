@@ -2,8 +2,9 @@ package org.ieslluissimarro.rag.rag2daw2025.srv.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.ieslluissimarro.rag.rag2daw2025.exception.EntityAlreadyExistsException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityIllegalArgumentException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityNotFoundException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.FiltroException;
@@ -12,12 +13,14 @@ import org.ieslluissimarro.rag.rag2daw2025.filters.model.PeticionListadoFiltrado
 import org.ieslluissimarro.rag.rag2daw2025.filters.specification.FiltroBusquedaSpecification;
 import org.ieslluissimarro.rag.rag2daw2025.filters.utils.PaginationFactory;
 import org.ieslluissimarro.rag.rag2daw2025.filters.utils.PeticionListadoFiltradoConverter;
+import org.ieslluissimarro.rag.rag2daw2025.model.db.RolDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.db.UsuarioDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.LoginUsuario;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PaginaDto;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioList;
+import org.ieslluissimarro.rag.rag2daw2025.repository.RolRepository;
 import org.ieslluissimarro.rag.rag2daw2025.repository.UsuarioRepository;
 import org.ieslluissimarro.rag.rag2daw2025.srv.UsuarioService;
 import org.ieslluissimarro.rag.rag2daw2025.srv.mapper.UsuarioMapper;
@@ -34,15 +37,17 @@ import org.springframework.stereotype.Service;
 public class UsuarioServiceImpl implements UsuarioService{
 
     private final UsuarioRepository usuarioRepository;
+    private final RolRepository rolRepository;
     private final PaginationFactory paginationFactory;
     private final PeticionListadoFiltradoConverter peticionConverter;
 
-
     public UsuarioServiceImpl(
             UsuarioRepository usuarioRepository, 
+            RolRepository rolRepository,
             PaginationFactory paginationFactory,
             PeticionListadoFiltradoConverter peticionConverter) {
         this.usuarioRepository = usuarioRepository;
+        this.rolRepository = rolRepository;
         this.paginationFactory = paginationFactory;
         this.peticionConverter = peticionConverter;
     }
@@ -169,16 +174,32 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 
 
-
+/*
     @Override
     public UsuarioEdit create(UsuarioEdit usuarioEdit) {
-        if (usuarioRepository.existsById(usuarioEdit.getId())) {
-            throw new EntityAlreadyExistsException("USER_ALREADY_EXIST",
-            "El usuario con ID " + usuarioEdit.getId() + " ya existe");
+        // if (usuarioRepository.existsById(usuarioEdit.getId())) {
+        //     throw new EntityAlreadyExistsException("USER_ALREADY_EXIST",
+        //     "El usuario con ID " + usuarioEdit.getId() + " ya existe");
+        // }
+        if (usuarioEdit.getId() != null) {
+            throw new EntityIllegalArgumentException("USER_ID_NOT_ALLOWED",
+                "No se puede proporcionar un ID para crear un nuevo usuario.");
+            
         }
+
         UsuarioDb entity = UsuarioMapper.INSTANCE.UsuarioEditToUsuarioDb(usuarioEdit);
-        return UsuarioMapper.INSTANCE.UsuarioDbToUsuarioEdit(usuarioRepository.save(entity));
-    }
+entity=usuarioRepository.save(entity);
+        // Asignar roles
+        if (usuarioEdit.getRoleIds() != null) {
+            Set<RolDb> roles = usuarioEdit.getRoleIds().stream()
+                .map(roleId -> rolRepository.findById(roleId)
+                    .orElseThrow(() -> new EntityNotFoundException("ROLE_NOT_FOUND", "No se encontró el rol con ID " + roleId)))
+                .collect(Collectors.toSet());
+                entity.setRoles(roles);
+        }
+entity=usuarioRepository.save(entity);
+        return UsuarioMapper.INSTANCE.UsuarioDbToUsuarioEdit(entity);
+    }*/
 
     @Override
     public UsuarioEdit read(Long id) {
@@ -197,8 +218,18 @@ public class UsuarioServiceImpl implements UsuarioService{
         UsuarioDb existingEntity = usuarioRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("USER_NOT_FOUND_FOR_UPDATE", 
                 "No se puede actualizar. El usuario con ID " + id + " no existe"));
-        
+
         UsuarioMapper.INSTANCE.updateUsuarioDbFromUsuarioEdit(usuarioEdit, existingEntity);
+
+        // Actualizar roles
+        if (usuarioEdit.getRoleIds() != null) {
+            Set<RolDb> roles = usuarioEdit.getRoleIds().stream()
+                .map(roleId -> rolRepository.findById(roleId)
+                    .orElseThrow(() -> new EntityNotFoundException("ROLE_NOT_FOUND", "No se encontró el rol con ID " + roleId)))
+                .collect(Collectors.toSet());
+            existingEntity.setRoles(roles);
+        }
+
         return UsuarioMapper.INSTANCE.UsuarioDbToUsuarioEdit(usuarioRepository.save(existingEntity));
     }
 
@@ -207,6 +238,24 @@ public class UsuarioServiceImpl implements UsuarioService{
         if (usuarioRepository.existsById(id)) {
             usuarioRepository.deleteById(id);
         }
+    }
+
+
+
+
+    //Asignar roles a un usuario
+    @Override
+    public UsuarioDb assignRolesToUsuario(Long usuarioId, List<Long> roleIds) {
+        UsuarioDb usuario = usuarioRepository.findById(usuarioId)
+            .orElseThrow(() -> new EntityNotFoundException("USER_NOT_FOUND", "No se encontró el usuario con ID " + usuarioId));
+
+        Set<RolDb> roles = roleIds.stream()
+            .map(roleId -> rolRepository.findById(roleId)
+                .orElseThrow(() -> new EntityNotFoundException("ROLE_NOT_FOUND", "No se encontró el rol con ID " + roleId)))
+            .collect(Collectors.toSet());
+
+        usuario.setRoles(roles);
+        return usuarioRepository.save(usuario);
     }
 
 }

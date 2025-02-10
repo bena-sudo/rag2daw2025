@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 public class RolDb {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, unique = true, length = 255)

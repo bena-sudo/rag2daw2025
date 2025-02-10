@@ -47,9 +47,11 @@ public interface UsuarioMapper {
 
 
     // Devuelve un objeto de tido 'UsuarioEdit' a partir de un objeto de tipo 'UsuarioDb'
+    @Mapping(source = "roles", target = "roleIds")
     UsuarioEdit UsuarioDbToUsuarioEdit(UsuarioDb UsuarioDb);
     // Devuelve un objeto de tido 'UsuarioDb' a partir de un objeto de tipo 'UsuarioEdit'
     UsuarioDb UsuarioEditToUsuarioDb(UsuarioEdit UsuarioEdit);
     // Actualiza un objeto de tipo 'UsuarioDb' con los datos de un objeto de tipo 'UsuarioEdit'
+    @Mapping(source = "roleIds", target = "roles")
     void updateUsuarioDbFromUsuarioEdit(UsuarioEdit UsuarioEdit, @MappingTarget UsuarioDb UsuarioDb);
 }

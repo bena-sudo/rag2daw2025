@@ -18,7 +18,6 @@ import org.ieslluissimarro.rag.rag2daw2025.exception.BindingResultErrorsResponse
 import org.ieslluissimarro.rag.rag2daw2025.exception.BindingResultException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.CustomErrorResponse;
 import org.ieslluissimarro.rag.rag2daw2025.exception.DataValidationException;
-import org.ieslluissimarro.rag.rag2daw2025.exception.EntityAlreadyExistsException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityIllegalArgumentException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.FiltroException;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PaginaResponse;
@@ -26,6 +25,7 @@ import org.ieslluissimarro.rag.rag2daw2025.filters.model.PeticionListadoFiltrado
 import org.ieslluissimarro.rag.rag2daw2025.helper.BindingResultHelper;
 import org.ieslluissimarro.rag.rag2daw2025.helper.PaginationHelper;
 import org.ieslluissimarro.rag.rag2daw2025.model.IdEntityLong;
+import org.ieslluissimarro.rag.rag2daw2025.model.db.UsuarioDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ListadoRespuesta;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PaginaDto;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioEdit;
@@ -33,7 +33,6 @@ import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioList;
 import org.ieslluissimarro.rag.rag2daw2025.srv.UsuarioService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
@@ -143,43 +142,43 @@ public class UsuarioRestController {
         /******************* CRUD *********************/
 
 
-        /**
-         * Crea un nuevo usuario en el sistema.
-         *
-         * @param usuarioEdit    Objeto que contiene los datos del usuario a crear. Debe
-         *                      cumplir con las validaciones definidas.
-         * @param bindingResult Resultado de las validaciones de los datos
-         *                      proporcionados.
-         * @return Un objeto usuarioEdit con los datos creados, junto con un código de
-         *         estado HTTP 201 (CREATED).
-         * @throws HttpMessageNotReadableExceptiom Si no coincide el tipo de dato de
-         *                                         algún atributo y no se puede pasear.
-         * @throws BindingResultException          Si hay errores de validación en el
-         *                                         objeto usuarioEdit.
-         * @throws EntityAlreadyExistsException    Si ya existe un usuario con el ID
-         *                                         especificado.
-         * @throws DataIntegrityViolationException Si hay errores al almacenar el
-         *                                         registro en la BD (clave ajena,
-         *                                         restricción de unicidad, integridad
-         *                                         de datos).
-         */
-        @Operation(summary = "Crea un nuevo registro de tipo usuario en el sistema.")
-        @ApiResponses(value = {
-                @ApiResponse(responseCode = "201", description = "Created: 'usuario' creado exitosamente", 
-                        content = {@Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioEdit.class)) }),
-                @ApiResponse(responseCode = "400", description = "Bad Request: Errores de validación en los datos proporcionados (errorCode='USER_CREATE_VALIDATION', 'DATA CONVERSION_ERROR')", 
-                        content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BindingResultErrorsResponse.class)) }),
-                @ApiResponse(responseCode = "409", description = "Conflict: Error al intentar crear un 'usuario' (errorCodes: 'USER_ALREADY_EXIST', 'FOREIGN_KEY_VIOLATION', 'UNIQUE_CONSTRAINT_VIOLATION', 'DATA_INTEGRITY_VIOLATION')", 
-                        content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) })
-        })
-        @PostMapping("/v1/usuarios")
-        public ResponseEntity<UsuarioEdit> create(@Valid @RequestBody UsuarioEdit usuarioEdit, BindingResult bindingResult) {
-            // Comprueba errores de validación y si los hay lanza una BindingResultException
-            // con el errorCode
-            BindingResultHelper.validateBindingResult(bindingResult, "USER_CREATE_VALIDATION");
-            // No hay error de validación y procedemos a crear el nuevo registro
-            return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.create(usuarioEdit));
-        }
+        // /**
+        //  * Crea un nuevo usuario en el sistema.
+        //  *
+        //  * @param usuarioEdit    Objeto que contiene los datos del usuario a crear. Debe
+        //  *                      cumplir con las validaciones definidas.
+        //  * @param bindingResult Resultado de las validaciones de los datos
+        //  *                      proporcionados.
+        //  * @return Un objeto usuarioEdit con los datos creados, junto con un código de
+        //  *         estado HTTP 201 (CREATED).
+        //  * @throws HttpMessageNotReadableExceptiom Si no coincide el tipo de dato de
+        //  *                                         algún atributo y no se puede pasear.
+        //  * @throws BindingResultException          Si hay errores de validación en el
+        //  *                                         objeto usuarioEdit.
+        //  * @throws EntityAlreadyExistsException    Si ya existe un usuario con el ID
+        //  *                                         especificado.
+        //  * @throws DataIntegrityViolationException Si hay errores al almacenar el
+        //  *                                         registro en la BD (clave ajena,
+        //  *                                         restricción de unicidad, integridad
+        //  *                                         de datos).
+        //  */
+        // @Operation(summary = "Crea un nuevo registro de tipo usuario en el sistema.")
+        // @ApiResponses(value = {
+        //         @ApiResponse(responseCode = "201", description = "Created: 'usuario' creado exitosamente", 
+        //                 content = {@Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioEdit.class)) }),
+        //         @ApiResponse(responseCode = "400", description = "Bad Request: Errores de validación en los datos proporcionados (errorCode='USER_CREATE_VALIDATION', 'DATA CONVERSION_ERROR')", 
+        //                 content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BindingResultErrorsResponse.class)) }),
+        //         @ApiResponse(responseCode = "409", description = "Conflict: Error al intentar crear un 'usuario' (errorCodes: 'USER_ALREADY_EXIST', 'FOREIGN_KEY_VIOLATION', 'UNIQUE_CONSTRAINT_VIOLATION', 'DATA_INTEGRITY_VIOLATION')", 
+        //                 content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) })
+        // })
+        // @PostMapping("/v1/usuarios")
+        // public ResponseEntity<UsuarioEdit> create(@Valid @RequestBody UsuarioEdit usuarioEdit, BindingResult bindingResult) {
+        //     // Comprueba errores de validación y si los hay lanza una BindingResultException
+        //     // con el errorCode
+        //     BindingResultHelper.validateBindingResult(bindingResult, "USER_CREATE_VALIDATION");
+        //     // No hay error de validación y procedemos a crear el nuevo registro
+        //     return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.create(usuarioEdit));
+        // }
 
         /**
          * Obtiene los datos de un usuario a partir de su ID.
@@ -268,6 +267,20 @@ public class UsuarioRestController {
         public ResponseEntity<Void> delete(@PathVariable Long id) {
             usuarioService.delete(id);
             return ResponseEntity.noContent().build();
+        }
+
+
+
+
+
+
+
+
+        // Asignar roles a un usuario
+        @PostMapping("/v1/usuarios/{usuarioId}/roles")
+        public ResponseEntity<UsuarioDb> assignRolesToUsuario(@PathVariable Long usuarioId, @RequestBody List<Long> roleIds) {
+                UsuarioDb usuario = usuarioService.assignRolesToUsuario(usuarioId, roleIds);
+                return ResponseEntity.ok(usuario);
         }
 
 

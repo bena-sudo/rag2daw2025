@@ -6,7 +6,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,18 +16,18 @@ public class UsuarioPrincipal implements UserDetails {//Clase encargarda de gene
     private String email;
     private String password;
     private String telefono;
-    private LocalDate fechaNacimiento;
+    //private LocalDate fechaNacimiento;
 
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UsuarioPrincipal(String nombreCompleto, String nickname, String email, String password, String telefono, LocalDate fechaNacimiento, Collection<? extends GrantedAuthority> authorities) {
+    public UsuarioPrincipal(String nombreCompleto, String nickname, String email, String password, String telefono, /*LocalDate fechaNacimiento,*/ Collection<? extends GrantedAuthority> authorities) {
         this.nombreCompleto = nombreCompleto;
         this.nickname = nickname;
         this.email = email;
         this.password = password;
         this.telefono = telefono;
-        this.fechaNacimiento = fechaNacimiento;
+        //this.fechaNacimiento = fechaNacimiento;
         this.authorities = authorities;
     }
 
@@ -36,7 +35,7 @@ public class UsuarioPrincipal implements UserDetails {//Clase encargarda de gene
         List<GrantedAuthority> authorities =
                 usuarioDb.getRoles().stream().map(rol -> new SimpleGrantedAuthority(rol
                 .getNombre().name())).collect(Collectors.toList()); //Convertimos los roles de la BD en una lista de 'GrantedAuthority'
-        return new UsuarioPrincipal(usuarioDb.getNombre(), usuarioDb.getNickname(), usuarioDb.getEmail(), usuarioDb.getPassword(), usuarioDb.getTelefono(), usuarioDb.getFechaNacimiento(), authorities);
+        return new UsuarioPrincipal(usuarioDb.getNombre(), usuarioDb.getNickname(), usuarioDb.getEmail(), usuarioDb.getPassword(), usuarioDb.getTelefono(), authorities); /*usuarioDb.getFechaNacimiento()*/
     }
 
     @Override
@@ -94,11 +93,12 @@ public class UsuarioPrincipal implements UserDetails {//Clase encargarda de gene
         this.telefono = telefono;
     }
 
+    /*
     public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
 
     public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
-    }
+    }*/
 }

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.ieslluissimarro.rag.rag2daw2025.exception.FiltroException;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PaginaResponse;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PeticionListadoFiltrado;
+import org.ieslluissimarro.rag.rag2daw2025.model.db.UsuarioDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.LoginUsuario;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PaginaDto;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioEdit;
@@ -46,11 +47,15 @@ public interface UsuarioService {
 
 
 
-        public UsuarioEdit create(UsuarioEdit usuarioEdit);
+        //public UsuarioEdit create(UsuarioEdit usuarioEdit);
         public UsuarioEdit read(Long id);
         public UsuarioEdit update(Long id,UsuarioEdit usuarioEdit);
         public void delete(Long id);
 
+
+
+        // Asignar roles a un usuario
+        UsuarioDb assignRolesToUsuario(Long usuarioId, List<Long> roleIds);
 
 
 

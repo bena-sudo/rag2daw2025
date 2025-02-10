@@ -23,7 +23,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -60,15 +59,15 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje("El email del usuario ya existe"));
         }
 
-        LocalDate fechaNacimiento = nuevoUsuario.getFechaNacimiento() != null ? nuevoUsuario.getFechaNacimiento() : LocalDate.now();
+        //LocalDate fechaNacimiento = nuevoUsuario.getFechaNacimiento() != null ? nuevoUsuario.getFechaNacimiento() : LocalDate.now();
 
         UsuarioDb usuarioDb = new UsuarioDb(
             nuevoUsuario.getNombre(),
             nuevoUsuario.getNickname(),
             nuevoUsuario.getEmail(),
             passwordEncoder.encode(nuevoUsuario.getPassword()),
-            nuevoUsuario.getTelefono(),
-            fechaNacimiento
+            nuevoUsuario.getTelefono()
+            //fechaNacimiento
         );
         
          // Asignar automáticamente el rol de USUARIO

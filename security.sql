@@ -145,6 +145,26 @@ CREATE TABLE IF NOT EXISTS auditoria_eventos (
 );
 
 
+
+--------------------------------------------------------------
+-- INSERTAR ROLES
+
+INSERT INTO roles (nombre) VALUES
+    ('USUARIO'),
+    ('ADMINISTRADOR'),
+    ('ASESOR'),
+    ('SUPERVISOR'),
+    ('ACREDITADOR'),
+    ('EVALUADOR'),
+    ('PROFESOR'),
+    ('JEFEDPTO'),
+    ('JEFEESTUDIOS');
+
+
+
+
+
+
 SELECT * FROM usuarios;
 SELECT * FROM roles;
 SELECT * FROM usuarios_roles;
@@ -152,7 +172,7 @@ SELECT * FROM usuarios_roles;
 INSERT INTO usuarios_roles VALUES (2,2)
 
 
--- Funciona bien con todos los campos
+-- prueba
 INSERT INTO usuarios (nombre, nickname, email, password, password_salt, telefono, fecha_nacimiento, estado) 
 VALUES (
   'Edgar Tormo', 
@@ -164,6 +184,12 @@ VALUES (
   '1990-05-15', 
   'activo'
 );
+
+
+
+
+
+SELECT * FROM roles;
 
 
 INSERT INTO roles(nombre) VALUES ('USUARIO')
