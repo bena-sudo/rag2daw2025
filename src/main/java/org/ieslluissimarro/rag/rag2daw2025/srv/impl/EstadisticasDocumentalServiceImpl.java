@@ -10,7 +10,8 @@ import org.ieslluissimarro.rag.rag2daw2025.filters.model.PaginaResponse;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PeticionListadoFiltrado;
 import org.ieslluissimarro.rag.rag2daw2025.filters.specification.FiltroBusquedaSpecification;
 import org.ieslluissimarro.rag.rag2daw2025.filters.utils.PaginationFactory;
-import org.ieslluissimarro.rag.rag2daw2025.model.db.EstadisticasDocumentalDB;
+import org.ieslluissimarro.rag.rag2daw2025.filters.utils.PeticionListadoFiltradoConverter;
+import org.ieslluissimarro.rag.rag2daw2025.model.db.EstadisticaDocumentalDB;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.EstadisticasDocumentalList;
 import org.ieslluissimarro.rag.rag2daw2025.repository.EstadisticasDocumentalRepository;
 import org.ieslluissimarro.rag.rag2daw2025.srv.EstadisticasDocumentalService;
@@ -28,25 +29,28 @@ public class EstadisticasDocumentalServiceImpl implements EstadisticasDocumental
 
     private final PaginationFactory paginationFactory;
     private final EstadisticasDocumentalRepository estadisticasRepository;
+    private final PeticionListadoFiltradoConverter peticionConverter;
 
     public EstadisticasDocumentalServiceImpl(PaginationFactory paginationFactory,
-            EstadisticasDocumentalRepository estadisticasRepository) {
+            EstadisticasDocumentalRepository estadisticasRepository,
+            PeticionListadoFiltradoConverter peticionConverter) {
         this.paginationFactory = paginationFactory;
         this.estadisticasRepository = estadisticasRepository;
+        this.peticionConverter = peticionConverter;
     }
 
     @SuppressWarnings("null")
     @Override
     public PaginaResponse<EstadisticasDocumentalList> findAll(PeticionListadoFiltrado peticionListadoFiltrado)
-            throws FiltroException {
+        {
         try {
             Pageable pageable = paginationFactory.createPageable(peticionListadoFiltrado);
             // Configurar criterio de filtrado con Specification
-            Specification<EstadisticasDocumentalDB> filtrosBusquedaSpecification = new FiltroBusquedaSpecification<EstadisticasDocumentalDB>(
+            Specification<EstadisticaDocumentalDB> filtrosBusquedaSpecification = new FiltroBusquedaSpecification<EstadisticaDocumentalDB>(
                     peticionListadoFiltrado.getListaFiltros());
             // Filtrar y ordenar: puede producir cualquier de los errores controlados en el
             // catch
-            Page<EstadisticasDocumentalDB> page = estadisticasRepository.findAll(filtrosBusquedaSpecification,
+            Page<EstadisticaDocumentalDB> page = estadisticasRepository.findAll(filtrosBusquedaSpecification,
                     pageable);
             // Devolver respuesta
             return EstadisticasDocumentalMapper.pageToPaginaResponseEstadisticasDocumentalList(
@@ -85,5 +89,13 @@ public class EstadisticasDocumentalServiceImpl implements EstadisticasDocumental
     public List<Object[]> getTiempoRevisionPromedioPorUsuario() {
         return estadisticasRepository.getTiempoRevisionPromedioPorUsuario();
     }
+
+    @Override
+    public PaginaResponse<EstadisticasDocumentalList> findAll(List<String> filter, int page, int size,
+            List<String> sort) throws FiltroException {
+        PeticionListadoFiltrado peticion = peticionConverter.convertFromParams(filter, page, size, sort);
+        return findAll(peticion);
+    }
+
 
 }
