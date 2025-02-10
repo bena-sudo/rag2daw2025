@@ -6,7 +6,7 @@ Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0g
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="idUsuario"
 
-11111111A
+101
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="nombreFichero"
  
@@ -20,10 +20,6 @@ Content-Disposition: form-data; name="multipart"; filename="prueba.pdf"
 Content-Type: application/pdf
 
 < /home/vesprada/Escritorio/prueba.pdf
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="creadoPor"
-
-Simarret
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 
@@ -35,7 +31,7 @@ Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0g
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="dni"
 
-11111111A
+101
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="nombreFichero"
 
@@ -49,10 +45,7 @@ Content-Disposition: form-data; name="multipart"; filename="Cabecera_SIMARRO_DWE
 Content-Type: image/jpeg
 
 < /home/vesprada/Escritorio/Cabecera_SIMARRO_DWES.jpg
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="creadoPor"
 
-Socarrat
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 

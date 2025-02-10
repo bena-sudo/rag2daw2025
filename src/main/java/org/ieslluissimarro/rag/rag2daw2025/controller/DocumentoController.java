@@ -19,6 +19,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,7 +37,7 @@ public class DocumentoController {
 
     private final DocumentoService documentoService;
 
-    @PostMapping("/documento")
+    @PostMapping(name = "/documento", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<DocumentoNew> create(@RequestBody DocumentoNew documentoNew, BindingResult bindingResult) {
         BindingResultHelper.validateBindingResult(bindingResult, "DOCUMENT_CREATE_VALIDATION");
         
