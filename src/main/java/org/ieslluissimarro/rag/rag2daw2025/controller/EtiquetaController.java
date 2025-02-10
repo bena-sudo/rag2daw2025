@@ -5,7 +5,7 @@ import java.util.List;
 import org.ieslluissimarro.rag.rag2daw2025.exception.FiltroException;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PaginaResponse;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PeticionListadoFiltrado;
-import org.ieslluissimarro.rag.rag2daw2025.helpers.BindingResultHelper;
+import org.ieslluissimarro.rag.rag2daw2025.helper.BindingResultHelper;
 import org.ieslluissimarro.rag.rag2daw2025.model.IdEntityLong;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.EtiquetaEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.EtiquetaList;
