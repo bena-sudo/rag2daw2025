@@ -13,7 +13,7 @@ POST http://localhost:8090/api/rag/v1/createQuestionChat HTTP/1.1
 Content-Type: application/json
 
 {
-    "idChat": 7,
+    "idChat": 10,
     "usuario": "manolo",
     "textoPregunta": "hola" 
 }
@@ -38,15 +38,16 @@ DELETE  http://localhost:8090/api/rag/v1/deleteChat?idChat=5 HTTP/1.1
 
 ##########
 
-PUT http://localhost:8090/api/rag/v1/updatePregunta/5 HTTP/1.1
+PUT http://localhost:8090/api/rag/v1/updatePregunta/19 HTTP/1.1
 Content-Type: application/json
 
 {
-    "idChat": 7,
-    "idPregunta": 5,
+    "idChat": 10,
+    "idPregunta": 19,
     "usuario": "manolo",
-    "textoPregunta": "Hola que tal" ,
-    "feedback": "FALSE"
+    "textoPregunta": "Hola" ,
+    "textoRespuesta": "Adios",
+    "feedback": "BIEN"
     
 }
 #######
@@ -89,3 +90,10 @@ Content-Type: application/json
 //return lista de contextos con su count
 GET http://localhost:8090/api/rag/v1/contexto/popular HTTP/1.1
 Content-Type: application/json
+
+
+#####
+
+GET http://localhost:8090/api/rag/v1/preguntas/filter?operacion=filtro&filterBy=texto_respuesta&valor1=Respondido HTTP/1.1
+Content-Type: application/json
+

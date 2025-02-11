@@ -2,71 +2,111 @@ package org.ieslluissimarro.rag.rag2daw2025.helper;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 public class SQLHelper {
 
-    // http.....com/api/rag/v1/chats/filter?operacion=filtro&filterBy=user&valor1=manolo
-    // http.....com/api/rag/v1/chats/filter?operacion=filtro&filterBy=user&valor1=manolo&filterBy2=context&valor2=1
-    // http.....com/api/rag/v1/chats/filter?operacion=rango&filterBy=fecha&valor1=20-01-2024&valor2=5-2-2025
-    // mostrar los chats en el rango de valor1 y valor2
-    // http.....com/api/rag/v1/chats/filter?operacion=rango&filterBy=fecha&valor1=20-01-2024
-    // aqui falta el valor2 por lo que será default el dia actual
-    // http.....com/api/rag/v1/chats/filter?operacion=count&filterBy=user&valor1=pepe
-    // recuento simple
+    // http.....com/api/rag/v1/chats/filter?operacion=filterUser,rango&column=user&filterUserBy=manolo
+
+    // operacion=filtroP,filtroR,filtroUser&filterUserBy=manolo&filterRespuestaBy=Hola&filterPreguntaBy=Pregunta
 
     public static String builderSentencias(String tableName, Map<String, String> params) {
 
         String operacion = params.get("operacion");
-        String filterBy = params.get("filterBy");
-        String filterBy2 = params.get("filterBy2");
-        String valor1 = params.get("valor1");
-        String valor2 = params.get("valor2");
+        ArrayList<String> operacionesList = new ArrayList<>(Arrays.asList(operacion.split(",")));
 
-        if (operacion == null || filterBy == null || valor1 == null) {
-            throw new IllegalArgumentException(
-                    "Parámetros incompletos. Se requieren 'operacion', 'filterBy' y 'valor1'.");
-        }
-
-        if (!operacion.equals("rango")) {
-            if ((filterBy2 != null && valor2 == null) || (filterBy2 == null && valor2 != null)) {
-                throw new IllegalArgumentException(
-                        "Parámetros incompletos. Se requieren los parámetros secundarios estén completos.");
+        int i = 0;
+        StringBuilder queryFinal = new StringBuilder();
+        for (String op : operacionesList) {
+            if (i > 0) {
+                queryFinal.append(" AND ");
+            } else {
+                queryFinal.append("SELECT * FROM " + tableName + " ");
             }
+
+            switch (op) {
+                case "filterUser":
+                    String filterUserBy = params.get("filterUserBy");
+                    if (filterUserBy == null) {
+                        throw new IllegalArgumentException(
+                                "Parámetros incompletos en la petición. -Filter by user");
+                    }
+
+                    queryFinal.append("WHERE \"user\" = '" + filterUserBy + "' ");
+                    break;
+                case "rango":
+                    String fechaInical = params.get("fechaInicial");
+                    String fechaFinal = params.get("fechaFinal");
+                    if (fechaInical == null) {
+                        fechaFinal= "1940-01-01";
+                    }
+                    if (fechaFinal == null) {
+                        fechaFinal = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                    }
+
+                    queryFinal.append("WHERE fecha BETWEEN '" + fechaInical + "' and '" + fechaFinal + "'");
+
+                    break;
+
+                case "filterP":
+                    String filterPregunta = params.get("filterPreguntaBy");
+
+                    if (filterPregunta == null) {
+                        throw new IllegalArgumentException(
+                                "Parámetros incompletos en la petición. -Pregunta");
+                    }
+
+                    queryFinal.append("WHERE texto_pregunta = '" + filterPregunta + "' ");
+                    break;
+
+                case "filterR":
+                    String filterRespuesta = params.get("filterRespuestaBy");
+
+                    if (filterRespuesta == null) {
+                        throw new IllegalArgumentException(
+                                "Parámetros incompletos en la petición. -Respuesta");
+                    }
+
+                    queryFinal.append("WHERE texto_respuesta = '" + filterRespuesta + "' ");
+                    break;
+
+                case "filterFeedback":
+                    String feedback = params.get("feedbackValue");
+
+                    if (feedback == null) {
+                        throw new IllegalArgumentException(
+                                "Parámetros incompletos en la petición. -Feedback");
+                    }
+
+                    queryFinal.append("WHERE feedback = '" + feedback + "' ");
+                    break;
+
+                case "filterChunk":
+                    String chunk = params.get("filtChunkBy");
+
+                    if (chunk == null) {
+                        throw new IllegalArgumentException(
+                                "Parámetros incompletos en la petición. -Chunk");
+                    }
+
+                    queryFinal.append("WHERE id_documentchunk = '" + chunk + "' ");
+                    break;
+
+                default:
+                    throw new IllegalArgumentException("Operación no válida: " + operacion);
+            }
+            i++;
         }
 
-        if (filterBy != null && filterBy.matches("user")) {
-            filterBy = "\"user\"";
-        }
-
-        if (filterBy2 != null && filterBy2.matches("user")) {
-            filterBy2 = "\"user\"";
-        }
-
-        switch (operacion.toLowerCase()) {
-            case "filtro":
-                return buildFilterQuery(tableName, filterBy, valor1);
-            case "rango":
-                return buildRangeQuery(tableName, filterBy, valor1, valor2);
-            case "count":
-
-                if (valor2 == null || filterBy2 == null) {
-                    return buildCountQuery(tableName, filterBy, valor1);
-                }
-                return buildCountQuery(tableName, filterBy, filterBy2, valor1, valor2);
-
-            default:
-                throw new IllegalArgumentException("Operación no válida: " + operacion);
-        }
+        return queryFinal.toString();
 
     }
 
-
-
-    public static String selectDistinctString(String tableName, String column){
+    public static String selectDistinctString(String tableName, String column) {
         return String.format("SELECT DISTINCT %s FROM %s", column, tableName);
     }
-
 
     private static String buildFilterQuery(String tableName, String filterBy, String valor1) {
         return String.format("SELECT * FROM %s WHERE %s = '%s'", tableName, filterBy, valor1);
@@ -90,6 +130,7 @@ public class SQLHelper {
     }
 
     public static String selectContextoCountGrouped(String campo) {
-        return String.format("SELECT contexto, COUNT(*) AS total FROM %s GROUP BY contexto ORDER BY total DESC ",campo);
+        return String.format("SELECT contexto, COUNT(*) AS total FROM %s GROUP BY contexto ORDER BY total DESC ",
+                campo);
     }
 }
