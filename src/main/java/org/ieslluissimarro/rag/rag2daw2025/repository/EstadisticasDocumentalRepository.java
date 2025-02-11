@@ -1,13 +1,10 @@
 package org.ieslluissimarro.rag.rag2daw2025.repository;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 import org.ieslluissimarro.rag.rag2daw2025.model.db.EstadisticaDocumentalDB;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
