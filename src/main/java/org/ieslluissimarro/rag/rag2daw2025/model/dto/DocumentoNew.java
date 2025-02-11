@@ -1,14 +1,14 @@
 package org.ieslluissimarro.rag.rag2daw2025.model.dto;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import org.ieslluissimarro.rag.rag2daw2025.model.enums.EstadoDocumento;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
@@ -28,7 +28,8 @@ public class DocumentoNew {
 
    private String nombreFichero;
 
-   // Campo para el archivo (no se persiste directamente en la base de datos. Debe pasarse a base64)
+   //Campo para el archivo (no se persiste directamente en la base de datos. Debe pasarse a base64)
+   @Transient
    private MultipartFile multipart;
 
    @Size(max = 5, message = "La extensión del documento debe tener como máximo 5 caracteres")
