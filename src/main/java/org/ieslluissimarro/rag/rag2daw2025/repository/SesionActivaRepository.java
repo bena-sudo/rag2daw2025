@@ -7,9 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 public interface SesionActivaRepository extends JpaRepository<SesionActiva, Long> {
+    
     Optional<SesionActiva> findByTokenSesion(String token);
 
     void deleteByTokenSesion(String token);
@@ -18,4 +21,7 @@ public interface SesionActivaRepository extends JpaRepository<SesionActiva, Long
     @Modifying
     @Query("DELETE FROM SesionActiva s WHERE s.usuario.id = :usuarioId")
     void deleteByUsuarioId(@Param("usuarioId") Long usuarioId);
+
+    // Encontrar sesiones expiradas
+    List<SesionActiva> findByFechaExpiracionBefore(LocalDateTime fecha);
 }

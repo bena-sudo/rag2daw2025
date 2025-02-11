@@ -191,3 +191,5 @@ FROM usuarios u
 JOIN usuarios_roles ur ON u.id = ur.id_usuario
 JOIN roles r ON ur.id_rol = r.id
 WHERE u.email = 'christianciscar@hotmail.com';
+SELECT * FROM sesiones_activas;
+DELETE FROM sesiones_activas;

@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -113,24 +114,24 @@ public class AuthController {
     public ResponseEntity<?> login(@Valid @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje("Datos incorrectos"));
-
+    
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginUsuario.getEmail(), loginUsuario.getPassword()));
-
+    
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtProvider.generateToken(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
+    
+        JwtDto jwtDto = new JwtDto(jwt, "Bearer", userDetails.getUsername(), userDetails.getAuthorities());
+    
         UsuarioDb usuario = usuarioService.getByEmail(loginUsuario.getEmail())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-
+        
+        // Crear sesión activa con fecha de expiración
         SesionActiva sesion = new SesionActiva(usuario, jwt);
+        sesion.setFechaExpiracion(LocalDateTime.now().plusMinutes(10)); // Expira en 30 minutos
         sesionActivaRepository.save(sesion);
-
-        RefreshToken refreshToken = refreshTokenService.createRefreshToken(usuario);
-
-        JwtDto jwtDto = new JwtDto(jwt, refreshToken.getToken(), userDetails.getUsername(), userDetails.getAuthorities());
-
+    
         return ResponseEntity.status(HttpStatus.OK).body(jwtDto);
     }
 

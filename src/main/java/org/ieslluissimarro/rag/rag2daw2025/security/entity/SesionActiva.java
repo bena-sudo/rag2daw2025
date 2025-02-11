@@ -36,6 +36,7 @@ public class SesionActiva {
         this.usuario = usuario;
         this.tokenSesion = tokenSesion;
         this.fechaInicio = LocalDateTime.now();
+        this.fechaExpiracion = LocalDateTime.now().plusMinutes(10); // Expira en 30 minutos
     }
 }
 

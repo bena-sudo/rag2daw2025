@@ -20,72 +20,75 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-  private final JwtService jwtService;
-  private final UserDetailsServiceImpl userDetailsService;
-  private final SesionActivaRepository sesionActivaRepository;
+    private final JwtService jwtService;
+    private final UserDetailsServiceImpl userDetailsService;
+    private final SesionActivaRepository sesionActivaRepository;
+    
+    private static final int INACTIVITY_TIMEOUT_MINUTES = 10;
 
-  public JwtAuthenticationFilter(JwtService jwtService, UserDetailsServiceImpl userDetailsService,
-      SesionActivaRepository sesionActivaRepository) {
-    this.jwtService = jwtService;
-    this.userDetailsService = userDetailsService;
-    this.sesionActivaRepository = sesionActivaRepository;
-  }
-
-  @Override
-  protected void doFilterInternal(@NonNull HttpServletRequest req, @NonNull HttpServletResponse res,
-      @NonNull FilterChain filterChain) throws ServletException, IOException {
-    final String authHeader = req.getHeader("Authorization");
-    final String jwt;
-    final String email;
-
-    // Comprueba si la cabecera contiene un token válido
-    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-      filterChain.doFilter(req, res);
-      return;
+    public JwtAuthenticationFilter(JwtService jwtService, UserDetailsServiceImpl userDetailsService,
+                                    SesionActivaRepository sesionActivaRepository) {
+        this.jwtService = jwtService;
+        this.userDetailsService = userDetailsService;
+        this.sesionActivaRepository = sesionActivaRepository;
     }
 
-    jwt = authHeader.substring(7);
+    @Override
+    protected void doFilterInternal(@NonNull HttpServletRequest req, @NonNull HttpServletResponse res,
+                                    @NonNull FilterChain filterChain) throws ServletException, IOException {
+        final String authHeader = req.getHeader("Authorization");
+        final String jwt;
+        final String email;
 
-    try {
-      email = jwtService.getEmailUsuarioFromToken(jwt);
-
-      // Comprobar si el token está en la tabla de sesiones activas
-      Optional<SesionActiva> sesionOpt = sesionActivaRepository.findByTokenSesion(jwt);
-      if (sesionOpt.isEmpty()) {
-        logger.warn("Intento de uso de un token inválido o eliminado");
-        filterChain.doFilter(req, res);
-        return;
-      }
-
-      // Si el token es válido y no hay autenticación previa, autenticar al usuario
-      if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-        if (jwtService.isTokenValid(jwt, userDetails)) {
-          UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-              userDetails, null, userDetails.getAuthorities());
-          authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
-          SecurityContextHolder.getContext().setAuthentication(authToken);
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(req, res);
+            return;
         }
-      }
 
-    } catch (MalformedJwtException e) {
-      logger.error("Token mal formado");
-    } catch (UnsupportedJwtException e) {
-      logger.error("Token no soportado");
-    } catch (ExpiredJwtException e) {
-      logger.error("Token expirado");
-      sesionActivaRepository.deleteByTokenSesion(jwt); // Eliminar sesión si el token ha expirado
-    } catch (IllegalArgumentException e) {
-      logger.error("Token vacío");
-    } catch (SecurityException e) {
-      logger.error("Fallo en la firma");
+        jwt = authHeader.substring(7);
+
+        try {
+            email = jwtService.getEmailUsuarioFromToken(jwt);
+
+            Optional<SesionActiva> sesionOpt = sesionActivaRepository.findByTokenSesion(jwt);
+            if (sesionOpt.isEmpty()) {
+                filterChain.doFilter(req, res);
+                return;
+            }
+            
+            SesionActiva sesion = sesionOpt.get();
+            if (sesion.getFechaExpiracion().isBefore(LocalDateTime.now())) {
+                sesionActivaRepository.delete(sesion);
+                filterChain.doFilter(req, res);
+                return;
+            }
+
+            // Actualizar última actividad
+            sesion.setFechaExpiracion(LocalDateTime.now().plusMinutes(INACTIVITY_TIMEOUT_MINUTES));
+            sesionActivaRepository.save(sesion);
+
+            if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+                if (jwtService.isTokenValid(jwt, userDetails)) {
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                            userDetails, null, userDetails.getAuthorities());
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
+            }
+
+        } catch (MalformedJwtException | UnsupportedJwtException | IllegalArgumentException e) {
+            logger.error("Token inválido");
+        } catch (ExpiredJwtException e) {
+            sesionActivaRepository.deleteByTokenSesion(jwt);
+        }
+
+        filterChain.doFilter(req, res);
     }
-
-    filterChain.doFilter(req, res);
-  }
 }
