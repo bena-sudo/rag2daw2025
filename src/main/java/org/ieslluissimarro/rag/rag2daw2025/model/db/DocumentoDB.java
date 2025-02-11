@@ -59,14 +59,14 @@ public class DocumentoDB {
    private String contentTypeDocumento;
 
    @Size(max = 50, message = "El tipo de documento debe tener como máximo 50 caracteres")
-   @Column(name = "tipodocumento")
+   @Column(name = "tipo_documento")
    private String tipoDocumento;
 
    @Enumerated(EnumType.STRING)
-   @Column(length = 20, columnDefinition = "VARCHAR(20) DEFAULT 'pendiente'")
+   @Column(length = 20, name = "estado_documento", columnDefinition = "VARCHAR(20) DEFAULT 'pendiente'")
    private EstadoDocumento estado;
 
-   @Column(name = "fecha_creacion", nullable = false)
+   @Column(name = "fecha_creacion", insertable=false , updatable = false, nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
    private LocalDateTime fechaCreacion;
 
    @Column(name = "fecha_revision")

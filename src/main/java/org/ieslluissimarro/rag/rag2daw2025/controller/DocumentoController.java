@@ -11,23 +11,21 @@ import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoList;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoNew;
 import org.ieslluissimarro.rag.rag2daw2025.srv.DocumentoService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RestController
@@ -37,10 +35,10 @@ public class DocumentoController {
 
     private final DocumentoService documentoService;
 
-    @PostMapping(name = "/documento", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping("/documento")
     public ResponseEntity<DocumentoNew> create(@RequestBody DocumentoNew documentoNew, BindingResult bindingResult) {
         BindingResultHelper.validateBindingResult(bindingResult, "DOCUMENT_CREATE_VALIDATION");
-        
+
         return ResponseEntity.status(HttpStatus.CREATED).body(documentoService.create(documentoNew));
     }
 

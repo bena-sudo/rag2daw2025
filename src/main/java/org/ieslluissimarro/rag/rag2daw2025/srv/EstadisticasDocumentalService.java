@@ -5,11 +5,7 @@ import java.util.List;
 import org.ieslluissimarro.rag.rag2daw2025.exception.FiltroException;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PaginaResponse;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PeticionListadoFiltrado;
-import org.ieslluissimarro.rag.rag2daw2025.model.db.EstadisticaDocumentalDB;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.EstadisticasDocumentalList;
-import org.springframework.data.domain.Sort;
-
-import jakarta.annotation.Nonnull;
 
 public interface EstadisticasDocumentalService {
     /**
