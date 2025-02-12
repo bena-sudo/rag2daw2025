@@ -25,7 +25,6 @@ CREATE TABLE IF NOT EXISTS usuarios (
   email VARCHAR(255) NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL,
   telefono VARCHAR(15),
-  fecha_nacimiento DATE,
   estado VARCHAR(20) CHECK (estado IN ('activo', 'inactivo', 'pendiente', 'suspendido')) DEFAULT 'pendiente',
   fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
