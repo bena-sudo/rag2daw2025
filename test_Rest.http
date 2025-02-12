@@ -33,3 +33,9 @@ Content-Type: application/json
 GET http://localhost:8090/api/v1/estadistica/estadisticas?filter=idChunk:IGUAL:3&page=0&size=10&sort=id HTTP/1.1
 Content-Type: application/json
 ###
+GET http://localhost:8090/api/v1/chunks?filter=id:IGUAL:2&page=0&size=10&sort=id HTTP/1.1
+Content-Type: application/json
+
+###
+GET http://localhost:8090/api/v1/chunks HTTP/1.1
+Content-Type: application/json

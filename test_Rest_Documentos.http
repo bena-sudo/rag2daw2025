@@ -51,13 +51,13 @@ Content-Type: image/jpeg
 
 
 ### Read document
-GET http://localhost:8090/api/v1/docs/1 HTTP/1.1
+GET http://localhost:8090/api/v1/documento/2 HTTP/1.1
 Content-Type: application/json
 
 
 
 ### Update document
-PUT http://localhost:8090/api/v1/docs/1 HTTP/1.1
+PUT http://localhost:8090/api/v1/documento/1 HTTP/1.1
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -86,5 +86,5 @@ Simarret
 
 
 ### Delete document
-DELETE http://localhost:8090/api/v1/docs/1 HTTP/1.1
+DELETE http://localhost:8090/api/v1/documento/1 HTTP/1.1
 Content-Type: application/json
