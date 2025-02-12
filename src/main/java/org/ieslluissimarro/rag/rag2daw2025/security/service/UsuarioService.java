@@ -5,6 +5,7 @@ import org.ieslluissimarro.rag.rag2daw2025.model.db.UsuarioDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.enums.RolNombre;
 import org.ieslluissimarro.rag.rag2daw2025.repository.BloqueoCuentaRepository;
 import org.ieslluissimarro.rag.rag2daw2025.repository.UsuarioRepository;
+import org.ieslluissimarro.rag.rag2daw2025.srv.AuditoriaEventoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,12 @@ public class UsuarioService {
     UsuarioRepository usuarioRepository;
 
     @Autowired
+    private AuditoriaEventoService auditoriaEventoService;
+
+    @Autowired
     private BloqueoCuentaRepository bloqueoCuentaRepository;
+
+
                                
     public Optional<UsuarioDb> getByNickName(String nickname){
         return usuarioRepository.findByNickname(nickname);
@@ -40,7 +46,18 @@ public class UsuarioService {
     }
 
     public void save(@NonNull UsuarioDb usuario){
+        boolean isNew = usuario.getId() == null;
         usuarioRepository.save(usuario);
+
+        // Registrar evento de auditoría
+        auditoriaEventoService.registrarEvento(
+            usuario.getId(),
+            isNew ? "creacion" : "modificacion",
+            "usuarios",
+            null,
+            usuario.getEmail(),
+            isNew ? "Creación de usuario" : "Modificación de usuario"
+        );
     }
 
 
@@ -61,12 +78,25 @@ public class UsuarioService {
         BloqueoCuentaDb bloqueoCuenta = bloqueoCuentaRepository.findByUsuarioId(usuario.getId())
             .orElse(new BloqueoCuentaDb(usuario.getId(), 0, false, null));
         
-        bloqueoCuenta.setIntentosFallidos(bloqueoCuenta.getIntentosFallidos() + 1);
+
+        int intentosAnteriores = bloqueoCuenta.getIntentosFallidos();
+        bloqueoCuenta.setIntentosFallidos(intentosAnteriores + 1);
         if (bloqueoCuenta.getIntentosFallidos() >= 5) {
             bloqueoCuenta.setBloqueado(true);
             bloqueoCuenta.setFechaBloqueo(LocalDateTime.now());
         }
         bloqueoCuentaRepository.save(bloqueoCuenta);
+
+
+         // Registrar evento de auditoría
+         auditoriaEventoService.registrarEvento(
+            usuario.getId(),
+            "modificacion",
+            "bloqueo_cuentas",
+            "intentos_fallidos: " + intentosAnteriores,
+            "intentos_fallidos: " + bloqueoCuenta.getIntentosFallidos(),
+            "Incremento de intentos fallidos de inicio de sesión"
+        );
     }
 
     @Transactional
@@ -76,10 +106,21 @@ public class UsuarioService {
         BloqueoCuentaDb bloqueoCuenta = bloqueoCuentaRepository.findByUsuarioId(usuario.getId())
             .orElse(new BloqueoCuentaDb(usuario.getId(), 0, false, null));
         
+        int intentosAnteriores = bloqueoCuenta.getIntentosFallidos();
         bloqueoCuenta.setIntentosFallidos(0);
         bloqueoCuenta.setBloqueado(false);
         bloqueoCuenta.setFechaBloqueo(null);
         bloqueoCuentaRepository.save(bloqueoCuenta);
+
+        // Registrar evento de auditoría
+        auditoriaEventoService.registrarEvento(
+            usuario.getId(),
+            "modificacion",
+            "bloqueo_cuentas",
+            "intentos_fallidos: " + intentosAnteriores,
+            "intentos_fallidos: 0",
+            "Reseteo de intentos fallidos de inicio de sesión"
+        );
     }
 
 
@@ -88,10 +129,22 @@ public class UsuarioService {
         BloqueoCuentaDb bloqueoCuenta = bloqueoCuentaRepository.findByUsuarioId(usuarioId)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         
+        int intentosAnteriores = bloqueoCuenta.getIntentosFallidos();
         bloqueoCuenta.setIntentosFallidos(0);
         bloqueoCuenta.setBloqueado(false);
         bloqueoCuenta.setFechaBloqueo(null);
         bloqueoCuentaRepository.save(bloqueoCuenta);
+
+
+        // Registrar evento de auditoría
+        auditoriaEventoService.registrarEvento(
+            usuarioId,
+            "modificacion",
+            "bloqueo_cuentas",
+            "intentos_fallidos: " + intentosAnteriores,
+            "intentos_fallidos: 0",
+            "Desbloqueo de cuenta de usuario"
+        );
     }
 
 

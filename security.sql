@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS intentos_login (
 CREATE TABLE IF NOT EXISTS auditoria_eventos (
     id SERIAL PRIMARY KEY,
     usuario_id BIGINT,
-    tipo_evento VARCHAR(20) CHECK (tipo_evento IN ('actividad', 'modificacion', 'login', 'seguridad')) NOT NULL,
+    tipo_evento VARCHAR(20) CHECK (tipo_evento IN ('actividad', 'modificacion', 'login', 'seguridad', 'creacion', 'eliminacion')) NOT NULL,
     tabla_afectada VARCHAR(100) NULL,
     dato_anterior TEXT NULL,
     dato_nuevo TEXT NULL,
@@ -168,6 +168,7 @@ SELECT * FROM usuarios;
 SELECT * FROM roles;
 SELECT * FROM usuarios_roles;
 SELECT * FROM bloqueo_cuentas;
+SELECT * FROM auditoria_eventos;
 
 INSERT INTO usuarios_roles VALUES (2,2)
 

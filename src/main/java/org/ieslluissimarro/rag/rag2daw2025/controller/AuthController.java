@@ -16,6 +16,7 @@ import org.ieslluissimarro.rag.rag2daw2025.security.entity.RefreshToken;
 import org.ieslluissimarro.rag.rag2daw2025.security.service.JwtService;
 import org.ieslluissimarro.rag.rag2daw2025.security.service.RolDeteilsService;
 import org.ieslluissimarro.rag.rag2daw2025.security.service.UsuarioService;
+import org.ieslluissimarro.rag.rag2daw2025.srv.impl.AuditoriaEventoServiceImpl;
 import org.ieslluissimarro.rag.rag2daw2025.security.service.RefreshTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -77,6 +78,9 @@ public class AuthController {
     
     @Autowired
     RefreshTokenRepository refreshTokenRepository;
+
+    @Autowired
+    private AuditoriaEventoServiceImpl auditoriaEventoService;
 
     /**
      * Registro de un nuevo usuario
@@ -152,6 +156,16 @@ public class AuthController {
 
             // Resetear intentos fallidos en caso de éxito
             usuarioService.resetearIntentosFallidos(loginUsuario.getEmail());
+
+            // Registrar evento de auditoría
+            auditoriaEventoService.registrarEvento(
+                usuario.getId(),
+                "login",
+                "usuarios",
+                null,
+                loginUsuario.getEmail(),
+                "Inicio de sesión exitoso"
+            );
 
             return ResponseEntity.status(HttpStatus.OK).body(jwtDto);
         } catch (Exception e) {

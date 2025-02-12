@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.ieslluissimarro.rag.rag2daw2025.exception.EntityIllegalArgumentException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityNotFoundException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.FiltroException;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PaginaResponse;
@@ -40,16 +39,19 @@ public class UsuarioServiceImpl implements UsuarioService{
     private final RolRepository rolRepository;
     private final PaginationFactory paginationFactory;
     private final PeticionListadoFiltradoConverter peticionConverter;
+    private final AuditoriaEventoServiceImpl auditoriaEventoService;
 
     public UsuarioServiceImpl(
             UsuarioRepository usuarioRepository, 
             RolRepository rolRepository,
             PaginationFactory paginationFactory,
-            PeticionListadoFiltradoConverter peticionConverter) {
+            PeticionListadoFiltradoConverter peticionConverter,
+            AuditoriaEventoServiceImpl auditoriaEventoService) {
         this.usuarioRepository = usuarioRepository;
         this.rolRepository = rolRepository;
         this.paginationFactory = paginationFactory;
         this.peticionConverter = peticionConverter;
+        this.auditoriaEventoService = auditoriaEventoService;
     }
 
     @Override
@@ -211,13 +213,17 @@ entity=usuarioRepository.save(entity);
 
     @Override
     public UsuarioEdit update(Long id, UsuarioEdit usuarioEdit) {
-        if (!id.equals(usuarioEdit.getId())) {
+        /*if (!id.equals(usuarioEdit.getId())) {
             throw new EntityIllegalArgumentException("USER_ID_MISMATCH", 
                 "El ID proporcionado no coincide con el ID del usuario.");
         }
+                */
         UsuarioDb existingEntity = usuarioRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("USER_NOT_FOUND_FOR_UPDATE", 
                 "No se puede actualizar. El usuario con ID " + id + " no existe"));
+
+        usuarioEdit.setId(id);
+                
 
         UsuarioMapper.INSTANCE.updateUsuarioDbFromUsuarioEdit(usuarioEdit, existingEntity);
 
@@ -230,14 +236,39 @@ entity=usuarioRepository.save(entity);
             existingEntity.setRoles(roles);
         }
 
-        return UsuarioMapper.INSTANCE.UsuarioDbToUsuarioEdit(usuarioRepository.save(existingEntity));
+        UsuarioDb updatedEntity = usuarioRepository.save(existingEntity);
+
+        // Registrar evento de auditoría
+        auditoriaEventoService.registrarEvento(
+            updatedEntity.getId(),
+            "modificacion",
+            "usuarios",
+            existingEntity.getEmail(),
+            updatedEntity.getEmail(),
+            "Modificación de usuario"
+        );
+        return UsuarioMapper.INSTANCE.UsuarioDbToUsuarioEdit(updatedEntity);
     }
 
     @Override
     public void delete(Long id) {
-        if (usuarioRepository.existsById(id)) {
-            usuarioRepository.deleteById(id);
-        }
+        UsuarioDb usuario = usuarioRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("USER_NOT_FOUND_FOR_DELETE", 
+                "No se puede eliminar. El usuario con ID " + id + " no existe"));
+        
+
+        auditoriaEventoService.registrarEvento(
+        id,
+        "eliminacion",
+        "usuarios",
+        usuario.getEmail(),
+        null,
+        "Eliminación de usuario"
+    );
+
+    if (usuarioRepository.existsById(id)) {
+        usuarioRepository.deleteById(id);
+    }
     }
 
 
