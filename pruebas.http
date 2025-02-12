@@ -100,10 +100,6 @@ POST http://localhost:8090/api/rag/v1/filter HTTP/1.1
 Content-Type: application/json
 
 {
-    "filterUser": "manolo",
-    "filterRango": "2025-02-11 00:00:00,2025-02-12 23:59:59",
-    "filterFeedback": "MAL",
-
-    "filterValorado":true
+    "filterFeedback": "BIEN"
 
 }
