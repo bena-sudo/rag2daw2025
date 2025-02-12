@@ -15,7 +15,7 @@ public class SesionCleanupService {
         this.sesionActivaRepository = sesionActivaRepository;
     }
 
-    @Scheduled(fixedRate = 600000) // Ejecuta cada 10 minutos
+    @Scheduled(fixedRate = 	300000)
     public void limpiarSesionesExpiradas() {
         sesionActivaRepository.deleteAll(sesionActivaRepository.findByFechaExpiracionBefore(LocalDateTime.now()));
     }
