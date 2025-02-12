@@ -12,10 +12,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,16 +41,14 @@ public class DocumentoChunkDB implements Serializable{
     private Integer chunkOrder;
 
     @NotNull(message = "El texto del chunk no puede estar vacío.")
-    @Size(min = 1)
-    @Lob
     @Column(name = "chunk_text", columnDefinition = "TEXT")
     private String chunkText;
 
     @Column(name = "chunked_by")
-    private String chunkedBy;
+    private Long chunkedBy;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 20, columnDefinition = "VARCHAR(20) DEFAULT 'pendiente'")
+    @Column(length = 20)
     private EstadoChunk estado;
 
     @Column(name = "fecha_creacion", insertable=false , updatable = false, nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
