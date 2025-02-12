@@ -124,45 +124,42 @@ public class AuthController {
         if (bindingResult.hasErrors())
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje("Datos incorrectos"));
 
+        Optional<UsuarioDb> usuarioOpt = usuarioService.getByEmail(loginUsuario.getEmail());
+        if (usuarioOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje("Usuario no encontrado"));
+        }
 
-            Optional<UsuarioDb> usuarioOpt = usuarioService.getByEmail(loginUsuario.getEmail());
-            if (usuarioOpt.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje("Usuario no encontrado"));
-            }
-    
-            UsuarioDb usuario = usuarioOpt.get();
-            Optional<BloqueoCuentaDb> bloqueoCuentaOpt = bloqueoCuentaRepository.findByUsuarioId(usuario.getId());
-            if (bloqueoCuentaOpt.isPresent() && bloqueoCuentaOpt.get().isBloqueado()) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new Mensaje("Cuenta bloqueada por múltiples intentos fallidos"));
-            }
+        UsuarioDb usuario = usuarioOpt.get();
+        Optional<BloqueoCuentaDb> bloqueoCuentaOpt = bloqueoCuentaRepository.findByUsuarioId(usuario.getId());
+        if (bloqueoCuentaOpt.isPresent() && bloqueoCuentaOpt.get().isBloqueado()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new Mensaje("Cuenta bloqueada por múltiples intentos fallidos"));
+        }
 
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginUsuario.getEmail(), loginUsuario.getPassword()));
 
-            try {
-                Authentication authentication = authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken(loginUsuario.getEmail(), loginUsuario.getPassword()));
-    
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-                String jwt = jwtProvider.generateToken(authentication);
-                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-    
-                JwtDto jwtDto = new JwtDto(jwt,"Bearer", userDetails.getUsername(), userDetails.getAuthorities());
-    
-                // Crear sesión activa con fecha de expiración
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String jwt = jwtProvider.generateToken(authentication);
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+            JwtDto jwtDto = new JwtDto(jwt, "Bearer", userDetails.getUsername(), userDetails.getAuthorities());
+
+            // Crear sesión activa con fecha de expiración
             SesionActiva sesion = new SesionActiva(usuario, jwt);
-            sesion.setFechaExpiracion(LocalDateTime.now().plusMinutes(10)); // Expira en 30 minutos
+            sesion.setFechaExpiracion(LocalDateTime.now().plusMinutes(30)); // Expira en 30 minutos
             sesionActivaRepository.save(sesion);
-                
-               
-    
-                // Resetear intentos fallidos en caso de éxito
-                usuarioService.resetearIntentosFallidos(loginUsuario.getEmail());
-    
-                return ResponseEntity.status(HttpStatus.OK).body(jwtDto);
-            } catch (Exception e) {
-                // Incrementar intentos fallidos en caso de error
-                usuarioService.incrementarIntentosFallidos(loginUsuario.getEmail());
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Mensaje("Credenciales incorrectas"));
-            }
+
+            // Resetear intentos fallidos en caso de éxito
+            usuarioService.resetearIntentosFallidos(loginUsuario.getEmail());
+
+            return ResponseEntity.status(HttpStatus.OK).body(jwtDto);
+        } catch (Exception e) {
+            // Incrementar intentos fallidos en caso de error
+            usuarioService.incrementarIntentosFallidos(loginUsuario.getEmail());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Mensaje("Credenciales incorrectas"));
+        }
+    }
 
 
 
@@ -187,7 +184,7 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.OK).body(jwtDto);
 
         */
-    }
+    
 
     /**
      * Endpoint para refrescar el Access Token

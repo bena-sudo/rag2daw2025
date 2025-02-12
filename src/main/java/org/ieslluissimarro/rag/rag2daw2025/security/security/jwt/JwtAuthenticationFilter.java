@@ -63,7 +63,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
             
             SesionActiva sesion = sesionOpt.get();
-            if (sesion.getFechaExpiracion().isBefore(LocalDateTime.now())) {
+            if (sesion.getFechaExpiracion() == null || sesion.getFechaExpiracion().isBefore(LocalDateTime.now())) {
                 sesionActivaRepository.delete(sesion);
                 filterChain.doFilter(req, res);
                 return;
