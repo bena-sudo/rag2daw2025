@@ -1,6 +1,5 @@
 package org.ieslluissimarro.rag.rag2daw2025.security.entity;
 
-
 import org.ieslluissimarro.rag.rag2daw2025.model.db.UsuarioDb;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -8,9 +7,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-public class UsuarioPrincipal implements UserDetails {//Clase encargarda de generar la seguridad: Implementa los privilegios de cada usuario
+public class UsuarioPrincipal implements UserDetails {
+
     private String nombreCompleto;
     private String nickname;
     private String email;
