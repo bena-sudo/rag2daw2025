@@ -25,7 +25,7 @@ public class DocumentoChunkList implements Serializable {
     @Size(min = 1, message = "El texto del chunk no puede estar vacío")
     private String chunkText;
 
-    private String chunkedBy;
+    private Long chunkedBy;
 
     private EstadoChunk estado;
 
