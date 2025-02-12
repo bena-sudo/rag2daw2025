@@ -46,6 +46,17 @@ Content-Type: application/json
 }
 
 ###
+## login OK
+POST http://localhost:8090/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "edgartormo@gmail.com",
+    "password": "TeLoDigo@2r"
+}
+
+
+###
 ## login OK ADMINISTRADOR
 POST http://localhost:8090/auth/login HTTP/1.1
 Content-Type: application/json
@@ -356,3 +367,9 @@ Content-Type: application/json
 [
     1, 2, 4, 5
 ]
+
+
+### Desbloquear cuenta de usuario
+POST http://localhost:8090/auth/desbloquear/2 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTM3MDIxNSwiZXhwIjoxNzM5NDA2MjE1fQ.qN7SwPc_hMDzrwTrK1gLywOd-R2aDqEqY5reuM1ImKg
+Content-Type: application/json

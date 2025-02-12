@@ -167,6 +167,7 @@ INSERT INTO roles (nombre) VALUES
 SELECT * FROM usuarios;
 SELECT * FROM roles;
 SELECT * FROM usuarios_roles;
+SELECT * FROM bloqueo_cuentas;
 
 INSERT INTO usuarios_roles VALUES (2,2)
 

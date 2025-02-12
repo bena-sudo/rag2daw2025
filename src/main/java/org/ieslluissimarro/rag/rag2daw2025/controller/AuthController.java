@@ -1,10 +1,12 @@
 package org.ieslluissimarro.rag.rag2daw2025.controller;
 
+import org.ieslluissimarro.rag.rag2daw2025.model.db.BloqueoCuentaDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.db.RolDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.db.UsuarioDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.LoginUsuario;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.Mensaje;
 import org.ieslluissimarro.rag.rag2daw2025.model.enums.RolNombre;
+import org.ieslluissimarro.rag.rag2daw2025.repository.BloqueoCuentaRepository;
 import org.ieslluissimarro.rag.rag2daw2025.repository.SesionActivaRepository;
 import org.ieslluissimarro.rag.rag2daw2025.security.dto.JwtDto;
 import org.ieslluissimarro.rag.rag2daw2025.security.dto.NuevoUsuario;
@@ -15,6 +17,7 @@ import org.ieslluissimarro.rag.rag2daw2025.security.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,11 +27,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -36,7 +36,6 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.hibernate.internal.CoreLogging.logger;
 
 @RestController
 @RequestMapping("/auth")
@@ -61,6 +60,10 @@ public class AuthController {
 
     @Autowired
     SesionActivaRepository sesionActivaRepository;
+
+    @Autowired
+    BloqueoCuentaRepository bloqueoCuentaRepository;
+
 
     /**
      * Registro de un nuevo usuario
@@ -110,6 +113,46 @@ public class AuthController {
         if (bindingResult.hasErrors())
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje("Datos incorrectos"));
 
+
+            Optional<UsuarioDb> usuarioOpt = usuarioService.getByEmail(loginUsuario.getEmail());
+            if (usuarioOpt.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje("Usuario no encontrado"));
+            }
+    
+            UsuarioDb usuario = usuarioOpt.get();
+            Optional<BloqueoCuentaDb> bloqueoCuentaOpt = bloqueoCuentaRepository.findByUsuarioId(usuario.getId());
+            if (bloqueoCuentaOpt.isPresent() && bloqueoCuentaOpt.get().isBloqueado()) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new Mensaje("Cuenta bloqueada por múltiples intentos fallidos"));
+            }
+
+
+            try {
+                Authentication authentication = authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(loginUsuario.getEmail(), loginUsuario.getPassword()));
+    
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+                String jwt = jwtProvider.generateToken(authentication);
+                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+    
+                JwtDto jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
+    
+                // Guardar la sesión activa en la BD
+                SesionActiva sesion = new SesionActiva(usuario, jwt);
+                sesionActivaRepository.save(sesion);
+    
+                // Resetear intentos fallidos en caso de éxito
+                usuarioService.resetearIntentosFallidos(loginUsuario.getEmail());
+    
+                return ResponseEntity.status(HttpStatus.OK).body(jwtDto);
+            } catch (Exception e) {
+                // Incrementar intentos fallidos en caso de error
+                usuarioService.incrementarIntentosFallidos(loginUsuario.getEmail());
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Mensaje("Credenciales incorrectas"));
+            }
+
+
+
+            /*
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginUsuario.getEmail(), loginUsuario.getPassword()));
 
@@ -125,6 +168,8 @@ public class AuthController {
         sesionActivaRepository.save(sesion);
 
         return ResponseEntity.status(HttpStatus.OK).body(jwtDto);
+
+        */
     }
 
     /**
@@ -155,7 +200,18 @@ public class AuthController {
             logger.error("Error al eliminar sesiones del usuario: ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Mensaje("Error al cerrar sesión"));
         }
-    } 
+    }
+
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @PostMapping("/desbloquear/{usuarioId}")
+    public ResponseEntity<?> desbloquearCuenta(@PathVariable Long usuarioId) {
+        try {
+            usuarioService.desbloquearCuenta(usuarioId);
+            return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Cuenta desbloqueada exitosamente"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Mensaje("Error al desbloquear la cuenta"));
+        }
+    }
     
     
 }
