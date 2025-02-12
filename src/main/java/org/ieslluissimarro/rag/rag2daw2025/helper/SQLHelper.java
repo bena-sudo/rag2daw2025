@@ -160,27 +160,6 @@ public class SQLHelper {
         return String.format("SELECT DISTINCT %s FROM %s", column, tableName);
     }
 
-    private static String buildFilterQuery(String tableName, String filterBy, String valor1) {
-        return String.format("SELECT * FROM %s WHERE %s = '%s'", tableName, filterBy, valor1);
-    }
-
-    private static String buildRangeQuery(String tableName, String filterBy, String valor1, String valor2) {
-        if (valor2 == null) {
-            valor2 = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")); // Fecha actual por defecto
-        }
-        return String.format("SELECT * FROM %s WHERE %s BETWEEN '%s' AND '%s'", tableName, filterBy, valor1, valor2);
-    }
-
-    private static String buildCountQuery(String tableName, String filterBy, String valor1) {
-        return String.format("SELECT COUNT(*) FROM %s WHERE %s = '%s'", tableName, filterBy, valor1);
-    }
-
-    private static String buildCountQuery(String tableName, String filterBy, String filterBy2, String valor1,
-            String valor2) {
-        return String.format("SELECT COUNT(*) FROM %s WHERE %s = '%s' AND %s = '%s'",
-                tableName, filterBy, valor1, filterBy2, valor2);
-    }
-
     public static String selectContextoCountGrouped(String campo) {
         return String.format("SELECT contexto, COUNT(*) AS total FROM %s GROUP BY contexto ORDER BY total DESC ",
                 campo);

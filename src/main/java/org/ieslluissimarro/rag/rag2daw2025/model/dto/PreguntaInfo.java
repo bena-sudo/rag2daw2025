@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class PreguntaInfo {
-
+    private Long idchat;
     private Long idPregunta;
     private String usuario;
     private String textoPregunta;

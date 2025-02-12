@@ -29,15 +29,15 @@ public class FiltrosYEstadisticasController {
 
 
     /* Ejemplo de json que recibe el endpoint filter
-        Los campos enviados serán los unicos en ser filtrados, por lo que se puede enviar un solo campo para filtar
-        Si no quieres que se filtre por un campo no lo envies en el json ni pongas como valor null.
+        Los campos enviados serán los unicos en ser filtrados, por lo que solo envies los campos que quieres que se apliquen.
+        Si no quieres que se filtre por un campo no lo envies en el json ni pongas como valor null (excepto en las fechas donde si que aceptan null).
         {
             filterUser : "valor" ,
             filterRango:YYYY-MM-DD HH:MM:SS|YYYY-MM-DD HH:MM:SS,  los campos pueden ser valores "null" y obtendrán valores por defecto
             filterPregunta: "valor",
             filterRespuesta: "valor",
             filterFeedback: "valor", los valores normalmente son BIEN, NORMAL y MAL
-            filterValorado: true/false
+            filterValorado: true/false,
             filterChunks: "valor"
             
         }
