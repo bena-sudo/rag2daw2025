@@ -2,7 +2,6 @@ package org.ieslluissimarro.rag.rag2daw2025.srv.impl;
 
 import java.util.List;
 
-import org.ieslluissimarro.rag.rag2daw2025.exception.EntityAlreadyExistsException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityIllegalArgumentException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityNotFoundException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.FiltroException;
@@ -44,8 +43,8 @@ public class DocumentoChunkServiceImpl implements DocumentoChunkService{
     @Override
     public DocumentoChunkEdit create(DocumentoChunkEdit documentoChunkEdit) {
         if (documentoChunkEdit.getId() != null) {
-            throw new EntityIllegalArgumentException("CURSO_ID_MISMATCH",
-                "El ID debe ser nulo al crear un nuevo Curso");
+            throw new EntityIllegalArgumentException("DOCUMENTCHUNK_ID_MISMATCH",
+                "El ID debe ser nulo al crear un nuevo chunk");
         }
         DocumentoChunkDB entity = DocumentoChunkMapper.INSTANCE.documentoChunkEditToDocumentoChunkDB(documentoChunkEdit);
         return DocumentoChunkMapper.INSTANCE.documentoChunkDBToDocumentoChunkEdit(documentoChunkEditRepository.save(entity));
@@ -99,7 +98,7 @@ public class DocumentoChunkServiceImpl implements DocumentoChunkService{
             // Filtrar y ordenar: puede producir cualquier de los errores controlados en el catch
             Page<DocumentoChunkDB> page = documentoChunkEditRepository.findAll(filtrosBusquedaSpecification, pageable);
             //Devolver respuesta
-            return DocumentoChunkMapper.pageToPaginaResponseAlumnoList(
+            return DocumentoChunkMapper.pageToPaginaResponseDocumentoChunkList(
                 page,
                 peticionListadoFiltrado.getListaFiltros(), 
                 peticionListadoFiltrado.getSort());

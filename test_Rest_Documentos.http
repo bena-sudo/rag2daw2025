@@ -1,0 +1,90 @@
+###
+## create document OK (ruta y nombre fichero correctos)
+POST http://localhost:8090/api/v1/documentos HTTP/1.1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="idUsuario"
+
+101
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="nombreFichero"
+ 
+prueba.pdf
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="comentario"
+
+Documento de prueba
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="multipart"; filename="prueba.pdf"
+Content-Type: application/pdf
+
+< /home/vesprada/Escritorio/prueba.pdf
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+
+### Create document OK: PONER UNA RUTA CORRECTA Y NOMBRE FICHERO 'Cabecera_SIMARRO_DWES.jpg'
+POST http://localhost:8090/api/v1/docs HTTP/1.1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="dni"
+
+101
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="nombreFichero"
+
+Cabecera_SIMARRO_DWES.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="comentario"
+
+Documento de prueba
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="multipart"; filename="Cabecera_SIMARRO_DWES.jpg"
+Content-Type: image/jpeg
+
+< /home/vesprada/Escritorio/Cabecera_SIMARRO_DWES.jpg
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+
+### Read document
+GET http://localhost:8090/api/v1/documento/2 HTTP/1.1
+Content-Type: application/json
+
+
+
+### Update document
+PUT http://localhost:8090/api/v1/documento/1 HTTP/1.1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="dni"
+
+11111111A
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="nombreFichero"
+
+DWES_UD4_005_FicherosEnBaseDeDatos.pdf
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="comentario"
+
+Documento actualizado con update
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="multipart"; filename="DWES_UD4_005_FicherosEnBaseDeDatosConsultasAgrupadas.pdf"
+Content-Type: application/pdf
+
+< /home/vesprada/Escritorio/desplegament.pdf
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="creadoPor"
+
+Simarret
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+
+### Delete document
+DELETE http://localhost:8090/api/v1/documento/1 HTTP/1.1
+Content-Type: application/json

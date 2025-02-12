@@ -10,7 +10,7 @@ public class IdEntityLong {
 
     public IdEntityLong(String id) {
         try {
-            this.value = Long.parseLong(id);
+            this.value = Long.valueOf(id);
         } catch (NumberFormatException ex) {
             throw new DataValidationException("ID_FORMAT_INVALID",
                     " El ID debe ser un valor numérico de tipo Long (INT64).");

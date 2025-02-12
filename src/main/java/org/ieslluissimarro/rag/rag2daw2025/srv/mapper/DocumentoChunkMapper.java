@@ -23,11 +23,11 @@ public interface DocumentoChunkMapper {
 
     DocumentoChunkInfo documentoChunkDBToDocumentoChunkInfo(DocumentoChunkDB documentoChunkDB);
 
-    List<DocumentoChunkList> documentoChunkDBToDocumentoChunkList(List<DocumentoChunkDB> docAlumnosDb);
+    List<DocumentoChunkList> documentoChunkDBToDocumentoChunkList(List<DocumentoChunkDB> documentoChunkDB);
 
     void updateDocumentoChunkDBFromDocumentoChunkEdit(DocumentoChunkEdit documentoChunkEdit, @MappingTarget DocumentoChunkDB documentoChunkDB);
 
-    static PaginaResponse<DocumentoChunkList> pageToPaginaResponseAlumnoList(
+    static PaginaResponse<DocumentoChunkList> pageToPaginaResponseDocumentoChunkList(
             Page<DocumentoChunkDB> page,
             List<FiltroBusqueda> filtros,
             List<String> ordenaciones) {

@@ -1,7 +1,6 @@
 package org.ieslluissimarro.rag.rag2daw2025.exception;
 
 import java.util.Map;
-
 import lombok.Getter;
 
 @Getter
