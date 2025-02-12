@@ -25,4 +25,8 @@ public class FiltrosRequest {
 
     private String filterChunk;
 
+    @Nullable
+
+    private String filterValorado;
+
 }

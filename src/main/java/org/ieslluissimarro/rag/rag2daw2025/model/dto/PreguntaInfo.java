@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class PreguntaInfo {
 
+    private Long idPregunta;
     private String usuario;
     private String textoPregunta;
     private String textoRespuesta;

@@ -28,16 +28,39 @@ public class FiltrosYEstadisticasController {
     private FiltrosYEstadisticasService service;
 
 
-    /* 
+    /* Ejemplo de json que recibe el endpoint filter
+        Los campos enviados serán los unicos en ser filtrados, por lo que se puede enviar un solo campo para filtar
+        Si no quieres que se filtre por un campo no lo envies en el json ni pongas como valor null.
         {
-            filtro:null|fecha2,
+            filterUser : "valor" ,
+            filterRango:YYYY-MM-DD HH:MM:SS|YYYY-MM-DD HH:MM:SS,  los campos pueden ser valores "null" y obtendrán valores por defecto
+            filterPregunta: "valor",
+            filterRespuesta: "valor",
+            filterFeedback: "valor", los valores normalmente son BIEN, NORMAL y MAL
+            filterValorado: true/false
+            filterChunks: "valor"
+            
         }
 
-     * Ejemplo de las llamadas que recibirán los endpoints
+     
      */
 
 
+    @PostMapping("filter")
+    public ResponseEntity<?> getDatosByFiltroRequest(@RequestBody FiltrosRequest parametros) {
+        try {
 
+            String query = SQLHelper.builderSentencias(JsonToMapHelper.converter(parametros));
+
+            return ResponseEntity.ok().body(service.executeQuery(query));
+
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("ILLEGAL_ARGUMENT_EXCEPTION");
+        }
+
+    }
+    
+/* 
     @PostMapping("chats/filter")
     public ResponseEntity<?> getDatosFiltradosChat(@RequestBody FiltrosRequest parametros) {
         try {
@@ -65,7 +88,7 @@ public class FiltrosYEstadisticasController {
         }
 
     }
-
+*/
     @GetMapping("contexto/popular")
     public ResponseEntity<?> getListaContextos() {
         try {
