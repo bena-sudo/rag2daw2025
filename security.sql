@@ -23,9 +23,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
   nombre VARCHAR(255) NOT NULL,
   nickname VARCHAR(255) NOT NULL UNIQUE, 
   email VARCHAR(255) NOT NULL UNIQUE,
-  password VARCHAR(255) NOT NULL, -- Hash de la contraseña
+  password VARCHAR(255) NOT NULL,
   telefono VARCHAR(15),
-  fecha_nacimiento DATE,
   estado VARCHAR(20) CHECK (estado IN ('activo', 'inactivo', 'pendiente', 'suspendido')) DEFAULT 'pendiente',
   fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -135,7 +134,7 @@ CREATE TABLE IF NOT EXISTS intentos_login (
 CREATE TABLE IF NOT EXISTS auditoria_eventos (
     id SERIAL PRIMARY KEY,
     usuario_id BIGINT,
-    tipo_evento VARCHAR(20) CHECK (tipo_evento IN ('actividad', 'modificacion', 'login', 'seguridad')) NOT NULL,
+    tipo_evento VARCHAR(20) CHECK (tipo_evento IN ('actividad', 'modificacion', 'login', 'seguridad', 'creacion', 'eliminacion')) NOT NULL,
     tabla_afectada VARCHAR(100) NULL,
     dato_anterior TEXT NULL,
     dato_nuevo TEXT NULL,
@@ -145,14 +144,36 @@ CREATE TABLE IF NOT EXISTS auditoria_eventos (
 );
 
 
+
+--------------------------------------------------------------
+-- INSERTAR ROLES
+
+INSERT INTO roles (nombre) VALUES
+    ('USUARIO'),
+    ('ADMINISTRADOR'),
+    ('ASESOR'),
+    ('SUPERVISOR'),
+    ('ACREDITADOR'),
+    ('EVALUADOR'),
+    ('PROFESOR'),
+    ('JEFEDPTO'),
+    ('JEFEESTUDIOS');
+
+
+
+
+
+
 SELECT * FROM usuarios;
 SELECT * FROM roles;
 SELECT * FROM usuarios_roles;
+SELECT * FROM bloqueo_cuentas;
+SELECT * FROM auditoria_eventos;
 
 INSERT INTO usuarios_roles VALUES (2,2)
 
 
--- Funciona bien con todos los campos
+-- prueba
 INSERT INTO usuarios (nombre, nickname, email, password, password_salt, telefono, fecha_nacimiento, estado) 
 VALUES (
   'Edgar Tormo', 
@@ -166,8 +187,36 @@ VALUES (
 );
 
 
+
+
+
+SELECT * FROM roles;
+
+
 INSERT INTO roles(nombre) VALUES ('USUARIO')
 INSERT INTO roles(nombre) VALUES ('ADMINISTRADOR')
 ALTER TABLE usuarios DROP COLUMN fechacreacion;
 ALTER TABLE usuarios DROP COLUMN fechanacimiento;
 SELECT column_name FROM information_schema.columns WHERE table_name = 'usuarios';
+SELECT * FROM sesiones_activas;
+DELETE FROM sesiones_activas WHERE usuario_id = (SELECT id FROM usuarios WHERE email = 'christianciscar@hotmail.com');
+
+CREATE TABLE IF NOT EXISTS refresh_tokens (
+    id SERIAL PRIMARY KEY,
+    usuario_id BIGINT NOT NULL,
+    token VARCHAR(500) UNIQUE NOT NULL,
+    expiracion TIMESTAMP NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);
+
+INSERT INTO usuarios_roles (id_usuario, id_rol)
+VALUES ((SELECT id FROM usuarios WHERE email = 'christianciscar@hotmail.com'),
+        (SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'));
+
+SELECT u.email, r.nombre 
+FROM usuarios u
+JOIN usuarios_roles ur ON u.id = ur.id_usuario
+JOIN roles r ON ur.id_rol = r.id
+WHERE u.email = 'christianciscar@hotmail.com';
+SELECT * FROM sesiones_activas;
+DELETE FROM sesiones_activas;
