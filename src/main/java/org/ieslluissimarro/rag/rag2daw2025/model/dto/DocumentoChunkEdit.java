@@ -19,6 +19,9 @@ public class DocumentoChunkEdit implements Serializable {
     private static final long serialVersionUID = 1L;
     private Long id;
 
+    @NotNull(message = "El id del documento no puede ser nulo.")
+    private Long idDocumento;
+
     private Integer idDocRag;
 
     @NotNull(message = "El orden del chunk no puede ser nulo")
