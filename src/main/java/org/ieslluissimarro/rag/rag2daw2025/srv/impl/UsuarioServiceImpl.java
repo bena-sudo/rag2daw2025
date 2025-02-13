@@ -223,10 +223,13 @@ entity=usuarioRepository.save(entity);
                 "No se puede actualizar. El usuario con ID " + id + " no existe"));
 
         usuarioEdit.setId(id);
+
+        String estadoActual = existingEntity.getEstado();
                 
 
         UsuarioMapper.INSTANCE.updateUsuarioDbFromUsuarioEdit(usuarioEdit, existingEntity);
 
+        existingEntity.setEstado(estadoActual);
         // Actualizar roles
         if (usuarioEdit.getRoleIds() != null) {
             Set<RolDb> roles = usuarioEdit.getRoleIds().stream()

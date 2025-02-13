@@ -46,7 +46,6 @@ public class UsuarioEdit {
     private LocalDate fechaNacimiento;
     */
     
-    @NotBlank
     @Size(max = 20, message = "El estado no puede tener más de 20 caracteres")
     @Schema(example = "Activo", description = "Estado del usuario (ej. Activo, Inactivo)")
     private String estado;
