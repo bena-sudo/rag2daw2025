@@ -36,10 +36,6 @@ public class EtiquetaServiceImpl implements EtiquetaService {
 
     @Override
     public EtiquetaEdit create(EtiquetaEdit etiquetaEdit) {
-        if (etiquetaEdit.getId() != null) {
-            throw new EntityIllegalArgumentException("ETIQUETA_ID_MISMATCH",
-                    "El ID debe ser nulo al crear una nueva etiqueta.");
-        }
         EtiquetaDB entity = EtiquetaMapper.INSTANCE.etiquetaEditToEtiquetaDB(etiquetaEdit);
         return EtiquetaMapper.INSTANCE.etiquetaDBToEtiquetaEdit(etiquetaRepository.save(entity));
     }

@@ -39,3 +39,17 @@ Content-Type: application/json
 ###
 GET http://localhost:8090/api/v1/chunks HTTP/1.1
 Content-Type: application/json
+
+### Crear un nuevo DocumentoChunkEdit
+POST http://localhost:8090/api/v1/chunk HTTP/1.1
+Content-Type: application/json
+
+{
+  "idDocumento": 2,
+  "idDocRag": 123,
+  "chunkOrder": 1,
+  "chunkText": "Este es el texto del chunk",
+  "chunkedBy": 456,
+  "estado": "PENDIENTE",
+  "fechaModificacion": "2025-02-12T15:30:00"
+}

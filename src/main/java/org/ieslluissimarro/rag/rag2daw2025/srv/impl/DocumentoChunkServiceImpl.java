@@ -42,10 +42,6 @@ public class DocumentoChunkServiceImpl implements DocumentoChunkService{
 
     @Override
     public DocumentoChunkEdit create(DocumentoChunkEdit documentoChunkEdit) {
-        if (documentoChunkEdit.getId() != null) {
-            throw new EntityIllegalArgumentException("DOCUMENTCHUNK_ID_MISMATCH",
-                "El ID debe ser nulo al crear un nuevo chunk");
-        }
         DocumentoChunkDB entity = DocumentoChunkMapper.INSTANCE.documentoChunkEditToDocumentoChunkDB(documentoChunkEdit);
         return DocumentoChunkMapper.INSTANCE.documentoChunkDBToDocumentoChunkEdit(documentoChunkEditRepository.save(entity));
     }

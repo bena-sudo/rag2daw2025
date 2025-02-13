@@ -37,10 +37,7 @@ public class DocumentChunkController {
 
     @PostMapping("/chunk")
     public ResponseEntity<DocumentoChunkEdit> create(@Valid @RequestBody DocumentoChunkEdit documentoChunkEdit, BindingResult bindingResult) {
-        // Comprueba errores de validación y si los hay lanza una BindingResultException
-        // con el errorCode
         BindingResultHelper.validateBindingResult(bindingResult, "CHUNK_CREATE_VALIDATION");
-        // No hay error de validación y procedemos a crear el nuevo registro
         return ResponseEntity.status(HttpStatus.CREATED).body(documentChunkService.create(documentoChunkEdit));
     }
     @GetMapping("/chunk/{id}")
