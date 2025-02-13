@@ -4,6 +4,7 @@ import org.ieslluissimarro.rag.rag2daw2025.model.db.BloqueoCuentaDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.db.UsuarioDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.enums.RolNombre;
 import org.ieslluissimarro.rag.rag2daw2025.repository.BloqueoCuentaRepository;
+import org.ieslluissimarro.rag.rag2daw2025.repository.SesionActivaRepository;
 import org.ieslluissimarro.rag.rag2daw2025.repository.UsuarioRepository;
 import org.ieslluissimarro.rag.rag2daw2025.srv.AuditoriaEventoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class UsuarioService {
 
     @Autowired
     private BloqueoCuentaRepository bloqueoCuentaRepository;
+
+    @Autowired
+    private SesionActivaRepository sesionActivaRepository;
 
 
                                
@@ -145,6 +149,88 @@ public class UsuarioService {
             "intentos_fallidos: 0",
             "Desbloqueo de cuenta de usuario"
         );
+    }
+
+    @Transactional
+    public void activarCuenta(String email) {
+        UsuarioDb usuario = usuarioRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        usuario.setEstado("inactivo");
+        usuarioRepository.save(usuario);
+
+        // Registrar evento de auditoría
+        auditoriaEventoService.registrarEvento(
+            usuario.getId(),
+            "modificacion",
+            "usuarios",
+            null,
+            "inactivo",
+            "Activación de cuenta de usuario"
+        );
+    }
+
+
+    @Transactional
+    public void activarUsuario(String email) {
+        UsuarioDb usuario = usuarioRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        usuario.setEstado("activo");
+        usuarioRepository.save(usuario);
+    }
+
+    @Transactional
+    public void inactivarUsuario(String email) {
+        UsuarioDb usuario = usuarioRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        usuario.setEstado("inactivo");
+        usuarioRepository.save(usuario);
+    }
+
+
+
+    /*
+    @Transactional
+    public void verificarInactividad(Long usuarioId) {
+        UsuarioDb usuario = usuarioRepository.findById(usuarioId)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        boolean tieneSesionesActivas = sesionActivaRepository.existsByUsuarioId(usuarioId);
+        if (!tieneSesionesActivas) {
+            usuario.setEstado("inactivo");
+            usuarioRepository.save(usuario);
+
+            // Registrar evento de auditoría
+            auditoriaEventoService.registrarEvento(
+                usuario.getId(),
+                "modificacion",
+                "usuarios",
+                null,
+                "inactivo",
+                "Cambio de estado a inactivo por falta de sesiones activas"
+            );
+        }
+    }*/
+
+    @Transactional
+    public void verificarBloqueo(Long usuarioId) {
+        UsuarioDb usuario = usuarioRepository.findById(usuarioId)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        Optional<BloqueoCuentaDb> bloqueoCuentaOpt = bloqueoCuentaRepository.findByUsuarioId(usuarioId);
+        if (bloqueoCuentaOpt.isPresent() && bloqueoCuentaOpt.get().isBloqueado()) {
+            usuario.setEstado("suspendido");
+            usuarioRepository.save(usuario);
+
+            // Registrar evento de auditoría
+            auditoriaEventoService.registrarEvento(
+                usuario.getId(),
+                "modificacion",
+                "usuarios",
+                null,
+                "suspendido",
+                "Cambio de estado a suspendido por bloqueo de cuenta"
+            );
+        }
     }
 
 

@@ -16,6 +16,7 @@ import org.ieslluissimarro.rag.rag2daw2025.security.entity.RefreshToken;
 import org.ieslluissimarro.rag.rag2daw2025.security.service.JwtService;
 import org.ieslluissimarro.rag.rag2daw2025.security.service.RolDeteilsService;
 import org.ieslluissimarro.rag.rag2daw2025.security.service.UsuarioService;
+import org.ieslluissimarro.rag.rag2daw2025.srv.EmailService;
 import org.ieslluissimarro.rag.rag2daw2025.srv.impl.AuditoriaEventoServiceImpl;
 import org.ieslluissimarro.rag.rag2daw2025.security.service.RefreshTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +83,9 @@ public class AuthController {
     @Autowired
     private AuditoriaEventoServiceImpl auditoriaEventoService;
 
+    @Autowired
+    private EmailService emailService;
+
     /**
      * Registro de un nuevo usuario
      */
@@ -110,6 +114,8 @@ public class AuthController {
             //fechaNacimiento
         );
 
+        usuarioDb.setEstado("pendiente");
+
         Set<RolDb> rolesDb = new HashSet<>();
         Optional<RolDb> rol = rolService.getByRolNombre(RolNombre.USUARIO);
         rolesDb.add(rol.orElseThrow(() -> new RuntimeException("Rol no encontrado")));
@@ -117,7 +123,14 @@ public class AuthController {
         usuarioDb.setRoles(rolesDb);
         usuarioService.save(usuarioDb);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Usuario creado"));
+
+        // Enviar correo de confirmación
+        String token = jwtProvider.generateTokenFromUsuario(usuarioDb);
+        String confirmUrl = "http://localhost:8090/auth/confirmar?token=" + token;
+        String mensaje = "Por favor, confirma tu cuenta haciendo clic en el siguiente enlace: " + confirmUrl;
+        emailService.sendEmail(nuevoUsuario.getEmail(), "Confirmación de cuenta", mensaje);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Usuario creado. Por favor, confirma tu cuenta a través del correo electrónico enviado."));
     }
 
     /**
@@ -128,12 +141,18 @@ public class AuthController {
         if (bindingResult.hasErrors())
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje("Datos incorrectos"));
 
+
         Optional<UsuarioDb> usuarioOpt = usuarioService.getByEmail(loginUsuario.getEmail());
         if (usuarioOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje("Usuario no encontrado"));
         }
 
+
         UsuarioDb usuario = usuarioOpt.get();
+        if ("pendiente".equals(usuario.getEstado())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje("Debe confirmar su cuenta a través del correo electrónico enviado"));
+        }
+        usuarioService.verificarBloqueo(usuario.getId());
         Optional<BloqueoCuentaDb> bloqueoCuentaOpt = bloqueoCuentaRepository.findByUsuarioId(usuario.getId());
         if (bloqueoCuentaOpt.isPresent() && bloqueoCuentaOpt.get().isBloqueado()) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new Mensaje("Cuenta bloqueada por múltiples intentos fallidos"));
@@ -166,6 +185,8 @@ public class AuthController {
                 loginUsuario.getEmail(),
                 "Inicio de sesión exitoso"
             );
+
+            usuarioService.activarUsuario(loginUsuario.getEmail());
 
             return ResponseEntity.status(HttpStatus.OK).body(jwtDto);
         } catch (Exception e) {
@@ -237,6 +258,8 @@ public class AuthController {
      */
     @PostMapping("/logout")
     public ResponseEntity<?> logout(@RequestHeader("Authorization") String token) {
+
+
         if (token.startsWith("Bearer ")) {
             token = token.substring(7);
         }
@@ -253,6 +276,9 @@ public class AuthController {
         logger.info("Usuario encontrado: " + usuario.getEmail());
 
         try {
+
+            usuarioService.inactivarUsuario(usuario.getEmail());
+
             sesionActivaRepository.deleteByUsuarioId(usuario.getId());
             refreshTokenRepository.deleteByUsuario(usuario); // Elimina el Refresh Token del usuario
             logger.info("Todas las sesiones y tokens del usuario eliminados");
@@ -272,6 +298,20 @@ public class AuthController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Mensaje("Error al desbloquear la cuenta"));
         }
+    }
+
+
+    @GetMapping("/confirmar")
+    public ResponseEntity<?> confirmarCuenta(@RequestParam("token") String token) {
+        String email = jwtProvider.getEmailUsuarioFromToken(token);
+        Optional<UsuarioDb> usuarioOpt = usuarioService.getByEmail(email);
+        if (usuarioOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje("Token inválido"));
+        }
+
+        usuarioService.activarCuenta(email);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Cuenta confirmada exitosamente"));
     }
     
     

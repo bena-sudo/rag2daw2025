@@ -159,7 +159,9 @@ INSERT INTO roles (nombre) VALUES
     ('JEFEDPTO'),
     ('JEFEESTUDIOS');
 
-
+UPDATE usuarios
+SET estado = 'activo'
+WHERE id = 2;
 
 
 
@@ -191,6 +193,7 @@ VALUES (
 
 
 SELECT * FROM roles;
+
 
 
 INSERT INTO roles(nombre) VALUES ('USUARIO')

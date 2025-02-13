@@ -24,4 +24,8 @@ public interface SesionActivaRepository extends JpaRepository<SesionActiva, Long
 
     // Encontrar sesiones expiradas
     List<SesionActiva> findByFechaExpiracionBefore(LocalDateTime fecha);
+
+    boolean existsByUsuarioId(Long usuarioId);
+
+
 }
