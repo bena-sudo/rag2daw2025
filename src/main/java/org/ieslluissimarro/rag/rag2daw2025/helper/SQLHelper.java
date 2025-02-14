@@ -11,13 +11,13 @@ public class SQLHelper {
     private static final String CONSULTA_BASE = "SELECT " +
             "c.id_chat, " +
             "c.\"user\" AS chat_user, " +
-            "c.fecha AS chat_fecha, " +
+            "TO_CHAR(c.fecha, 'YYYY-MM-DD') AS chat_fecha, " +
             "c.contexto, " +
             "p.id_pregunta, " +
             "p.\"user\" AS pregunta_user, " +
             "p.texto_pregunta, " +
             "p.texto_respuesta, " +
-            "p.fecha AS pregunta_fecha, " +
+            "TO_CHAR(p.fecha, 'YYYY-MM-DD') AS pregunta_fecha, " +
             "p.feedback, " +
             "p.valorado, " +
             "p.id_chat AS pregunta_id_chat, " +
@@ -28,11 +28,25 @@ public class SQLHelper {
             "LEFT JOIN pregunta_documentchunk pd ON p.id_pregunta = pd.id_pregunta " +
             "LEFT JOIN documentchunks d ON pd.id_documentchunk = d.id_documentchunk ";
 
-    public static String builderSentencias(Map<String, String> params) {
+    public static String builderSentencias(Map<String, String> params, String groupBy) {
 
         int i = 0;
         StringBuilder queryFinal = new StringBuilder();
-        queryFinal.append(CONSULTA_BASE + " WHERE");
+
+
+        if (groupBy != null && !groupBy.matches("none")) {
+          
+            if (groupBy.equals("user")) {
+                groupBy="chat_user";
+            }
+
+            queryFinal.append("SELECT "+groupBy+", COUNT(*) AS cantidad FROM ( " +CONSULTA_BASE);
+        }else{
+            queryFinal.append(CONSULTA_BASE);
+        }
+
+
+        
 
         for (String op : params.keySet()) {
             switch (op) {
@@ -46,7 +60,7 @@ public class SQLHelper {
                         queryFinal.append(" AND ");
                     }
 
-                    queryFinal.append(" c.\"user\" = '" + filterUserBy + "' ");
+                    queryFinal.append(" WHERE c.\"user\" = '" + filterUserBy + "' ");
                     i++;
                     break;
                 case "filterRango":
@@ -62,7 +76,7 @@ public class SQLHelper {
                     String fechaFinal = parts[1];
 
                     if (fechaInicial == null || fechaInicial.matches("null")) {
-                        fechaFinal = "2000-01-01";
+                        fechaInicial = "2000-01-01";
                     }
                     if (fechaFinal == null || fechaFinal.matches("null")) {
                         fechaFinal = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -72,7 +86,7 @@ public class SQLHelper {
                         queryFinal.append(" AND ");
                     }
 
-                    queryFinal.append(" c.fecha BETWEEN '" + fechaInicial + "' and '" + fechaFinal + "'");
+                    queryFinal.append(" WHERE c.fecha BETWEEN '" + fechaInicial + "' and '" + fechaFinal + "'");
                     i++;
                     break;
 
@@ -83,7 +97,7 @@ public class SQLHelper {
                         break;
                     }
 
-                    queryFinal.append(" p.texto_pregunta = '" + filterPregunta + "' ");
+                    queryFinal.append(" WHERE p.texto_pregunta = '" + filterPregunta + "' ");
                     i++;
                     break;
 
@@ -98,7 +112,7 @@ public class SQLHelper {
                         queryFinal.append(" AND ");
                     }
 
-                    queryFinal.append(" p.texto_respuesta = '" + filterRespuesta + "' ");
+                    queryFinal.append(" WHERE p.texto_respuesta = '" + filterRespuesta + "' ");
                     i++;
                     break;
 
@@ -113,7 +127,7 @@ public class SQLHelper {
                         queryFinal.append(" AND ");
                     }
 
-                    queryFinal.append(" p.feedback = '" + feedback + "' ");
+                    queryFinal.append(" WHERE p.feedback = '" + feedback + "' ");
                     i++;
                     break;
 
@@ -128,7 +142,7 @@ public class SQLHelper {
                         queryFinal.append(" AND ");
                     }
 
-                    queryFinal.append(" p.valorado = " + valorado + " ");
+                    queryFinal.append(" WHERE p.valorado = " + valorado + " ");
                     i++;
                     break;
                 case "filterChunk":
@@ -142,7 +156,7 @@ public class SQLHelper {
                         queryFinal.append(" AND ");
                     }
 
-                    queryFinal.append(" d.id_documentchunk = '" + chunk + "' ");
+                    queryFinal.append(" WHERE d.id_documentchunk = '" + chunk + "' ");
                     i++;
                     break;
 
@@ -152,8 +166,15 @@ public class SQLHelper {
 
         }
 
-        return queryFinal.toString();
+        if (groupBy != null) {  
+            queryFinal.append(" ) AS subquery GROUP BY "+ groupBy);
 
+            System.out.println( "\n"+queryFinal);
+            return queryFinal.toString();
+        }
+        System.out.println("\n"+queryFinal);
+
+        return queryFinal.toString();
     }
 
     public static String selectDistinctString(String tableName, String column) {

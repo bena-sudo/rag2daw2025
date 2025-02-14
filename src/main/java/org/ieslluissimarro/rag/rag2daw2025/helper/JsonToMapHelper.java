@@ -18,6 +18,7 @@ public class JsonToMapHelper {
         parametros.put("filterPregunta", filtros.getFilterPregunta());
         parametros.put("filterFeedback", filtros.getFilterFeedback());
         parametros.put("filterChunk", filtros.getFilterChunk());
+        parametros.put("filterValorado", filtros.getFilterValorado());
 
         return parametros;
     }

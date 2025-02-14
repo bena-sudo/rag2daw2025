@@ -100,6 +100,19 @@ POST http://localhost:8090/api/rag/v1/filter HTTP/1.1
 Content-Type: application/json
 
 {
-    "filterFeedback": "BIEN"
+    "filterValorado": true
+
+}
+
+
+########
+
+
+POST http://localhost:8090/api/rag/v1/estadisticas?groupBy=chat_fecha HTTP/1.1
+Content-Type: application/json
+
+{
+  
+    "filterValorado":true
 
 }

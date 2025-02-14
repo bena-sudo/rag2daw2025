@@ -64,7 +64,7 @@ public class FiltrosYEstadisticasController {
 
         Pageable paging = PaginationHelper.createPageable(page, size, sort);
 
-        String query = SQLHelper.builderSentencias(JsonToMapHelper.converter(parametros));
+        String query = SQLHelper.builderSentencias(JsonToMapHelper.converter(parametros), null);
 
         PaginaDto<ChatList> paginaChatInfo = service.executePaginatedQuery(query, paging);
 
@@ -79,38 +79,18 @@ public class FiltrosYEstadisticasController {
 
     }
 
-    /*
-     * @PostMapping("chats/filter")
-     * public ResponseEntity<?> getDatosFiltradosChat(@RequestBody FiltrosRequest
-     * parametros) {
-     * try {
-     * 
-     * String query = SQLHelper.builderSentencias("chats",
-     * JsonToMapHelper.converter(parametros));
-     * 
-     * return ResponseEntity.ok().body(service.executeQuery(query));
-     * 
-     * } catch (IllegalArgumentException e) {
-     * throw new IllegalArgumentException("ILLEGAL_ARGUMENT_EXCEPTION");
-     * }
-     * 
-     * }
-     * 
-     * 
-     * @GetMapping("preguntas/filter")
-     * public ResponseEntity<?> getDatosFiltradosPreguntas(@RequestParam
-     * Map<String,String> parametros) {
-     * try {
-     * String query = SQLHelper.builderSentencias("preguntas", parametros);
-     * 
-     * return ResponseEntity.ok().body(service.executeQuery(query));
-     * 
-     * } catch (IllegalArgumentException e) {
-     * throw new IllegalArgumentException("ILLEGAL_ARGUMENT_EXCEPTION");
-     * }
-     * 
-     * }
-     */
+    @PostMapping("estadisticas")
+    public ResponseEntity<?> getEstadisticas(@RequestBody FiltrosRequest parametros,
+            @RequestParam(defaultValue = "none") String groupBy
+
+    ) {
+
+        String query = SQLHelper.builderSentencias(JsonToMapHelper.converter(parametros), groupBy);
+
+        return ResponseEntity.ok().body(service.executeQuery(query));
+
+    }
+
     @GetMapping("contexto/popular")
     public ResponseEntity<?> getListaContextos() {
         try {
