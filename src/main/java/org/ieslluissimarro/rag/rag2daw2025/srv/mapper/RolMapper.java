@@ -1,10 +1,13 @@
 package org.ieslluissimarro.rag.rag2daw2025.srv.mapper;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.ieslluissimarro.rag.rag2daw2025.model.db.RolDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.RolInfo;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.RolList;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.RolListPermiso;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -16,6 +19,12 @@ public interface RolMapper {
 
     RolInfo rolDbToRolInfo (RolDb rolDb);
     Set<RolInfo> rolesDbToRolInfo(Set<RolDb> rolesDb);
+
+    List<RolList> rolesDbToRolList(List<RolDb> rolesDb);
+    List<RolDb> rolesListToRolesDb(List<RolList> rolesList);
+
+    RolDb rolListPermisoToRolDb(RolListPermiso rolListPermiso);
+    RolListPermiso rolesDbToRolListPermiso(RolDb rolDb);
 
 
 

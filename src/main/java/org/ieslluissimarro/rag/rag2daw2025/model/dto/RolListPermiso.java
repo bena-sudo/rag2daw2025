@@ -9,12 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UsuarioInfo {
+public class RolListPermiso {
     private Long id;
     private String nombre;
-    private String nickname;
-    private String email;
-    private Integer telefono;
-    //private String fechaNacimiento;
-    private Set<RolInfo> roles;
+    private Set<PermisoList> permisos;
 }

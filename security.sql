@@ -3,7 +3,6 @@
 -- -----------------------------------------------------
 
 -- Eliminación de tablas en el orden correcto para evitar errores de dependencia
-DROP TABLE IF EXISTS usuarios_permisos;
 DROP TABLE IF EXISTS usuarios_roles;
 DROP TABLE IF EXISTS permisos;
 DROP TABLE IF EXISTS rol_permisos;
@@ -79,16 +78,6 @@ CREATE TABLE IF NOT EXISTS rol_permisos (
     FOREIGN KEY (permiso_id) REFERENCES permisos(id) ON DELETE CASCADE
 );
 
--- -----------------------------------------------------
--- Tabla `usuarios_permisos` (asignación individual de permisos)
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS usuarios_permisos (
-    id SERIAL PRIMARY KEY,
-    usuario_id BIGINT NOT NULL,
-    permiso_id INT NOT NULL,
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
-    FOREIGN KEY (permiso_id) REFERENCES permisos(id) ON DELETE CASCADE
-);
 
 -- -----------------------------------------------------
 -- Tabla `bloqueo_cuentas`
@@ -114,18 +103,6 @@ CREATE TABLE IF NOT EXISTS sesiones_activas (
     fecha_inicio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     fecha_expiracion TIMESTAMP NULL,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
-);
-
--- -----------------------------------------------------
--- Tabla `intentos_login` (registro de intentos de inicio de sesión)
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS intentos_login (
-    id SERIAL PRIMARY KEY,
-    usuario_id BIGINT,
-    ip_origen VARCHAR(45),
-    exito BOOLEAN NOT NULL,
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL
 );
 
 -- -----------------------------------------------------
@@ -223,3 +200,60 @@ JOIN roles r ON ur.id_rol = r.id
 WHERE u.email = 'christianciscar@hotmail.com';
 SELECT * FROM sesiones_activas;
 DELETE FROM sesiones_activas;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Insertar categorías de permisos
+INSERT INTO categorias (nombre) VALUES
+    ('Usuarios'),
+    ('Roles'),
+    ('Permisos'),
+    ('Auditoría'),
+    ('Sesiones');
+
+-- Insertar permisos
+INSERT INTO permisos (nombre, descripcion, id_categoria) VALUES
+    ('CREAR_USUARIO', 'Permite crear nuevos usuarios', (SELECT id FROM categorias WHERE nombre = 'Usuarios')),
+    ('EDITAR_USUARIO', 'Permite editar la información de los usuarios', (SELECT id FROM categorias WHERE nombre = 'Usuarios')),
+    ('ELIMINAR_USUARIO', 'Permite eliminar usuarios', (SELECT id FROM categorias WHERE nombre = 'Usuarios')),
+    ('VER_USUARIOS', 'Permite ver la lista de usuarios', (SELECT id FROM categorias WHERE nombre = 'Usuarios')),
+    ('ASIGNAR_ROLES', 'Permite asignar roles a los usuarios', (SELECT id FROM categorias WHERE nombre = 'Roles')),
+    ('CREAR_ROL', 'Permite crear nuevos roles', (SELECT id FROM categorias WHERE nombre = 'Roles')),
+    ('EDITAR_ROL', 'Permite modificar los roles existentes', (SELECT id FROM categorias WHERE nombre = 'Roles')),
+    ('ELIMINAR_ROL', 'Permite eliminar roles', (SELECT id FROM categorias WHERE nombre = 'Roles')),
+    ('GESTIONAR_PERMISOS', 'Permite gestionar los permisos de los roles', (SELECT id FROM categorias WHERE nombre = 'Permisos')),
+    ('VER_AUDITORIA', 'Permite ver los registros de auditoría', (SELECT id FROM categorias WHERE nombre = 'Auditoría')),
+    ('GESTIONAR_SESIONES', 'Permite gestionar sesiones activas', (SELECT id FROM categorias WHERE nombre = 'Sesiones'));
+
+-- Asignar permisos a roles
+INSERT INTO rol_permisos (rol_id, permiso_id) VALUES
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'CREAR_USUARIO')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'EDITAR_USUARIO')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'ELIMINAR_USUARIO')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_USUARIOS')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'ASIGNAR_ROLES')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'CREAR_ROL')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'EDITAR_ROL')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'ELIMINAR_ROL')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'GESTIONAR_PERMISOS')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_AUDITORIA')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'GESTIONAR_SESIONES')),
+    ((SELECT id FROM roles WHERE nombre = 'USUARIO'), (SELECT id FROM permisos WHERE nombre = 'VER_USUARIOS'));
+
+-- Verificar las inserciones
+SELECT * FROM permisos;
+SELECT * FROM rol_permisos;

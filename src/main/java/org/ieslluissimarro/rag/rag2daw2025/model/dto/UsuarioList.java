@@ -15,7 +15,7 @@ public class UsuarioList {
     private String nickname;
     private String email;
     private Integer telefono;
-    private String fechaNacimiento;
+    //private String fechaNacimiento;
     private String fechaCreacion;
     private Set<RolInfo> roles;
 }

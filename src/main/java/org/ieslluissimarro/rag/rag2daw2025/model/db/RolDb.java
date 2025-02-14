@@ -11,6 +11,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.JoinColumn;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,4 +35,12 @@ public class RolDb {
 
     //@ManyToMany(mappedBy = "roles")
     //private Set<UsuarioDb> usuarios;
+
+    @ManyToMany
+    @JoinTable(
+        name = "rol_permisos",
+        joinColumns = @JoinColumn(name = "rol_id"),
+        inverseJoinColumns = @JoinColumn(name = "permiso_id")
+    )
+    private Set<PermisoDb> permisos;
 }

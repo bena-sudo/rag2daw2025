@@ -54,4 +54,8 @@ public interface UsuarioMapper {
     // Actualiza un objeto de tipo 'UsuarioDb' con los datos de un objeto de tipo 'UsuarioEdit'
     @Mapping(source = "roleIds", target = "roles")
     void updateUsuarioDbFromUsuarioEdit(UsuarioEdit UsuarioEdit, @MappingTarget UsuarioDb UsuarioDb);
+
+
+    List<UsuarioInfo> usuariosDbToUsuarioInfo(List<UsuarioDb> usuariosDb);
+    List<UsuarioDb> usuariosListToUsuariosDb(List<UsuarioList> usuariosList);
 }
