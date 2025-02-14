@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS sesiones_activas;
 DROP TABLE IF EXISTS auditoria_eventos;
 DROP TABLE IF EXISTS intentos_login;
 DROP TABLE IF EXISTS usuarios;
+DROP TABLE IF EXISTS refresh_tokens;
 DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS categorias;
 
@@ -189,6 +190,8 @@ VALUES (
 );
 
 
+ALTER TABLE usuarios WHERE id =
+
 
 
 
@@ -223,3 +226,7 @@ JOIN roles r ON ur.id_rol = r.id
 WHERE u.email = 'christianciscar@hotmail.com';
 SELECT * FROM sesiones_activas;
 DELETE FROM sesiones_activas;
+
+UPDATE usuarios 
+SET estado = 'inactivo' 
+WHERE id = 3;
