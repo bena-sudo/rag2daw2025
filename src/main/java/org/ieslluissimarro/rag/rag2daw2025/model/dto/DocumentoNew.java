@@ -22,7 +22,7 @@ public class DocumentoNew {
 
    private String comentario;
 
-   private EstadoDocumento estadoDocumento;
+   private EstadoDocumento estado;
 
    private String nombreFichero;
 

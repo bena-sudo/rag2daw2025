@@ -9,7 +9,7 @@ CREATE TABLE documentos (
     extension_documento VARCHAR(5),
     content_type_documento VARCHAR(100),
     tipo_documento VARCHAR(50),
-    estado_documento VARCHAR(20) DEFAULT 'pendiente', -- "pendiente", "aprobado", "denegado"
+    estado_documento VARCHAR(20), -- "pendiente", "aprobado", "denegado"
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     fecha_revision TIMESTAMP
 );

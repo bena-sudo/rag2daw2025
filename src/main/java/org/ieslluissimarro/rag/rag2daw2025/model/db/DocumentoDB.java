@@ -63,7 +63,7 @@ public class DocumentoDB {
    private String tipoDocumento;
 
    @Enumerated(EnumType.STRING)
-   @Column(length = 20, name = "estado_documento", columnDefinition = "VARCHAR(20) DEFAULT 'pendiente'")
+   @Column(length = 20, name = "estado_documento")
    private EstadoDocumento estado;
 
    @Column(name = "fecha_creacion", insertable=false , updatable = false, nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
