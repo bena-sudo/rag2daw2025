@@ -82,9 +82,12 @@ public class DocumentoServiceImpl implements DocumentoService {
     public PaginaResponse<DocumentoList> findAll(PeticionListadoFiltrado peticionListadoFiltrado) {
         try {
             Pageable pageable = paginationFactory.createPageable(peticionListadoFiltrado);
+    
             // Configurar criterio de filtrado con Specification
             Specification<DocumentoDB> filtrosBusquedaSpecification = new FiltroBusquedaSpecification<DocumentoDB>(
                 peticionListadoFiltrado.getListaFiltros());
+
+
             // Filtrar y ordenar: puede producir cualquier de los errores controlados en el catch
             Page<DocumentoDB> page = documentoRepository.findAll(filtrosBusquedaSpecification, pageable);
             //Devolver respuesta

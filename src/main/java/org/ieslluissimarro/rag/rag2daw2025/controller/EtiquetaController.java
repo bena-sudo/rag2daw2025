@@ -69,7 +69,7 @@ public class EtiquetaController {
     public ResponseEntity<PaginaResponse<EtiquetaList>> getAll(
             @RequestParam(required = false) List<String> filter,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") List<String> sort) throws FiltroException {
         return ResponseEntity.ok(etiquetaService.findAll(filter, page, size, sort));
     }
