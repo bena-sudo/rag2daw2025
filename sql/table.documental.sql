@@ -1,4 +1,3 @@
-
 CREATE TABLE documentos (
     id SERIAL PRIMARY KEY,
     id_doc_rag INT,
@@ -15,7 +14,7 @@ CREATE TABLE documentos (
 );
 
 CREATE TABLE etiquetas (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL UNIQUE
 );
 
