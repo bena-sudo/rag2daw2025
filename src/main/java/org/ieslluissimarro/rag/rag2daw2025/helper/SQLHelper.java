@@ -11,24 +11,24 @@ public class SQLHelper {
     private static final String CONSULTA_BASE = "SELECT " +
             "c.id_chat, " +
             "c.\"user\" AS chat_user, " +
-            "TO_CHAR(c.fecha, 'YYYY-MM-DD') AS chat_fecha, " +
+            "c.fecha::date AS fecha, " +
             "c.contexto, " +
             "p.id_pregunta, " +
             "p.\"user\" AS pregunta_user, " +
             "p.texto_pregunta, " +
             "p.texto_respuesta, " +
-            "TO_CHAR(p.fecha, 'YYYY-MM-DD') AS pregunta_fecha, " +
+            "p.fecha::date AS pregunta_fecha, " +
             "p.feedback, " +
             "p.valorado, " +
             "p.id_chat AS pregunta_id_chat, " +
             "d.id_documentchunk " +
             "FROM " +
             "chats c " +
-            "JOIN preguntas p ON c.id_chat = p.id_chat " +
+            "LEFT JOIN preguntas p ON c.id_chat = p.id_chat " +
             "LEFT JOIN pregunta_documentchunk pd ON p.id_pregunta = pd.id_pregunta " +
             "LEFT JOIN documentchunks d ON pd.id_documentchunk = d.id_documentchunk ";
 
-    public static String builderSentencias(Map<String, String> params, String groupBy) {
+    public static String builderSentencias(Map<String, String> params, String groupBy, Boolean historic) {
 
         int i = 0;
         StringBuilder queryFinal = new StringBuilder();
@@ -40,7 +40,17 @@ public class SQLHelper {
                 groupBy="chat_user";
             }
 
-            queryFinal.append("SELECT "+groupBy+", COUNT(*) AS cantidad FROM ( " +CONSULTA_BASE);
+
+            if (historic) {
+                queryFinal.append("SELECT TO_CHAR(fecha, 'YYYY-MM-DD') AS fecha, "+groupBy+", COUNT(*) AS cantidad FROM ( " +CONSULTA_BASE);
+
+            }else{
+                queryFinal.append("SELECT "+groupBy+", COUNT(*) AS cantidad FROM ( " +CONSULTA_BASE);
+
+            }
+
+        
+            
         }else{
             queryFinal.append(CONSULTA_BASE);
         }
@@ -166,8 +176,12 @@ public class SQLHelper {
 
         }
 
-        if (groupBy != null) {  
+        if (groupBy != null && !groupBy.matches("none")) {  
             queryFinal.append(" ) AS subquery GROUP BY "+ groupBy);
+
+            if (historic) {
+                queryFinal.append(", fecha ORDER BY fecha");
+            }
 
             System.out.println( "\n"+queryFinal);
             return queryFinal.toString();

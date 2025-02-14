@@ -64,7 +64,7 @@ public class FiltrosYEstadisticasController {
 
         Pageable paging = PaginationHelper.createPageable(page, size, sort);
 
-        String query = SQLHelper.builderSentencias(JsonToMapHelper.converter(parametros), null);
+        String query = SQLHelper.builderSentencias(JsonToMapHelper.converter(parametros), null, false);
 
         PaginaDto<ChatList> paginaChatInfo = service.executePaginatedQuery(query, paging);
 
@@ -81,11 +81,22 @@ public class FiltrosYEstadisticasController {
 
     @PostMapping("estadisticas")
     public ResponseEntity<?> getEstadisticas(@RequestBody FiltrosRequest parametros,
-            @RequestParam(defaultValue = "none") String groupBy
+            @RequestParam(defaultValue = "none") String groupBy,
+            @RequestParam(defaultValue = "false") String historic
 
     ) {
 
-        String query = SQLHelper.builderSentencias(JsonToMapHelper.converter(parametros), groupBy);
+        Boolean histo;
+        if (historic.matches("false")) {
+            histo= false;
+        }else if (historic.matches("true")) {
+            histo=true;
+        }else{
+            histo= false;
+        }
+
+
+        String query = SQLHelper.builderSentencias(JsonToMapHelper.converter(parametros), groupBy,histo);
 
         return ResponseEntity.ok().body(service.executeQuery(query));
 
