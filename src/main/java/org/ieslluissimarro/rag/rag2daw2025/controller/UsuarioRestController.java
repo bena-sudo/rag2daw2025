@@ -30,6 +30,7 @@ import org.ieslluissimarro.rag.rag2daw2025.model.dto.ListadoRespuesta;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PaginaDto;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.UsuarioList;
+import org.ieslluissimarro.rag.rag2daw2025.srv.AuditoriaEventoService;
 import org.ieslluissimarro.rag.rag2daw2025.srv.UsuarioService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
@@ -50,8 +51,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class UsuarioRestController {
     
     private final UsuarioService usuarioService;
-
-
 
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     @GetMapping("/usuarios")
@@ -84,8 +83,9 @@ public class UsuarioRestController {
          *
          * @param usuarioService Servicio que maneja la lógica de negocio de los Usuarios.
          */
-        public UsuarioRestController(UsuarioService usuarioService) {
+        public UsuarioRestController(UsuarioService usuarioService, AuditoriaEventoService auditoriaEventoService) {
             this.usuarioService = usuarioService;
+        
         }
         /**
          * Obtiene una lista paginada de Usuarios con opción de filtrado y ordenación.
