@@ -3,6 +3,7 @@ package org.ieslluissimarro.rag.rag2daw2025.controller;
 import org.ieslluissimarro.rag.rag2daw2025.model.db.BloqueoCuentaDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.db.RolDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.db.UsuarioDb;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.BloqueoCuentaList;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.LoginUsuario;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.Mensaje;
 import org.ieslluissimarro.rag.rag2daw2025.model.enums.RolNombre;
@@ -16,6 +17,7 @@ import org.ieslluissimarro.rag.rag2daw2025.security.entity.RefreshToken;
 import org.ieslluissimarro.rag.rag2daw2025.security.service.JwtService;
 import org.ieslluissimarro.rag.rag2daw2025.security.service.RolDeteilsService;
 import org.ieslluissimarro.rag.rag2daw2025.security.service.UsuarioService;
+import org.ieslluissimarro.rag.rag2daw2025.srv.BloqueoCuentaService;
 import org.ieslluissimarro.rag.rag2daw2025.srv.EmailService;
 import org.ieslluissimarro.rag.rag2daw2025.srv.impl.AuditoriaEventoServiceImpl;
 import org.ieslluissimarro.rag.rag2daw2025.security.service.RefreshTokenService;
@@ -85,6 +87,9 @@ public class AuthController {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private BloqueoCuentaService bloqueoCuentaService;
 
     /**
      * Registro de un nuevo usuario
@@ -313,6 +318,15 @@ public class AuthController {
 
         return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Cuenta confirmada exitosamente"));
     }
+
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @GetMapping("/bloqueadas")
+    public ResponseEntity<List<BloqueoCuentaList>> listarCuentasBloqueadas() {
+        List<BloqueoCuentaList> bloqueos = bloqueoCuentaService.listarCuentasBloqueadas();
+        return ResponseEntity.ok(bloqueos);
+    }
+
+
     
     
 }
