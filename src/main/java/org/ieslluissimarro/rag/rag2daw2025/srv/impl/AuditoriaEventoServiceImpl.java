@@ -1,6 +1,7 @@
 package org.ieslluissimarro.rag.rag2daw2025.srv.impl;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.ieslluissimarro.rag.rag2daw2025.model.db.AuditoriaEventoDb;
 import org.ieslluissimarro.rag.rag2daw2025.repository.AuditoriaEventoRepository;
@@ -25,6 +26,11 @@ public class AuditoriaEventoServiceImpl implements AuditoriaEventoService{
         evento.setFecha(LocalDateTime.now());
 
         auditoriaEventoRepository.save(evento);
+    }
+
+    @Override
+    public List<AuditoriaEventoDb> findByUsuarioId(Long usuarioId) {
+        return auditoriaEventoRepository.findByUsuarioId(usuarioId);
     }
 
   
