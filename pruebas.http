@@ -100,7 +100,8 @@ POST http://localhost:8090/api/rag/v1/filter HTTP/1.1
 Content-Type: application/json
 
 {
-    "filterChunk":1
+    "filterChunk":1,
+    "filter"
 }
 
 

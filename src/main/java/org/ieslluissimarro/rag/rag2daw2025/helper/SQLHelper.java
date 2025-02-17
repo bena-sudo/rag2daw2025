@@ -68,9 +68,11 @@ public class SQLHelper {
 
                     if (i > 0) {
                         queryFinal.append(" AND ");
+                    }else{
+                        queryFinal.append(" WHERE ");
                     }
 
-                    queryFinal.append(" WHERE c.\"user\" = '" + filterUserBy + "' ");
+                    queryFinal.append("c.\"user\" = '" + filterUserBy + "' ");
                     i++;
                     break;
                 case "filterRango":
@@ -94,9 +96,11 @@ public class SQLHelper {
 
                     if (i > 0) {
                         queryFinal.append(" AND ");
+                    }else{
+                        queryFinal.append(" WHERE ");
                     }
 
-                    queryFinal.append(" WHERE c.fecha BETWEEN '" + fechaInicial + "' and '" + fechaFinal + "'");
+                    queryFinal.append(" c.fecha BETWEEN '" + fechaInicial + "' and '" + fechaFinal + "'");
                     i++;
                     break;
 
@@ -107,7 +111,13 @@ public class SQLHelper {
                         break;
                     }
 
-                    queryFinal.append(" WHERE p.texto_pregunta = '" + filterPregunta + "' ");
+                    if (i > 0) {
+                        queryFinal.append(" AND ");
+                    }else{
+                        queryFinal.append(" WHERE ");
+                    }
+
+                    queryFinal.append(" p.texto_pregunta = '" + filterPregunta + "' ");
                     i++;
                     break;
 
@@ -120,9 +130,11 @@ public class SQLHelper {
 
                     if (i > 0) {
                         queryFinal.append(" AND ");
+                    }else{
+                        queryFinal.append(" WHERE ");
                     }
 
-                    queryFinal.append(" WHERE p.texto_respuesta = '" + filterRespuesta + "' ");
+                    queryFinal.append(" p.texto_respuesta = '" + filterRespuesta + "' ");
                     i++;
                     break;
 
@@ -135,9 +147,11 @@ public class SQLHelper {
 
                     if (i > 0) {
                         queryFinal.append(" AND ");
+                    }else{
+                        queryFinal.append(" WHERE ");
                     }
 
-                    queryFinal.append(" WHERE p.feedback = '" + feedback + "' ");
+                    queryFinal.append(" p.feedback = '" + feedback + "' ");
                     i++;
                     break;
 
@@ -150,9 +164,11 @@ public class SQLHelper {
 
                     if (i > 0) {
                         queryFinal.append(" AND ");
+                    }else{
+                        queryFinal.append(" WHERE ");
                     }
 
-                    queryFinal.append(" WHERE p.valorado = " + valorado + " ");
+                    queryFinal.append(" p.valorado = " + valorado + " ");
                     i++;
                     break;
                 case "filterChunk":
@@ -164,9 +180,11 @@ public class SQLHelper {
 
                     if (i > 0) {
                         queryFinal.append(" AND ");
+                    }else{
+                        queryFinal.append(" WHERE ");
                     }
 
-                    queryFinal.append(" WHERE d.id_documentchunk = '" + chunk + "' ");
+                    queryFinal.append(" d.id_documentchunk = '" + chunk + "' ");
                     i++;
                     break;
 
