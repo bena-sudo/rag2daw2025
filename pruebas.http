@@ -115,3 +115,8 @@ Content-Type: application/json
 
 
 }
+
+########
+
+GET http://localhost:8090/api/rag/v1/reply/1 HTTP/1.1
+Content-Type: application/json

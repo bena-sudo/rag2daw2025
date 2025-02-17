@@ -1,5 +1,6 @@
 package org.ieslluissimarro.rag.rag2daw2025.controller;
 
+import java.time.Duration;
 import java.util.List;
 
 import org.ieslluissimarro.rag.rag2daw2025.exception.BindingResultErrorsResponse;
@@ -39,6 +40,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Flux;
+
 import org.springframework.web.bind.annotation.RequestParam;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -133,6 +136,16 @@ public class ChatController {
 	BindingResultHelper.validationBindingResult(bindingResult, "CHAT_UPDATE_VALIDATION");
 
 	return ResponseEntity.ok(chatService.update(id, chatEdit));
+    }
+
+    @GetMapping("/reply/{id}")
+    public Flux<String> responderPregunta(@PathVariable Long idPregunta) {
+        String respuesta = "Simulación de respuesta. Esto es una simulación para compovar si realmente funciona el flux que hemos incorporado en el backend y el SSE que hay en el frontend.";
+        String[] palabras = respuesta.split(" ");
+
+        return Flux.fromArray(palabras)
+            .delayElements(Duration.ofMillis(500))
+            .map(palabra -> palabra + " ");
     }
 
     
