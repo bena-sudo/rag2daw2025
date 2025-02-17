@@ -175,7 +175,7 @@ public class AuthController {
 
             // Crear sesión activa con fecha de expiración
             SesionActiva sesion = new SesionActiva(usuario, jwt);
-            sesion.setFechaExpiracion(LocalDateTime.now().plusMinutes(30)); // Expira en 30 minutos
+            sesion.setFechaExpiracion(LocalDateTime.now().plusMinutes(300)); // Expira en 30 minutos
             sesionActivaRepository.save(sesion);
 
             // Resetear intentos fallidos en caso de éxito

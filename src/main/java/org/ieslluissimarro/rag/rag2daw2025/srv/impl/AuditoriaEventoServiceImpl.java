@@ -4,8 +4,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.ieslluissimarro.rag.rag2daw2025.model.db.AuditoriaEventoDb;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.AuditoriaEventoList;
 import org.ieslluissimarro.rag.rag2daw2025.repository.AuditoriaEventoRepository;
 import org.ieslluissimarro.rag.rag2daw2025.srv.AuditoriaEventoService;
+import org.ieslluissimarro.rag.rag2daw2025.srv.mapper.AuditoriaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +31,9 @@ public class AuditoriaEventoServiceImpl implements AuditoriaEventoService{
     }
 
     @Override
-    public List<AuditoriaEventoDb> findByUsuarioId(Long usuarioId) {
-        return auditoriaEventoRepository.findByUsuarioId(usuarioId);
+    public List<AuditoriaEventoList> findByUsuarioId(Long usuarioId) {
+        
+        return AuditoriaMapper.INSTANCE.auditoriasDbToAuditoriasList(auditoriaEventoRepository.findByUsuarioId(usuarioId));
     }
 
   

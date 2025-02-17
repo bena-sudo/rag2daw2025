@@ -257,3 +257,13 @@ INSERT INTO rol_permisos (rol_id, permiso_id) VALUES
 -- Verificar las inserciones
 SELECT * FROM permisos;
 SELECT * FROM rol_permisos;
+
+
+
+
+
+
+
+
+
+
