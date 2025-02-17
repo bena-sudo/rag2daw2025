@@ -5,6 +5,7 @@ import java.util.List;
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityIllegalArgumentException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityNotFoundException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.FiltroException;
+import org.ieslluissimarro.rag.rag2daw2025.exception.responseHelpers.MultipartProcessingException;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PaginaResponse;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PeticionListadoFiltrado;
 import org.ieslluissimarro.rag.rag2daw2025.filters.specification.FiltroBusquedaSpecification;
@@ -41,7 +42,11 @@ public class DocumentoServiceImpl implements DocumentoService {
         if (documentoNew.getId() != null) {
             throw new EntityIllegalArgumentException("DOCUMENT_ID_MISSMATCH", "El ID debe ser nulo al crear un nuevo documento");
         }
+        if (documentoNew.getMultipart() == null || documentoNew.getMultipart().isEmpty()) {
+            throw new MultipartProcessingException("BAD_MULTIPART", "El archivo no puede estar vacío");
+        }
         DocumentoDB entity = DocumentoMapper.INSTANCE.documentoNewToDocumentoDB(documentoNew);
+        
         return DocumentoMapper.INSTANCE.documentoDBToDocumentoNew(documentoRepository.save(entity));
     }
 

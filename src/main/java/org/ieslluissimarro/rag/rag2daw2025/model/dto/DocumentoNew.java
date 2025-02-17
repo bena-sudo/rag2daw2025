@@ -1,6 +1,7 @@
 package org.ieslluissimarro.rag.rag2daw2025.model.dto;
 
 import org.ieslluissimarro.rag.rag2daw2025.model.enums.EstadoDocumento;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -26,9 +27,9 @@ public class DocumentoNew {
 
    private String nombreFichero;
 
-   private String base64Documento;
+   //private String base64Documento;
    // Campo para el archivo (no se persiste directamente en la base de datos. Debe pasarse a base64)
-   //private MultipartFile multipart;
+   private MultipartFile multipart;
 
    @Size(max = 5, message = "La extensión del documento debe tener como máximo 5 caracteres")
    private String extensionDocumento;

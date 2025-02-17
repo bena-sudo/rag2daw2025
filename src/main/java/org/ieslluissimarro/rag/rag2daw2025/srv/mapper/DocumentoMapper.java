@@ -9,12 +9,15 @@ import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoList;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoNew;
+import org.ieslluissimarro.rag.rag2daw2025.utils.MultipartUtils;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 
-@Mapper
+@SuppressWarnings("unused")
+@Mapper(imports = {MultipartUtils.class})
 public interface DocumentoMapper {
     
     DocumentoMapper INSTANCE = Mappers.getMapper(DocumentoMapper.class);
@@ -27,12 +30,27 @@ public interface DocumentoMapper {
 
     DocumentoNew documentoDBToDocumentoNew(DocumentoDB documentoDb);
 
+    /**
+     * Mapeo de DocumentoNew a DocumentoDB, convirtiendo el archivo en Base64, su extensión y tipo MIME
+     */
+    @Mapping(target = "base64Documento", expression = "java(MultipartUtils.multipartToString(documentoNew.getMultipart()))")
+    @Mapping(target = "extensionDocumento", expression = "java(MultipartUtils.getExtensionMultipartfile(documentoNew.getMultipart()))")
+    @Mapping(target = "contentTypeDocumento", expression = "java(documentoNew.getMultipart().getContentType())")
     DocumentoDB documentoNewToDocumentoDB(DocumentoNew documentoNew);
 
     List<DocumentoList> documentoDBToDocumentoList(List<DocumentoDB> documentoDb);
 
+    /**
+     * Actualización de DocumentoDB a partir de DocumentoEdit, incluyendo la conversión de MultipartFile
+     */
+    @Mapping(target = "base64Documento", expression = "java(documentoEdit.getMultipart() != null ? MultipartUtils.multipartToString(documentoEdit.getMultipart()) : documentoDb.getBase64Documento())")
+    @Mapping(target = "extensionDocumento", expression = "java(documentoEdit.getMultipart() != null ? MultipartUtils.getExtensionMultipartfile(documentoEdit.getMultipart()) : documentoDb.getExtensionDocumento())")
+    @Mapping(target = "contentTypeDocumento", expression = "java(documentoEdit.getMultipart() != null ? documentoEdit.getMultipart().getContentType() : documentoDb.getContentTypeDocumento())")
     void updateDocumentoDBFromDocumentoEdit(DocumentoEdit documentoEdit, @MappingTarget DocumentoDB documentoDb);
 
+    /**
+     * Conversión de una página de DocumentoDB en una respuesta paginada
+     */
     static PaginaResponse<DocumentoList> pageToPaginaResponseDocumentoList(
             Page<DocumentoDB> page,
             List<FiltroBusqueda> filtros,
@@ -46,5 +64,4 @@ public interface DocumentoMapper {
                 filtros,
                 ordenaciones);
     }
-
 }
