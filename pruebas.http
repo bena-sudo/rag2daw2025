@@ -25,7 +25,7 @@ GET http://localhost:8090/api/rag/v1/returnPreguntasByIdChat?idChat=27 HTTP/1.1
 
 #########/////
 
-GET http://localhost:8090/api/rag/v1/returnChatsInfo HTTP/1.1
+GET http://localhost:8090/api/rag/v1/getListChunks HTTP/1.1
 
 ##########
 
@@ -100,7 +100,7 @@ POST http://localhost:8090/api/rag/v1/filter HTTP/1.1
 Content-Type: application/json
 
 {
-
+    "filterChunk":1
 }
 
 

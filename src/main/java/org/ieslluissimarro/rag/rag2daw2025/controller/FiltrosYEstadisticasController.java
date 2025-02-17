@@ -127,4 +127,18 @@ public class FiltrosYEstadisticasController {
         }
 
     }
+
+
+    @GetMapping("getListChunks")
+    public ResponseEntity<?> getListChunks() {
+        try {
+            String query = SQLHelper.selectDistinctString("documentchunks", "id_documentchunk");
+
+            return ResponseEntity.ok().body(service.executeQuery(query));
+
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("ILLEGAL_ARGUMENT_EXCEPTION");
+        }
+
+    }
 }
