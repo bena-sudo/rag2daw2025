@@ -1,8 +1,7 @@
 package org.ieslluissimarro.rag.rag2daw2025.model.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.Digits;
+
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;

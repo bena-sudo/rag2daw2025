@@ -45,7 +45,7 @@ Content-Type: application/json
     "idPregunta": 27,
     "usuario": "manolo",
     "textoPregunta": "prueba" ,
-    "textoRespuesta": "Adios",
+    "textoRespuesta": "Adiosa",
     "feedback": "MAL",
     "valorado": true
     

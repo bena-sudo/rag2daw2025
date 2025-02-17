@@ -2,13 +2,12 @@ package org.ieslluissimarro.rag.rag2daw2025.helper;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 
 public class SQLHelper {
 
-    private static final String CONSULTA_BASE = "SELECT " +
+    private static final String CONSULTA_BASE =
+     "SELECT " +
             "c.id_chat, " +
             "c.\"user\" AS chat_user, " +
             "c.fecha::date AS fecha, " +
@@ -21,12 +20,12 @@ public class SQLHelper {
             "p.feedback, " +
             "p.valorado, " +
             "p.id_chat AS pregunta_id_chat, " +
-            "d.id_documentchunk " +
-            "FROM " +
+            "d.id AS id_documentchunk   " +
+        "FROM " +
             "chats c " +
-            "LEFT JOIN preguntas p ON c.id_chat = p.id_chat " +
-            "LEFT JOIN pregunta_documentchunk pd ON p.id_pregunta = pd.id_pregunta " +
-            "LEFT JOIN documentchunks d ON pd.id_documentchunk = d.id_documentchunk ";
+        "LEFT JOIN preguntas p ON c.id_chat = p.id_chat " +
+        "LEFT JOIN pregunta_documentchunk pd ON p.id_pregunta = pd.id_pregunta " +
+        "LEFT JOIN documentos_chunks d ON pd.id_documentchunk = d.id  ";
 
     public static String builderSentencias(Map<String, String> params, String groupBy, Boolean historic) {
 

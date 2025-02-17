@@ -1,10 +1,7 @@
 package org.ieslluissimarro.rag.rag2daw2025.model.dto;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
-import org.ieslluissimarro.rag.rag2daw2025.model.db.PreguntaDb;
 
 import io.micrometer.common.lang.Nullable;
 import io.swagger.v3.oas.annotations.media.Schema;

@@ -132,7 +132,7 @@ public class FiltrosYEstadisticasController {
     @GetMapping("getListChunks")
     public ResponseEntity<?> getListChunks() {
         try {
-            String query = SQLHelper.selectDistinctString("documentchunks", "id_documentchunk");
+            String query = SQLHelper.selectDistinctString("documentos_chunks", "id");
 
             return ResponseEntity.ok().body(service.executeQuery(query));
 
