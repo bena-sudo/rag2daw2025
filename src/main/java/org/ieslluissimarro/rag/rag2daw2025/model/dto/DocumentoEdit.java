@@ -1,6 +1,7 @@
 package org.ieslluissimarro.rag.rag2daw2025.model.dto;
 
 import org.ieslluissimarro.rag.rag2daw2025.model.enums.EstadoDocumento;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,12 +21,12 @@ public class DocumentoEdit {
 
    private String comentario;
 
-   private EstadoDocumento estadoDocumento;
+   private EstadoDocumento estado;
 
    private String nombreFichero;
 
    // Campo para el archivo (no se persiste directamente en la base de datos. Debe pasarse a base64)
-   // private MultipartFile multipart;
+   private MultipartFile multipart;
 
    // @Size(max = 5, message = "La extensión del documento debe tener como máximo 5 caracteres")
    // private String extensionDocumento;

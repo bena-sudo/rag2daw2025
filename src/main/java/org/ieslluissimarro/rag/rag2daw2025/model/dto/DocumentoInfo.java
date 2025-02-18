@@ -19,7 +19,7 @@ public class DocumentoInfo {
    private String base64Documento;
    private String extensionDocumento;
    private String contentTypeDocumento;
-   private String estadoDocumento;
+   private String estado;
    private LocalDateTime fechaCreacion;
    private LocalDateTime fechaRevision;
 
