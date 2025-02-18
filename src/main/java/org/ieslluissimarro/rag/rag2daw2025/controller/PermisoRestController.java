@@ -19,7 +19,7 @@ public class PermisoRestController {
     @Autowired
     private PermisoServiceImpl permisoService;
 
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @PreAuthorize("@authorizationService.hasPermission('VER_PERMISOS')")
     @GetMapping
     public ResponseEntity<List<PermisoList>> getAllPermisos() {
         List<PermisoList> permisos = permisoService.findAllPermisos();

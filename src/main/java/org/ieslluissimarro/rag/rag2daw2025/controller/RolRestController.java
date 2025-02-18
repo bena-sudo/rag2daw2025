@@ -38,7 +38,7 @@ public class RolRestController {
         return ResponseEntity.ok(roles);
     }
 
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @PreAuthorize("@authorizationService.hasPermission('VER_USUARIOS_POR_ROL')")
     @GetMapping("/{rolNombre}/usuarios")
     public ResponseEntity<List<UsuarioInfo>> getUsuariosByRol(@PathVariable String rolNombre) {
         RolNombre rol = RolNombre.valueOf(rolNombre);
@@ -46,8 +46,8 @@ public class RolRestController {
         
         return ResponseEntity.ok(UsuarioMapper.INSTANCE.usuariosDbToUsuarioInfo(usuarios));
     }
-
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    
+    @PreAuthorize("@authorizationService.hasPermission('VER_PERMISOS_POR_ROL')")
     @GetMapping("/{id}/permisos")
     public ResponseEntity<RolListPermiso> getPermisosByRol(@PathVariable Long id) {
         RolDb rol = rolService.findById(id);
@@ -55,7 +55,7 @@ public class RolRestController {
         return ResponseEntity.ok(rolListPermiso);
     }
 
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @PreAuthorize("@authorizationService.hasPermission('ASIGNAR_PERMISOS_A_ROL')")
     @PostMapping("/{id}/permisos")
     public ResponseEntity<RolDb> assignPermisosToRol(@PathVariable Long id, @RequestBody Set<Long> permisoIds) {
         RolDb rol = rolService.findById(id);

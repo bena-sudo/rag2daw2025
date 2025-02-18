@@ -17,7 +17,7 @@ public class AuditoriaRestController {
     @Autowired
     private AuditoriaEventoServiceImpl auditoriaService;
 
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @PreAuthorize("@authorizationService.hasPermission('VER_AUDITORIA')")
     @GetMapping("/usuario/{usuarioId}")
     public ResponseEntity<List<AuditoriaEventoList>> getAuditoriasByUsuarioId(@PathVariable Long usuarioId) {
         List<AuditoriaEventoList> auditorias = auditoriaService.findByUsuarioId(usuarioId);

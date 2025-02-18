@@ -52,7 +52,7 @@ public class UsuarioRestController {
     
     private final UsuarioService usuarioService;
 
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @PreAuthorize("@authorizationService.hasPermission('VER_USUARIOS')")
     @GetMapping("/usuarios")
     public ResponseEntity<ListadoRespuesta<UsuarioList>> getAllUsuarios(
         @RequestParam(defaultValue = "0") int page,
@@ -104,7 +104,7 @@ public class UsuarioRestController {
             @ApiResponse(responseCode = "400", description = "Bad Request: Errores de filtrado u ordenación (errorCodes: 'BAD_OPERATOR_FILTER','BAD_ATTRIBUTE_ORDER','BAD_ATTRIBUTE_FILTER','BAD_FILTER'", 
             content = { @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) }), 
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")  })
-        @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+        @PreAuthorize("@authorizationService.hasPermission('VER_USUARIOS')")
         @GetMapping("/v1/usuarios")
         public ResponseEntity<PaginaResponse<UsuarioList>> getAllUsuarios(
             @RequestParam(required = false) List<String> filter,
@@ -129,7 +129,7 @@ public class UsuarioRestController {
             content = { @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) }), 
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
         })
-        @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+        @PreAuthorize("@authorizationService.hasPermission('VER_USUARIOS')")
         @PostMapping("/v1/usuarios/x")
         public ResponseEntity<PaginaResponse<UsuarioList>> getAllUsuariosPost(
             @Valid @RequestBody PeticionListadoFiltrado peticionListadoFiltrado) throws FiltroException {
@@ -199,6 +199,7 @@ public class UsuarioRestController {
                 @ApiResponse(responseCode = "404", description = "Not Found: No se encontró el usuario con el ID proporcionado (errorCode='USER_NOT_FOUND')", content = {
                         @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) })
         })
+        @PreAuthorize("@authorizationService.hasPermission('VER_USUARIO')")
         @GetMapping("/v1/usuarios/{id}")
         public ResponseEntity<UsuarioEdit> read(@PathVariable String id) {
             return ResponseEntity.ok(usuarioService.read(new IdEntityLong(id).getValue()));
@@ -240,6 +241,7 @@ public class UsuarioRestController {
                 @ApiResponse(responseCode = "409", description = "Conflict: Error al intentar actualizar un 'usuario' (errorCodes: 'FOREIGN_KEY_VIOLATION', 'UNIQUE_CONSTRAINT_VIOLATION', 'DATA_INTEGRITY_VIOLATION')", content = {
                         @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) })
         })
+        @PreAuthorize("@authorizationService.hasPermission('EDITAR_USUARIO')")
         @PutMapping("/v1/usuarios/{id}")
         public ResponseEntity<UsuarioEdit> update(@PathVariable Long id, @Valid @RequestBody UsuarioEdit usuarioEdit,
                 BindingResult bindingResult) {
@@ -263,6 +265,7 @@ public class UsuarioRestController {
                 @ApiResponse(responseCode = "400", description = "Bad Request: Error de validación en el ID proporcionado (errorCode='ID_FORMAT_INVALID')", content = {
                         @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) })
         })
+        @PreAuthorize("@authorizationService.hasPermission('ELIMINAR_USUARIO')")
         @DeleteMapping("/v1/usuarios/{id}")
         public ResponseEntity<Void> delete(@PathVariable Long id) {
             usuarioService.delete(id);

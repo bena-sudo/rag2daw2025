@@ -108,4 +108,23 @@ public class JwtServiceImpl implements JwtService{ // Se encargará de generar e
         byte[] keyBytes = Decoders.BASE64.decode(secret);
         return Keys.hmacShaKeyFor(keyBytes);
     }
+
+
+    //Extraer el usuario del token
+
+    @Value("${security.jwt.secret-key}") // valor en application.properties
+    private static String SECRET_KEY;
+
+    private static Claims extractClaim(String token) {
+        return Jwts
+        .parserBuilder()
+        .setSigningKey(SECRET_KEY)
+        .build()
+        .parseClaimsJws(token)
+        .getBody();
+    }
+    public static String extractEmail(String token) {
+        return extractClaim(token).getSubject();
+    }
+
 }

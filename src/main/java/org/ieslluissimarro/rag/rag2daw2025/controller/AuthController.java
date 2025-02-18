@@ -294,7 +294,7 @@ public class AuthController {
         }
     }
 
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @PreAuthorize("@authorizationService.hasPermission('DESBLOQUEAR_CUENTAS')")
     @PostMapping("/desbloquear/{usuarioId}")
     public ResponseEntity<?> desbloquearCuenta(@PathVariable Long usuarioId) {
         try {
@@ -319,7 +319,7 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Cuenta confirmada exitosamente"));
     }
 
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @PreAuthorize("@authorizationService.hasPermission('VER_CUENTAS_BLOQUEADAS')")
     @GetMapping("/bloqueadas")
     public ResponseEntity<List<BloqueoCuentaList>> listarCuentasBloqueadas() {
         List<BloqueoCuentaList> bloqueos = bloqueoCuentaService.listarCuentasBloqueadas();
