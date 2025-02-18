@@ -2,6 +2,7 @@ package org.ieslluissimarro.rag.rag2daw2025.controller;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.ieslluissimarro.rag.rag2daw2025.exception.BindingResultErrorsResponse;
 import org.ieslluissimarro.rag.rag2daw2025.exception.CustomErrorResponse;
@@ -21,6 +22,7 @@ import org.ieslluissimarro.rag.rag2daw2025.model.dto.PreguntaInfo;
 import org.ieslluissimarro.rag.rag2daw2025.srv.ChatService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -138,14 +140,16 @@ public class ChatController {
 	return ResponseEntity.ok(chatService.update(id, chatEdit));
     }
 
-    @GetMapping("/reply/{id}")
-    public Flux<String> responderPregunta(@PathVariable Long idPregunta) {
-        String respuesta = "Simulación de respuesta. Esto es una simulación para compovar si realmente funciona el flux que hemos incorporado en el backend y el SSE que hay en el frontend.";
-        String[] palabras = respuesta.split(" ");
+    @GetMapping(value = "/reply/{idPregunta}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<Character> responderPregunta(@PathVariable Long idPregunta) {
+        String respuesta = "Simulación de respuesta. Esto es una simulación para comprobar si realmente funciona el flujo que hemos incorporado en el backend y el SSE que hay en el frontend.";
 
-        return Flux.fromArray(palabras)
-            .delayElements(Duration.ofMillis(500))
-            .map(palabra -> palabra + " ");
+        List<Character> caracteres = respuesta.chars()
+            .mapToObj(c -> (char) c)
+            .collect(Collectors.toList());
+
+        return Flux.fromIterable(caracteres)
+            .delayElements(Duration.ofMillis(100));
     }
 
     
