@@ -1,10 +1,14 @@
 package org.ieslluissimarro.rag.rag2daw2025.model.dto;
 
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.ieslluissimarro.rag.rag2daw2025.model.db.EtiquetaDB;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -22,5 +26,6 @@ public class DocumentoInfo {
    private String estado;
    private LocalDateTime fechaCreacion;
    private LocalDateTime fechaRevision;
+private Set<EtiquetaDB> etiquetas = new HashSet<>();
 
 }
