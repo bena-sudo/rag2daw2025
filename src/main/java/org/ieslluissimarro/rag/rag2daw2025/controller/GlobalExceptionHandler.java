@@ -20,6 +20,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -94,6 +95,17 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<CustomErrorResponse>  handleFiltroException(FiltroException ex) {
         CustomErrorResponse response = new CustomErrorResponse(ex.getErrorCode(), ex.getDetailedMessage(),ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<CustomErrorResponse> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex) {
+        String errorMessage = String.format("El parámetro '%s' debe ser de tipo '%s'. Valor recibido: '%s'", 
+                ex.getName(), 
+                ex.getRequiredType() != null ? ex.getRequiredType().getSimpleName() : "desconocido",
+                ex.getValue());
+
+        CustomErrorResponse response = new CustomErrorResponse("INVALID_PARAMETER", errorMessage);
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

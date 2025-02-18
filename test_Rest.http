@@ -33,7 +33,7 @@ Content-Type: application/json
 GET http://localhost:8090/api/v1/estadistica/estadisticas?filter=idChunk:IGUAL:3&page=0&size=10&sort=id HTTP/1.1
 Content-Type: application/json
 ###
-GET http://localhost:8090/api/v1/chunks?filter=idDocumento:IGUAL:2&page=0&size=10&sort=id HTTP/1.1
+GET http://localhost:8090/api/v1/chunks?filter=idDocumento:IGUAL:2&page=0&size=6&sort=id HTTP/1.1
 Content-Type: application/json
 
 ###
@@ -50,6 +50,5 @@ Content-Type: application/json
   "chunkOrder": 1,
   "chunkText": "Este es el texto del chunk",
   "chunkedBy": 456,
-  "estado": "PENDIENTE",
-  "fechaModificacion": "2025-02-12T15:30:00"
+  "estado": "PENDIENTE"
 }
