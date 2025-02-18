@@ -13,7 +13,7 @@ public class DocumentoList {
    private Integer idDocRag;
    // private String dni;
    private String nombreFichero;
-   private String estadoDocumento;
+   private String estado;
    private String extensionDocumento;
    private String contentTypeDocumento;
 
