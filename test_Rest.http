@@ -69,7 +69,7 @@ Content-Type: application/json
 ###
 ## getAll usuarios con JWT
 GET http://localhost:8090/api/usuarios HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 
 
 
@@ -77,12 +77,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsL
 ###
 ## getAllUsuarios con ordenación sin filtros
 GET http://localhost:8090/api/v1/usuarios?sort=fechaCreacion,asc&sort=nombre,asc&page=0&size=10 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 
 ###
 ## getAllUsuarios con ordenación sin filtros
 GET http://localhost:8090/api/v1/usuarios?sort=fechaCreacion,desc&sort=nombre,asc&page=0&size=1 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 
 
 
@@ -93,34 +93,34 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsL
 ###
 ## getAllusuarios con CONTIENE
 GET http://localhost:8090/api/v1/usuarios?filter=nombre:CONTIENE:Tor&sort=id&page=0&size=10 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 ###
 ## getAllusuarios con EMPIEZA
 GET http://localhost:8090/api/v1/usuarios?filter=nombre:EMPIEZA:Tor&sort=id&page=0&size=10 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 
 
 
 ###
 ## getAllusuarios filtrado por rol con CONTIENE
 GET http://localhost:8090/api/v1/usuarios?filter=roles.nombre:CONTIENE:USUARIO&sort=id&page=0&size=10 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 ###
 GET http://localhost:8090/api/v1/usuarios?filter=roles:CONTIENE:USUARIO&sort=id&page=0&size=10 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 
 
 
 ###
 ## getAllUsuarios con CONTIENE (Usuarios cuyo nombre contenga un valor) NO FUNCIONA (POR HACER)
 GET http://localhost:8090/api/v1/usuarios?filter=nombre:CONTIENE:Edgar&sort=nombre&page=0&size=10 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 
 
 ###
 ## getAllUsuarios FILTRO POST val
 POST http://localhost:8090/api/v1/usuarios/x HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 Content-Type: application/json
 
 {
@@ -140,7 +140,7 @@ Content-Type: application/json
 ###
 ## getAllUsuarios FILTRO POST sin ordenación ni filtro
 POST http://localhost:8090/api/v1/usuarios/x HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 Content-Type: application/json
 
 {
@@ -155,7 +155,7 @@ Content-Type: application/json
 # ##  create
 # POST  http://localhost:8090/api/v1/usuarios HTTP/1.1
 # Content-Type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+# Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 
 # {
 #   "nombre": "Juan Pérez",
@@ -169,7 +169,7 @@ Content-Type: application/json
 # ##  create errorCode: USER_ALREADY_EXIST
 # POST  http://localhost:8090/api/v1/usuarios HTTP/1.1
 # Content-Type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+# Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 
 # {
 #   "id": 2,
@@ -190,7 +190,7 @@ Content-Type: application/json
 # ##  create errorCode: USER_CREATE_VALIDATION
 # POST  http://localhost:8090/api/v1/usuarios HTTP/1.1
 # Content-Type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+# Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 
 # {
 #   "nombre": "Juan Pérez",
@@ -221,15 +221,15 @@ Content-Type: application/json
 ###
 ##  read
 GET http://localhost:8090/api/v1/usuarios/11 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 ###
 ##  "errorCode": "ID_FORMAT_INVALID"
 GET http://localhost:8090/api/v1/usuarios/a HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 ###
 ##  "errorCode": "USER_NOT_FOUND"
 GET http://localhost:8090/api/v1/usuarios/5000 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 
 
 
@@ -240,7 +240,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsL
 ###
 ##  update
 PUT  http://localhost:8090/api/v1/usuarios/10 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 Content-Type: application/json
 
 {
@@ -255,7 +255,7 @@ Content-Type: application/json
 ###
 ##  update - errorCode: USER_NOT_FOUND_FOR_UPDATE
 PUT  http://localhost:8090/api/v1/usuarios/1000 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 Content-Type: application/json
 
 {
@@ -276,7 +276,7 @@ Content-Type: application/json
 ###
 ##  update - errorCode: USER_UPDATE_VALIDATION
 PUT  http://localhost:8090/api/v1/usuarios/3 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 Content-Type: application/json
 
 {
@@ -297,7 +297,7 @@ Content-Type: application/json
 ###
 ##  update - errorCode: USER_ID_MISMATCH
 PUT  http://localhost:8090/api/v1/usuarios/3 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 Content-Type: application/json
 
 {
@@ -325,7 +325,7 @@ Content-Type: application/json
 ###
 ## delete
 DELETE  http://localhost:8090/api/v1/usuarios/25 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 
 
 
@@ -345,11 +345,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsL
 ###
 ## Obtener todos los roles
 GET http://localhost:8090/api/v1/roles HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 ###
 ## Obtener usuarios por rol 
 GET http://localhost:8090/api/v1/roles/ADMINISTRADOR/usuarios HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 
 
 
@@ -357,7 +357,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsL
 
 ### Asignar roles a un usuario
 POST http://localhost:8090/api/v1/usuarios/5/roles HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 Content-Type: application/json
 
 [
@@ -367,7 +367,7 @@ Content-Type: application/json
 
 ### Desbloquear cuenta de usuario
 POST http://localhost:8090/auth/desbloquear/1 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 Content-Type: application/json
 
 
@@ -375,17 +375,17 @@ Content-Type: application/json
 ###
 ## Obtener todos los permisos
 GET http://localhost:8090/api/v1/permisos HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 
 
 ###
 ## Ver permisos de un rol
 GET http://localhost:8090/api/v1/roles/2/permisos HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 ###
 ## Ver permisos de un rol - "errorCode": "ROL_NOT_FOUND"
 GET http://localhost:8090/api/v1/roles/2352/permisos HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 
 
 
@@ -393,7 +393,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsL
 ###
 ## Asignar permisos a un rol por ID
 POST http://localhost:8090/api/v1/roles/1/permisos HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 Content-Type: application/json
 
 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
@@ -403,11 +403,11 @@ Content-Type: application/json
 ###
 ## Ver auditorías de eventos de un usuario
 GET http://localhost:8090/api/v1/auditorias/usuario/2 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 
 ###
 ## Ver auditorías de eventos de un usuario - errorCode: USER_NOT_FOUND
 GET http://localhost:8090/api/v1/auditorias/usuario/2000 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5OTA2MCwiZXhwIjoxNzM5OTM1MDYwfQ.Pzjf1BKSblLfErg8Pju-T-UMES-DzQ7uiO3xMvYJsWU
 
 

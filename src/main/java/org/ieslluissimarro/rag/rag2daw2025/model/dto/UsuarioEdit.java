@@ -52,7 +52,4 @@ public class UsuarioEdit {
     
     @Schema(description = "IDs de los roles asociados al usuario")
     private Set<Long> roleIds;
-    
-    @Schema(description = "IDs de los permisos asociados al usuario")
-    private Set<Long> permisosIds;
 }
