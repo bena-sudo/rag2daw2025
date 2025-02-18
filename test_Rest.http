@@ -381,7 +381,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsL
 ###
 ## Ver permisos de un rol
 GET http://localhost:8090/api/v1/roles/2/permisos HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTgxNTExOSwiZXhwIjoxNzM5ODUxMTE5fQ.vAdPxzY8rMTXpeRFVCWgC8UcfidYTl63AosDJ9o3M5k
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
 ###
 ## Ver permisos de un rol - "errorCode": "ROL_NOT_FOUND"
 GET http://localhost:8090/api/v1/roles/2352/permisos HTTP/1.1
@@ -402,15 +402,12 @@ Content-Type: application/json
 
 ###
 ## Ver auditorías de eventos de un usuario
-GET http://localhost:8090/api/v1/auditorias/usuario/5 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTgxNTExOSwiZXhwIjoxNzM5ODUxMTE5fQ.vAdPxzY8rMTXpeRFVCWgC8UcfidYTl63AosDJ9o3M5k
+GET http://localhost:8090/api/v1/auditorias/usuario/2 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
 
 ###
 ## Ver auditorías de eventos de un usuario - errorCode: USER_NOT_FOUND
 GET http://localhost:8090/api/v1/auditorias/usuario/2000 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
 
-###
-DELETE http://localhost:8090/auth/logout/13
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjaHJpc3RpYW5jaXNjYXJyQGhvdG1haWwuY29tIiwiaWF0IjoxNzM5ODkzODg4LCJleHAiOjE3Mzk5Mjk4ODh9.zePqgPgVbQstUNsWRic9qG1IcdoE3RC2MoSERh3auMY
 

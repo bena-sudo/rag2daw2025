@@ -1,6 +1,7 @@
 package org.ieslluissimarro.rag.rag2daw2025.controller;
 
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityNotFoundException;
+import org.ieslluissimarro.rag.rag2daw2025.model.db.AuditoriaEventoDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.AuditoriaEventoList;
 import org.ieslluissimarro.rag.rag2daw2025.srv.impl.AuditoriaEventoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
