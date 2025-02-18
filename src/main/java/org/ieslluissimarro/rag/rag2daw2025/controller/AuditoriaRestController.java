@@ -35,7 +35,7 @@ public class AuditoriaRestController {
             @ApiResponse(responseCode = "200", description = "Lista de eventos de auditoría obtenida correctamente", content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuditoriaEventoDb.class))),
             @ApiResponse(responseCode = "404", description = "No se encontraron eventos de auditoría para el usuario", content = @Content(mediaType = "application/json", schema = @Schema(implementation = String.class)))
     })
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @PreAuthorize("@authorizationService.hasPermission('VER_AUDITORIA')")
     @GetMapping("/usuario/{usuarioId}")
     public ResponseEntity<List<AuditoriaEventoList>> getAuditoriasByUsuarioId(@PathVariable Long usuarioId) {
         List<AuditoriaEventoList> auditorias = auditoriaService.findByUsuarioId(usuarioId);

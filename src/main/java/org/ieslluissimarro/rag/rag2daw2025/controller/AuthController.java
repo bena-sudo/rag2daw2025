@@ -319,6 +319,7 @@ public class AuthController {
         }
     }
 
+    
     /**
      * Desbloquear una cuenta de usuario
      */
@@ -327,7 +328,7 @@ public class AuthController {
             @ApiResponse(responseCode = "200", description = "Cuenta desbloqueada exitosamente"),
             @ApiResponse(responseCode = "500", description = "Error interno al desbloquear la cuenta", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Mensaje.class)))
     })
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @PreAuthorize("@authorizationService.hasPermission('VER_CUENTAS_BLOQUEADAS')")
     @PostMapping("/desbloquear/{usuarioId}")
     public ResponseEntity<?> desbloquearCuenta(@PathVariable Long usuarioId) {
         try {
@@ -360,6 +361,7 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Cuenta confirmada exitosamente"));
     }
 
+    
     /**
      * Listar cuentas bloqueadas
      */
@@ -367,7 +369,7 @@ public class AuthController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Lista de cuentas bloqueadas obtenida correctamente", content = @Content(mediaType = "application/json", schema = @Schema(implementation = BloqueoCuentaList.class)))
     })
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @PreAuthorize("@authorizationService.hasPermission('VER_CUENTAS_BLOQUEADAS')")
     @GetMapping("/bloqueadas")
     public ResponseEntity<List<BloqueoCuentaList>> listarCuentasBloqueadas() {
         List<BloqueoCuentaList> bloqueos = bloqueoCuentaService.listarCuentasBloqueadas();

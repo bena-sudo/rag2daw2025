@@ -69,7 +69,7 @@ public class RolRestController {
             @ApiResponse(responseCode = "404", description = "No se encontraron usuarios con este rol", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) })
     })
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @PreAuthorize("@authorizationService.hasPermission('VER_USUARIOS_POR_ROL')")
     @GetMapping("/{rolNombre}/usuarios")
     public ResponseEntity<List<UsuarioInfo>> getUsuariosByRol(@PathVariable String rolNombre) {
         RolNombre rol = RolNombre.valueOf(rolNombre);
@@ -91,7 +91,7 @@ public class RolRestController {
             @ApiResponse(responseCode = "404", description = "Rol no encontrado", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) })
     })
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @PreAuthorize("@authorizationService.hasPermission('VER_PERMISOS_POR_ROL')")
     @GetMapping("/{id}/permisos")
     public ResponseEntity<RolListPermiso> getPermisosByRol(@PathVariable Long id) {
         RolDb rol = rolService.findById(id);
@@ -113,7 +113,7 @@ public class RolRestController {
             @ApiResponse(responseCode = "404", description = "Rol no encontrado", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) })
     })
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @PreAuthorize("@authorizationService.hasPermission('ASIGNAR_PERMISOS_A_ROL')")
     @PostMapping("/{id}/permisos")
     public ResponseEntity<RolDb> assignPermisosToRol(@PathVariable Long id, @RequestBody Set<Long> permisoIds) {
         RolDb rol = rolService.findById(id);

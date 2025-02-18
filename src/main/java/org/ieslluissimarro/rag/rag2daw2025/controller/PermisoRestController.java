@@ -24,6 +24,7 @@ public class PermisoRestController {
     @Autowired
     private PermisoServiceImpl permisoService;
 
+    
     /**
      * Obtiene todos los permisos disponibles en el sistema.
      *
@@ -35,7 +36,7 @@ public class PermisoRestController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = PermisoList.class)) }),
             @ApiResponse(responseCode = "403", description = "Acceso denegado. Se requiere permiso de administrador")
     })
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @PreAuthorize("@authorizationService.hasPermission('VER_PERMISOS')")
     @GetMapping
     public ResponseEntity<List<PermisoList>> getAllPermisos() {
         List<PermisoList> permisos = permisoService.findAllPermisos();

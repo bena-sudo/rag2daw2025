@@ -30,39 +30,39 @@ public class GlobalExceptionHandler {
         this.analyzer = analyzer;
     }
     
-    @ExceptionHandler(EntityIllegalArgumentException.class) //Datos incorrectos en la entidad que producirian inconsistencias
+    @ExceptionHandler(EntityIllegalArgumentException.class)
     public ResponseEntity<CustomErrorResponse> handleEntityIllegalArgumentException(EntityIllegalArgumentException ex) {
         CustomErrorResponse response = new CustomErrorResponse(ex.getErrorCode(), ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(EntityNotFoundException.class) //No se ha encontrado la entidad con la clave primaria indicada
+    @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<CustomErrorResponse> handleEntityNotFoundException(EntityNotFoundException ex) {
         CustomErrorResponse response = new CustomErrorResponse(ex.getErrorCode(), ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
 
-    @ExceptionHandler(EntityAlreadyExistsException.class) //Se intenta crear una entidad con una clave primaria que ya existe
+    @ExceptionHandler(EntityAlreadyExistsException.class)
     public ResponseEntity<CustomErrorResponse> handleEntityAlreadyExistsException(EntityAlreadyExistsException ex) {
         CustomErrorResponse response = new CustomErrorResponse(ex.getErrorCode(), ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(DataValidationException.class) // Validación incorrecta de un atributo
+    @ExceptionHandler(DataValidationException.class)
     public ResponseEntity<CustomErrorResponse> handleDataValidationException(DataValidationException ex) {
         CustomErrorResponse response = new CustomErrorResponse(ex.getErrorCode(), ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(BindingResultException.class) // Errores en las validaciones de BindingResult en la entidad
+    @ExceptionHandler(BindingResultException.class)
     public ResponseEntity<BindingResultErrorsResponse> handleBindingResultException(BindingResultException ex) {
         BindingResultErrorsResponse response = new BindingResultErrorsResponse(ex.getErrorCode(), ex.getValidationErrors());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     
-    @ExceptionHandler(MethodArgumentNotValidException.class) //Error en las validaciones @Valid sobre la entidad cuando no hay BindingResult
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         //devolver BAD_REQUEST con la lista de errores
@@ -85,7 +85,7 @@ public class GlobalExceptionHandler {
     }
 
 
-    @ExceptionHandler(HttpMessageNotReadableException.class) //Datos suministrados en la petición HTTP incorrectos
+    @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<CustomErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
         CustomErrorResponse response = new CustomErrorResponse("DATA_CONVERSION_ERROR", 
         "Error en el tipo de dato de uno de los atributos suministrados",
