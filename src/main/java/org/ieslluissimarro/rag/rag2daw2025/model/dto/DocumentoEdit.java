@@ -20,7 +20,7 @@ public class DocumentoEdit {
 
    private String comentario;
 
-   private EstadoDocumento estadoDocumento;
+   private EstadoDocumento estado;
 
    private String nombreFichero;
 
