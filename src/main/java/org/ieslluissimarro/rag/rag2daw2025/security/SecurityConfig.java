@@ -61,6 +61,7 @@ public class SecurityConfig {
                         .authorizeHttpRequests(authRequest -> authRequest
                                 .requestMatchers(WHITE_LIST_URL).permitAll()
                                 .requestMatchers("/api/v1/usuarios").hasAnyAuthority("ADMINISTRADOR", "USUARIO") 
+                                .requestMatchers("/api/v1/usuarios/logout/{usuarioId}").hasAuthority("ADMINISTRADOR")
                                 .anyRequest().authenticated())
                         .sessionManagement(sessionManager -> sessionManager
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

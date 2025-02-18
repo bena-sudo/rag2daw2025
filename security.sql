@@ -137,8 +137,8 @@ INSERT INTO roles (nombre) VALUES
     ('JEFEESTUDIOS');
 
 UPDATE usuarios
-SET estado = 'activo'
-WHERE id = 2;
+SET estado = 'inactivo'
+WHERE id = 13;
 
 
 
@@ -149,7 +149,7 @@ SELECT * FROM usuarios_roles;
 SELECT * FROM bloqueo_cuentas;
 SELECT * FROM auditoria_eventos;
 
-INSERT INTO usuarios_roles VALUES (2,2)
+INSERT INTO usuarios_roles VALUES (13,2)
 
 
 -- prueba

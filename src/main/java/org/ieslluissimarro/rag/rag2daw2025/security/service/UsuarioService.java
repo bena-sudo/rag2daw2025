@@ -233,6 +233,10 @@ public class UsuarioService {
         }
     }
 
+    public Optional<UsuarioDb> getUsuarioById(Long usuarioId) {
+        return usuarioRepository.findById(usuarioId);
+    }
+
 
 
 }

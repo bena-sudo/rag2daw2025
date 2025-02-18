@@ -410,4 +410,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsL
 GET http://localhost:8090/api/v1/auditorias/usuario/2000 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTgwNTY0OCwiZXhwIjoxNzM5ODQxNjQ4fQ.HoeBfTRc4U-Ilqh2t_DLz8JVnY-2o6zHMezwDMukIHQ
 
+###
+DELETE http://localhost:8090/auth/logout/13
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjaHJpc3RpYW5jaXNjYXJyQGhvdG1haWwuY29tIiwiaWF0IjoxNzM5ODkzODg4LCJleHAiOjE3Mzk5Mjk4ODh9.zePqgPgVbQstUNsWRic9qG1IcdoE3RC2MoSERh3auMY
 
