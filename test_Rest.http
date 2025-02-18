@@ -412,4 +412,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsL
 
 ### Obtener sesiones activas
 GET http://localhost:8090/auth/sesiones-activas
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTkwMDYzMCwiZXhwIjoxNzM5OTM2NjMwfQ.JhQY_t8Gr3FiTIHdGoRwvU3afkFISLm_vi8L6Wh8Vnc
+Authorization: Bearer 
+Content-Type: application/json
+
+###Quitar sesion activa por administrador de cualquier sesión activa
+DELETE http://localhost:8090/auth/logout/13
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjaHJpc3RpYW5jaXNjYXJyQGhvdG1haWwuY29tIiwiaWF0IjoxNzM5ODkzODg4LCJleHAiOjE3Mzk5Mjk4ODh9.zePqgPgVbQstUNsWRic9qG1IcdoE3RC2MoSERh3auMY
