@@ -16,8 +16,6 @@ public class DocumentoNew {
 
    private Long id;
 
-   // private Integer idDocRag;
-
    @NotNull(message = "El id del usuario no puede estar vacío")
    private Long idUsuario;
 
@@ -27,7 +25,6 @@ public class DocumentoNew {
 
    private String nombreFichero;
 
-   //private String base64Documento;
    // Campo para el archivo (no se persiste directamente en la base de datos. Debe pasarse a base64)
    private MultipartFile multipart;
 
