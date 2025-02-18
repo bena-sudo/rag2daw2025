@@ -20,7 +20,7 @@ public enum PermisoNombre {
     VER_USUARIOS_POR_ROL("Permite ver los usuarios que tienen un rol concreto"),
     //GESTIONAR_SESIONES("Permite gestionar sesiones activas");
 
-
+    VER_SESIONES_ACTIVAS("Permite listar las sesiones activas"),
     CREAR_DOCUMENTO("Permite crear documentos"), // ADMIN, ASESOR
     EDITAR_DOCUMENTO("Permite editar documentos"), // ADMIN, ASESOR
     ELIMINAR_DOCUMENTO("Permite eliminar documentos"), // ADMIN, ASESOR

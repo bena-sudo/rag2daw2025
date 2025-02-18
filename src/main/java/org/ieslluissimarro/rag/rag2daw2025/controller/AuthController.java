@@ -6,6 +6,7 @@ import org.ieslluissimarro.rag.rag2daw2025.model.db.UsuarioDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.BloqueoCuentaList;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.LoginUsuario;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.Mensaje;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.SesionActivaResponse;
 import org.ieslluissimarro.rag.rag2daw2025.model.enums.RolNombre;
 import org.ieslluissimarro.rag.rag2daw2025.repository.BloqueoCuentaRepository;
 import org.ieslluissimarro.rag.rag2daw2025.repository.SesionActivaRepository;
@@ -319,7 +320,6 @@ public class AuthController {
         }
     }
 
-    
     /**
      * Desbloquear una cuenta de usuario
      */
@@ -361,7 +361,6 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Cuenta confirmada exitosamente"));
     }
 
-    
     /**
      * Listar cuentas bloqueadas
      */
@@ -402,6 +401,34 @@ public class AuthController {
         sesionActivaRepository.deleteByUsuarioId(usuarioId);
 
         return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Sesión del usuario cerrada correctamente"));
+    }
+
+    /**
+     * Obtener sesiones activas
+     */
+    @Operation(summary = "Obtener sesiones activas", description = "Devuelve una lista con el ID del usuario, su email, nickname y la fecha de activación de la sesión activa.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Lista de sesiones activas obtenida correctamente", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = SesionActivaResponse.class)) }),
+            @ApiResponse(responseCode = "404", description = "No hay sesiones activas", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Mensaje.class)) })
+    })
+    @PreAuthorize("@authorizationService.hasPermission('VER_SESIONES_ACTIVAS')")
+    @GetMapping("/sesiones-activas")
+    public ResponseEntity<?> getSesionesActivas() {
+        List<SesionActivaResponse> sesiones = sesionActivaRepository.findAll().stream()
+                .map(sesion -> new SesionActivaResponse(
+                        sesion.getUsuario().getId(),
+                        sesion.getUsuario().getEmail(),
+                        sesion.getUsuario().getNickname(),
+                        sesion.getFechaInicio()))
+                .collect(Collectors.toList());
+
+        if (sesiones.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Mensaje("No hay sesiones activas"));
+        }
+
+        return ResponseEntity.ok(sesiones);
     }
 
 }

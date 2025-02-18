@@ -410,4 +410,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsL
 GET http://localhost:8090/api/v1/auditorias/usuario/2000 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTg5NDE0MywiZXhwIjoxNzM5OTMwMTQzfQ.28UPZsO1RhvloGEn-hH-Q5tOTotUXTvexCSNwpar23g
 
-
+### Obtener sesiones activas
+GET http://localhost:8090/auth/sesiones-activas
+Authorization: Bearer 
+Content-Type: application/json

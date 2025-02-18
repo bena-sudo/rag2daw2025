@@ -241,6 +241,7 @@ INSERT INTO permisos (nombre, descripcion) VALUES
     ('VER_ETIQUETAS', 'Permite ver etiquetas'),
     ('EDITAR_ETIQUETAS', 'Permite editar etiquetas'),
     ('ELIMINAR_ETIQUETAS', 'Permite eliminar etiquetas');
+    ('VER_SESIONES_ACTIVAS', 'Permite listar las sesiones activas');
 
 -- Asignar permisos a roles
 INSERT INTO rol_permisos (rol_id, permiso_id) VALUES
@@ -265,6 +266,7 @@ INSERT INTO rol_permisos (rol_id, permiso_id) VALUES
     ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_ESTADISTICAS')),
     ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_ETIQUETAS')),
     ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'EDITAR_ETIQUETAS')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_SESIONES_ACTIVAS')),
     ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'ELIMINAR_ETIQUETAS')),
 
 
