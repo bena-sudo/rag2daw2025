@@ -32,9 +32,6 @@ public class DocumentoDB {
    @Column(name = "id_doc_rag")
    private Integer idDocRag;
 
-   // @Column(name = "dni", nullable = false)
-   // private String dni;
-
    @NotNull(message = "El id del usuario no puede estar vacío")
    @Column(name = "id_usuario", nullable = false)
    private Long idUsuario;
