@@ -49,6 +49,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -272,7 +273,6 @@ public class AuthController {
         List<GrantedAuthority> authorities = usuario.getRoles().stream()
                 .map(rol -> new SimpleGrantedAuthority(rol.getNombre().name()))
                 .collect(Collectors.toList());
-
         return ResponseEntity
                 .ok(new JwtDto(newAccessToken, newRefreshToken.getToken(), usuario.getEmail(), authorities));
     }
