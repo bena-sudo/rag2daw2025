@@ -33,4 +33,5 @@ public class DocumentoEdit {
    // @Size(max = 100, message = "El tipo de contenido debe tener como máximo 100 caracteres")
    // private String contentTypeDocumento;
 
+   
 }
