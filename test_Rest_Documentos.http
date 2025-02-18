@@ -88,3 +88,11 @@ Simarret
 ### Delete document
 DELETE http://localhost:8090/api/v1/documento/1 HTTP/1.1
 Content-Type: application/json
+
+### Get document
+GET http://localhost:8090/api/v1/documentos HTTP/1.1
+Content-Type: application/json
+
+### Read document
+GET http://localhost:8090/api/v1/documento/2 HTTP/1.1
+Content-Type: application/json
