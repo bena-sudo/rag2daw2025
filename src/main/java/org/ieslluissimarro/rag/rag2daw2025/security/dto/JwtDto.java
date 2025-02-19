@@ -16,12 +16,14 @@ public class JwtDto {
     private String refreshToken;
     private String bearer = "Bearer";
     private String email;
+    private Long idUser;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public JwtDto(String token, String refreshToken, String email, Collection<? extends GrantedAuthority> authorities) {
+    public JwtDto(String token, String refreshToken, String email, Long idUser, Collection<? extends GrantedAuthority> authorities) {
         this.token = token;
         this.refreshToken = refreshToken;
         this.email = email;
         this.authorities = authorities;
+        this.idUser = idUser;
     }
 }

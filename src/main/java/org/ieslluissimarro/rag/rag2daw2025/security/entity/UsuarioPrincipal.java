@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 public class UsuarioPrincipal implements UserDetails {
 
+    private Long id;
     private String nombreCompleto;
     private String nickname;
     private String email;
@@ -21,7 +22,8 @@ public class UsuarioPrincipal implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UsuarioPrincipal(String nombreCompleto, String nickname, String email, String password, String telefono, /*LocalDate fechaNacimiento,*/ Collection<? extends GrantedAuthority> authorities) {
+    public UsuarioPrincipal(Long id, String nombreCompleto, String nickname, String email, String password, String telefono, /*LocalDate fechaNacimiento,*/ Collection<? extends GrantedAuthority> authorities) {
+        this.id = id;
         this.nombreCompleto = nombreCompleto;
         this.nickname = nickname;
         this.email = email;
@@ -35,7 +37,7 @@ public class UsuarioPrincipal implements UserDetails {
         List<GrantedAuthority> authorities =
                 usuarioDb.getRoles().stream().map(rol -> new SimpleGrantedAuthority(rol
                 .getNombre().name())).collect(Collectors.toList()); //Convertimos los roles de la BD en una lista de 'GrantedAuthority'
-        return new UsuarioPrincipal(usuarioDb.getNombre(), usuarioDb.getNickname(), usuarioDb.getEmail(), usuarioDb.getPassword(), usuarioDb.getTelefono(), authorities); /*usuarioDb.getFechaNacimiento()*/
+        return new UsuarioPrincipal(usuarioDb.getId(), usuarioDb.getNombre(), usuarioDb.getNickname(), usuarioDb.getEmail(), usuarioDb.getPassword(), usuarioDb.getTelefono(), authorities); /*usuarioDb.getFechaNacimiento()*/
     }
 
     @Override
@@ -52,6 +54,12 @@ public class UsuarioPrincipal implements UserDetails {
     public String getUsername() {
         return email;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+
 
     @Override
     public boolean isAccountNonExpired() {

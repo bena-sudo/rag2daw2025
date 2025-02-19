@@ -49,7 +49,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -192,7 +191,7 @@ public class AuthController {
             String jwt = jwtProvider.generateToken(authentication);
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-            JwtDto jwtDto = new JwtDto(jwt, "Bearer", userDetails.getUsername(), userDetails.getAuthorities());
+            JwtDto jwtDto = new JwtDto(jwt, "Bearer", userDetails.getUsername(),usuario.getId(), userDetails.getAuthorities());
 
             // Crear sesión activa con fecha de expiración
             SesionActiva sesion = new SesionActiva(usuario, jwt);
@@ -273,8 +272,9 @@ public class AuthController {
         List<GrantedAuthority> authorities = usuario.getRoles().stream()
                 .map(rol -> new SimpleGrantedAuthority(rol.getNombre().name()))
                 .collect(Collectors.toList());
+
         return ResponseEntity
-                .ok(new JwtDto(newAccessToken, newRefreshToken.getToken(), usuario.getEmail(), authorities));
+                .ok(new JwtDto(newAccessToken, newRefreshToken.getToken(), usuario.getEmail(),usuario.getId(), authorities));
     }
 
     /**
