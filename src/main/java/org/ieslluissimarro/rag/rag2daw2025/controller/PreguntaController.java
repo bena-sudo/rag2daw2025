@@ -56,13 +56,6 @@ public class PreguntaController {
                                 preguntaEdit.getIdChat(), preguntaEdit.getTextoPregunta(), preguntaEdit.getUsuario()));
         }
 
-        @GetMapping("answerQuestionChat")
-        public ResponseEntity<PreguntaEdit> answerPregunta(
-                        @RequestParam(name = "idQuestionchat") Long id_pregunta,
-                        @RequestParam(name = "user") String user) {
-                return ResponseEntity.ok(preguntaService.responderPreguntaChat(id_pregunta, user));
-        }
-
         @GetMapping("initialMessageChat")
         public ResponseEntity<String> initialMessagechat() {
                 return ResponseEntity.ok(MENSAJE_INICIAL);

@@ -12,7 +12,6 @@ import org.ieslluissimarro.rag.rag2daw2025.model.dto.PreguntaList;
 import org.ieslluissimarro.rag.rag2daw2025.repository.PreguntaRepository;
 import org.ieslluissimarro.rag.rag2daw2025.srv.PreguntaService;
 import org.ieslluissimarro.rag.rag2daw2025.srv.mappers.PreguntaMapper;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
@@ -39,17 +38,6 @@ public class PreguntaServiceImpl implements PreguntaService{
 
     }
 
-    @Override
-    public List<PreguntaList> findAllPreguntaList(Sort sort) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAllPreguntaList'");
-    }
-
-    @Override
-    public List<PreguntaDb> findByTextContaining(String text, Sort sort) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByTextContaining'");
-    }
 
     @Override
     public PreguntaEdit create(Long idChat, String textoPregunta, String user) {
@@ -61,11 +49,6 @@ public class PreguntaServiceImpl implements PreguntaService{
 
     }
 
-    @Override
-    public PreguntaEdit responderPreguntaChat(Long idPregunta, String user) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'responderPreguntaChat'");
-    }
 
     @Override
     public PreguntaEdit update(Long id, PreguntaEdit preguntaEdit) {

@@ -16,7 +16,6 @@ import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatList;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ListadoRespuesta;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PaginaDto;
-import org.ieslluissimarro.rag.rag2daw2025.model.dto.PaginaResponse;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PreguntaEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.PreguntaInfo;
 import org.ieslluissimarro.rag.rag2daw2025.srv.ChatService;

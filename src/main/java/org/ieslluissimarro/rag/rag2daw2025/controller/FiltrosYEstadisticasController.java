@@ -1,10 +1,6 @@
 package org.ieslluissimarro.rag.rag2daw2025.controller;
 
-import java.util.List;
-import java.util.Map;
 
-import org.ieslluissimarro.rag.rag2daw2025.helper.FiltroBusqueda;
-import org.ieslluissimarro.rag.rag2daw2025.helper.FiltroBusquedaHelper;
 import org.ieslluissimarro.rag.rag2daw2025.helper.JsonToMapHelper;
 import org.ieslluissimarro.rag.rag2daw2025.helper.PaginationHelper;
 import org.ieslluissimarro.rag.rag2daw2025.helper.SQLHelper;
@@ -18,8 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
