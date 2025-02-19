@@ -26,6 +26,6 @@ public class DocumentoInfo {
    private String estado;
    private LocalDateTime fechaCreacion;
    private LocalDateTime fechaRevision;
-private Set<EtiquetaDB> etiquetas = new HashSet<>();
+   private Set<EtiquetaDB> etiquetas = new HashSet<>();
 
 }

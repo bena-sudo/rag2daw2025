@@ -4,5 +4,5 @@ public enum EstadoChunk {
     PENDIENTE,
     APROBADO,
     DENEGADO,
-    MODIFICADO;
+    CHUNKED;
 }

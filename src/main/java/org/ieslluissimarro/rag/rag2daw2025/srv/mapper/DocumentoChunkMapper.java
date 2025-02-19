@@ -23,6 +23,8 @@ public interface DocumentoChunkMapper {
 
     DocumentoChunkInfo documentoChunkDBToDocumentoChunkInfo(DocumentoChunkDB documentoChunkDB);
 
+    DocumentoChunkEdit documentoChunkInfoToDocumentoChunkEdit(DocumentoChunkInfo documentoChunkInfo);
+
     List<DocumentoChunkList> documentoChunkDBToDocumentoChunkList(List<DocumentoChunkDB> documentoChunkDB);
 
     void updateDocumentoChunkDBFromDocumentoChunkEdit(DocumentoChunkEdit documentoChunkEdit, @MappingTarget DocumentoChunkDB documentoChunkDB);
