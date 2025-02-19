@@ -14,6 +14,7 @@ public interface DocumentoChunkService {
     public DocumentoChunkInfo read(Long id);
     public DocumentoChunkEdit update(Long id, DocumentoChunkEdit documentoChunkEdit);
     public void delete(Long id);
+    public List<DocumentoChunkEdit> guardarChunks(List<DocumentoChunkEdit> chunks);
 
     PaginaResponse<DocumentoChunkList> findAll(List<String> filter, int page, int size, List<String> sort) throws FiltroException;
     PaginaResponse<DocumentoChunkList> findAll(PeticionListadoFiltrado peticionListadoFiltrado) throws FiltroException;

@@ -1,6 +1,7 @@
 package org.ieslluissimarro.rag.rag2daw2025.srv.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityIllegalArgumentException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityNotFoundException;
@@ -67,6 +68,19 @@ public class DocumentoChunkServiceImpl implements DocumentoChunkService{
 
         DocumentoChunkMapper.INSTANCE.updateDocumentoChunkDBFromDocumentoChunkEdit(documentoChunkEdit, existingEntity);
         return DocumentoChunkMapper.INSTANCE.documentoChunkDBToDocumentoChunkEdit(documentoChunkEditRepository.save(existingEntity));
+    }
+
+    @Override
+    public List<DocumentoChunkEdit> guardarChunks(List<DocumentoChunkEdit> chunks) {
+        List<DocumentoChunkDB> entities = chunks.stream()
+            .map(DocumentoChunkMapper.INSTANCE::documentoChunkEditToDocumentoChunkDB)
+            .collect(Collectors.toList());
+
+        List<DocumentoChunkDB> savedEntities = documentoChunkEditRepository.saveAll(entities);
+
+        return savedEntities.stream()
+            .map(DocumentoChunkMapper.INSTANCE::documentoChunkDBToDocumentoChunkEdit)
+            .collect(Collectors.toList());
     }
 
     @Override
