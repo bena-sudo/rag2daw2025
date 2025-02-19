@@ -19,20 +19,20 @@ public class FiltroBusquedaFactory {
      * 
      * @param filtros Array de filtros en formato "atributo:Operador:valor"
      * @return Lista de FiltroBusqueda
-          * @throws FiltroException 
-          */
-         public List<FiltroBusqueda> crearListaFiltrosBusqueda(String[] filtros) throws FiltroException {
+     * @throws FiltroException
+     */
+    public List<FiltroBusqueda> crearListaFiltrosBusqueda(String[] filtros) throws FiltroException {
         if (filtros == null || filtros.length == 0) {
             return Collections.emptyList();
         }
         try {
-         
-        return Arrays.stream(filtros)
-        .map(FiltroBusquedaFactory::createFiltro)
-        .collect(Collectors.toList());   
+
+            return Arrays.stream(filtros)
+                    .map(FiltroBusquedaFactory::createFiltro)
+                    .collect(Collectors.toList());
         } catch (IllegalArgumentException e) {
-                 throw new FiltroException("BAD_FILTER",
-                    "Error: Filtro incorrecto",e.getMessage());
+            throw new FiltroException("BAD_FILTER",
+                    "Error: Filtro incorrecto", e.getMessage());
         }
     }
 
