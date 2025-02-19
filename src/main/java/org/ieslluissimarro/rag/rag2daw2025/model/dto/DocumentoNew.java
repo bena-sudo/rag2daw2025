@@ -1,5 +1,9 @@
 package org.ieslluissimarro.rag.rag2daw2025.model.dto;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.ieslluissimarro.rag.rag2daw2025.model.db.EtiquetaDB;
 import org.ieslluissimarro.rag.rag2daw2025.model.enums.EstadoDocumento;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,4 +38,5 @@ public class DocumentoNew {
    @Size(max = 100, message = "El tipo de contenido debe tener como máximo 100 caracteres")
    private String contentTypeDocumento;
 
+   private Set<EtiquetaDB> etiquetas = new HashSet<>();
 }
