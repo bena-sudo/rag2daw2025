@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class PreguntaInfo {
-    private Long idchat;
+    private Long idChat;
     private Long idPregunta;
     private String usuario;
     private String textoPregunta;
