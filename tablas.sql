@@ -31,7 +31,7 @@ CREATE TABLE preguntas (
 CREATE TABLE documentos (
     id SERIAL PRIMARY KEY,
     id_doc_rag INT,
-    id_usuario BIGSERIAL NOT NULL,
+    id_usuario INTEGER NOT NULL,
     nombre_fichero VARCHAR(255) NOT NULL,
     comentario TEXT,
     base64_documento TEXT,
@@ -40,7 +40,8 @@ CREATE TABLE documentos (
     tipo_documento VARCHAR(50),
     estado_documento VARCHAR(20), -- "pendiente", "aprobado", "denegado"
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    fecha_revision TIMESTAMP
+    fecha_revision TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE SET NULL
 );
 
 CREATE TABLE documentos_chunks (
@@ -85,4 +86,57 @@ CREATE TABLE pregunta_documentchunk (
     id_pregunta BIGINT NOT NULL REFERENCES preguntas(id_pregunta) ON DELETE CASCADE,
     id_documentchunk BIGINT NOT NULL REFERENCES documentos_chunks(id) ON DELETE CASCADE,
     PRIMARY KEY (id_pregunta, id_documentchunk)
+);
+
+-- GRUPO ACREDITACION
+CREATE TABLE tipo_pregunta (
+    id SERIAL PRIMARY KEY,            
+    nombre VARCHAR(50) NOT NULL, 
+    descripcion TEXT
+);
+
+CREATE TABLE preguntas_cuestionarios (
+    id SERIAL PRIMARY KEY,            
+    texto TEXT NOT NULL,                  
+    tipo_id INT NOT NULL,                          
+    siguiente_si INT,                          
+    siguiente_no INT,                             
+    final_si BOOLEAN DEFAULT FALSE,               
+    final_no BOOLEAN DEFAULT FALSE,               
+    explicacion_si TEXT,                          
+    explicacion_no TEXT,                          
+    orden INT NOT NULL,                           
+    cuestionario_id INT NOT NULL,  
+    FOREIGN KEY (tipo_id) REFERENCES tipo_pregunta(id), 
+    FOREIGN KEY (siguiente_si) REFERENCES preguntas(id), 
+    FOREIGN KEY (siguiente_no) REFERENCES preguntas(id),
+    FOREIGN KEY (cuestionario_id) REFERENCES cuestionarios(id)  
+);
+
+CREATE TABLE respuestas (
+    id SERIAL PRIMARY KEY,
+    pregunta_id INTEGER NOT NULL,
+    usuario_id INTEGER,  
+    respuesta TEXT NOT NULL,
+    FOREIGN KEY (pregunta_id) REFERENCES preguntas(id) ON DELETE CASCADE,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL
+);
+
+CREATE TABLE estado_acreditacion (
+    id SERIAL PRIMARY KEY,
+    usuario_id INTEGER,
+    asesor_id INTEGER,
+    modulo_id INTEGER NOT NULL,
+    estado VARCHAR(20) CHECK (estado IN ('pendiente', 'aprobado', 'rechazado')) NOT NULL,
+    fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+    FOREIGN KEY (modulo_id) REFERENCES modulos(id) ON DELETE CASCADE
+);
+
+CREATE TABLE mensajes (
+  id BIGSERIAL PRIMARY KEY,
+  acreditacion_id BIGINT NOT NULL REFERENCES estado_acreditacion(id),
+  usuario_id BIGINT NOT NULL REFERENCES usuarios(id),
+  contenido TEXT NOT NULL,
+  fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
