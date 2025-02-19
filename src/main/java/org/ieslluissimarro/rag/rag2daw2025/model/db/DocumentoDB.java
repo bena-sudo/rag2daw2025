@@ -1,6 +1,8 @@
 package org.ieslluissimarro.rag.rag2daw2025.model.db;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.ieslluissimarro.rag.rag2daw2025.model.enums.EstadoDocumento;
 
@@ -8,9 +10,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -25,48 +31,51 @@ import lombok.NoArgsConstructor;
 @Table(name = "documentos")
 public class DocumentoDB {
 
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-   @Column(name = "id_doc_rag")
-   private Integer idDocRag;
+    @Column(name = "id_doc_rag")
+    private Integer idDocRag;
 
-   @NotNull(message = "El id del usuario no puede estar vacío")
-   @Column(name = "id_usuario", nullable = false)
-   private Long idUsuario;
+    @NotNull(message = "El id del usuario no puede estar vacío")
+    @Column(name = "id_usuario", nullable = false)
+    private Long idUsuario;
 
-   @Size(max = 255, message = "El nombre del fichero debe tener como máximo 255 caracteres")
-   @Column(name = "nombre_fichero", nullable = false)
-   private String nombreFichero;
+    @Size(max = 255, message = "El nombre del fichero debe tener como máximo 255 caracteres")
+    @Column(name = "nombre_fichero", nullable = false)
+    private String nombreFichero;
 
-   @Column(name = "comentario")
-   private String comentario;
+    @Column(name = "comentario")
+    private String comentario;
 
-   @NotNull(message = "El documento no puede estar vacio")
-   @Column(name = "base64_documento", nullable = false, columnDefinition = "TEXT")
-   private String base64Documento;
+    @NotNull(message = "El documento no puede estar vacio")
+    @Column(name = "base64_documento", nullable = false, columnDefinition = "TEXT")
+    private String base64Documento;
 
-   @Size(max = 5, message = "La extensión del documento debe tener como máximo 5 caracteres")
-   @Column(name = "extension_documento")
-   private String extensionDocumento;
+    @Size(max = 5, message = "La extensión del documento debe tener como máximo 5 caracteres")
+    @Column(name = "extension_documento")
+    private String extensionDocumento;
 
-   @Size(max = 100, message = "El tipo de contenido debe tener como máximo 100 caracteres")
-   @Column(name = "content_type_documento")
-   private String contentTypeDocumento;
+    @Size(max = 100, message = "El tipo de contenido debe tener como máximo 100 caracteres")
+    @Column(name = "content_type_documento")
+    private String contentTypeDocumento;
 
-   @Size(max = 50, message = "El tipo de documento debe tener como máximo 50 caracteres")
-   @Column(name = "tipo_documento")
-   private String tipoDocumento;
+    @Size(max = 50, message = "El tipo de documento debe tener como máximo 50 caracteres")
+    @Column(name = "tipo_documento")
+    private String tipoDocumento;
 
-   @Enumerated(EnumType.STRING)
-   @Column(length = 20, name = "estado_documento")
-   private EstadoDocumento estado;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, name = "estado_documento")
+    private EstadoDocumento estado;
 
-   @Column(name = "fecha_creacion", insertable=false , updatable = false, nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-   private LocalDateTime fechaCreacion;
+    @Column(name = "fecha_creacion", insertable = false, updatable = false, nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime fechaCreacion;
 
-   @Column(name = "fecha_revision")
-   private LocalDateTime fechaRevision;
+    @Column(name = "fecha_revision")
+    private LocalDateTime fechaRevision;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "documentos_etiquetas", joinColumns = @JoinColumn(name = "id_documento"), inverseJoinColumns = @JoinColumn(name = "id_etiqueta"))
+    private Set<EtiquetaDB> etiquetas = new HashSet<>();
 }
