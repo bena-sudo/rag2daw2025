@@ -7,12 +7,14 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoChunkEdit;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoChunkInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoChunkList;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.enums.EstadoChunk;
 import org.ieslluissimarro.rag.rag2daw2025.srv.DocumentoChunkService;
 import org.ieslluissimarro.rag.rag2daw2025.srv.DocumentoService;
 import org.ieslluissimarro.rag.rag2daw2025.srv.RagService;
+import org.ieslluissimarro.rag.rag2daw2025.srv.mapper.DocumentoChunkMapper;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -25,7 +27,7 @@ public class RagServiceImpl implements RagService {
     private final DocumentoChunkService documentoChunkService;  
 
     @Override
-    public List<DocumentoChunkList> subir(Long documentoId) {
+    public List<DocumentoChunkList> subirDoc(Long documentoId) {
         // 1. Verificar si el documento existe
         DocumentoInfo documento = documentoService.read(documentoId);
 
@@ -64,5 +66,24 @@ public class RagServiceImpl implements RagService {
         .collect(Collectors.toList());
 
     }
+
+    @Override
+    public DocumentoChunkInfo confirmarChunk(Long chunkId) {
+        // Paso 1: Obtener el DocumentoChunkInfo usando el método read
+        DocumentoChunkInfo chunkInfo = documentoChunkService.read(chunkId);
+        
+        // Paso 2: Convertir el DocumentoChunkInfo a DocumentoChunkEdit
+        DocumentoChunkEdit chunkEdit = DocumentoChunkMapper.INSTANCE.documentoChunkInfoToDocumentoChunkEdit(chunkInfo);
+
+        // Paso 3: Actualizar el estado en el DocumentoChunkEdit
+        chunkEdit.setEstado(EstadoChunk.CHUNKED);
+
+        // Paso 4: Llamar al método update con el DocumentoChunkEdit
+        documentoChunkService.update(chunkId, chunkEdit);
+
+        // Paso 5: Devolver el DocumentoChunkInfo actualizado (se vuelve a leer después de actualizar)
+        return documentoChunkService.read(chunkId);
+    }
+
 }
 
