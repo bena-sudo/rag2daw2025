@@ -148,10 +148,10 @@ public class ChatController {
             .mapToObj(c -> (char) c)
             .collect(Collectors.toList());
 
+        // Agregar el carácter especial al final
+            caracteres.add('\u0003');
+
         return Flux.fromIterable(caracteres)
-            .delayElements(Duration.ofMillis(100));
+            .delayElements(Duration.ofMillis(50));
     }
-
-    
-
 }
