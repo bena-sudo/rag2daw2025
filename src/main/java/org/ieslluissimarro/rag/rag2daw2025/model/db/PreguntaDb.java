@@ -27,8 +27,6 @@ public class PreguntaDb {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pregunta")
     private Long idPregunta;
-    /*@Column(name = "id_chat")
-    private Long idChat;*/
     @Column(name = "\"user\"")
     private String usuario;
     @Column(name = "texto_pregunta")
@@ -44,11 +42,6 @@ public class PreguntaDb {
     @JoinColumn(name = "id_chat", nullable = false)
     private ChatDb idChat;
 
-    /* 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "pregunta_documentchunks", joinColumns =
-     @JoinColumn(name="id_pregunta"), inverseJoinColumns = @JoinColumn(name="id_documentchunk"))
-    private Set<DocumentChunksDb> documentchunksImportantes = new HashSet<>();
-*/
+    
 
 }

@@ -94,17 +94,10 @@ public class ChatServiceImpl implements ChatService {
 
 	@Override
 	public PaginaResponse<ChatList> findAll(String[] filter, int page, int size, String[] sort) throws FiltroException {
-		/**
-		 * 'peticionConverter' está en el constructor del service porque utilizando una
-		 * buena arquitectura
-		 * toda clase externa al Service que contenga un método a ejecutar debería ser
-		 * testeable de manera
-		 * independiente y para ello debe de estar en el constructor para poderse
-		 * mockear.
-		 **/
+
 
 		PeticionListadoFiltrado peticion = peticionConverter.convertFromParams(filter, page, size, sort);
-		return findAll(peticion);// En vez de hacer 2 veces el filtrado llamamos al método que lo centraliza
+		return findAll(peticion);
 	}
 
 	@Override
@@ -148,10 +141,8 @@ public class ChatServiceImpl implements ChatService {
 		if (listaFiltros.isEmpty()) {
 			paginaChatRelaciones = chatRepository.findAll(pageable);
 		} else {
-			// Especificar filtro
 			Specification<ChatDb> filtrosBusquedaSpecification = new FiltroBusquedaSpecification<>(listaFiltros);
 
-			// Filtrar y ordenar
 			paginaChatRelaciones = chatRepository.findAll(filtrosBusquedaSpecification, pageable);
 		}
 
