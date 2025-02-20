@@ -22,21 +22,42 @@ public enum PermisoNombre {
 
     VER_SESIONES_ACTIVAS("Permite listar las sesiones activas"),
 
-
-    CREAR_DOCUMENTO("Permite crear documentos"), // ADMIN, ASESOR
     EDITAR_DOCUMENTO("Permite editar documentos"), // ADMIN, ASESOR
-    ELIMINAR_DOCUMENTO("Permite eliminar documentos"), // ADMIN, ASESOR
-    VER_DOCUMENTOS("Permite ver documentos"), // ADMIN, ASESOR
+    CREAR_DOCUMENTO("Permite crear documentos"), // ADMIN, ASESOR,USUARI
+    ELIMINAR_DOCUMENTO("Permite eliminar documentos"), // ADMIN, ASESOR,USUARI
+    VER_DOCUMENTOS("Permite ver documentos"), // ADMIN, ASESOR,USUARI
+    CREAR_DOCUMENTO_USUARIO("Permite crear documentos de usuarios"), // ADMIN, ASESOR,USUARI
+    ELIMINAR_DOCUMENTO_USUARIO("Permite eliminar documentos de usuarios"), // ADMIN, ASESOR,USUARI
+    VER_DOCUMENTOS_USUARIO("Permite ver documentos de usuarios"), // ADMIN, ASESOR,USUARI
 
     EDITAR_CHUNKS("Permite editar chunks"),
     ELIMINAR_CHUNKS("Permite eliminar chunks"),
     VER_CHUNKS("Permite ver chunks"),
-    VER_ESTADISTICAS("Permite ver estadísticas"),
+    VER_ESTADISTICAS("Permite ver estadísticas"),//SUPERVISOR, ADMIN
 
     VER_ETIQUETAS("Permite ver etiquetas"), //USER, ADMIN
     EDITAR_ETIQUETAS("Permite editar etiquetas"),
     ELIMINAR_ETIQUETAS("Permite eliminar etiquetas"),
-    CREAR_ETIQUETAS("Permite crear etiquetas");
+    CREAR_ETIQUETAS("Permite crear etiquetas"),
+
+    CREAR_CHAT("Permite crear un chat"),//SUPERVISOR
+    VER_CHATS("Permite ver todos los chats"),
+    VER_PREGUNTAS("Permite ver todas las pregunttas"),
+    ELIMINAR_CHAT("Permite eliminar un chat"),
+    MODIFICAR_CHAT("Permite modificar un chat"),
+    VER_LISTA_CONTEXTOS("Permite ver las listas de contextos"),
+    CREAR_PREGUNTA("Permite crear preguntas"),
+    MODIFICAR_PREGUNTA("Permite modificar preguntas"),
+
+    ASSIGNAR_ACREDITACIONES("Permite assignar acreditaciones"), // ACREDITADOR
+    CREAR_ACREDITACIONES("Permite crear acreditaciones"), //USUARIO ACREDITADOR
+    CREAR_MENSAJE("Permite crear mensajes"),
+    VER_ACREDITACIONES("Permite ver acreditaciones");    
+
+
+
+
+
 
 
 

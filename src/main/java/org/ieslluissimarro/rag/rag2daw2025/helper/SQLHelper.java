@@ -183,7 +183,7 @@ public class SQLHelper {
                         queryFinal.append(" WHERE ");
                     }
 
-                    queryFinal.append(" d.id_documentchunk = '" + chunk + "' ");
+                    queryFinal.append(" d.id = '" + chunk + "' ");
                     i++;
                     break;
 

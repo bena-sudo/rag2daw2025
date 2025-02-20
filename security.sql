@@ -4,6 +4,7 @@
 
 -- Eliminación de tablas en el orden correcto para evitar errores de dependencia
 DROP TABLE IF EXISTS usuarios_roles;
+DROP TABLE IF EXISTS usuarios_permisos;
 DROP TABLE IF EXISTS permisos;
 DROP TABLE IF EXISTS rol_permisos;
 DROP TABLE IF EXISTS bloqueo_cuentas;
@@ -13,6 +14,9 @@ DROP TABLE IF EXISTS intentos_login;
 DROP TABLE IF EXISTS usuarios;
 DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS categorias;
+DROP TABLE IF EXISTS refresh_tokens;
+DROP TABLE IF EXISTS verificationtoken;
+
 
 -- -----------------------------------------------------
 -- Tabla `usuarios`
@@ -240,8 +244,41 @@ INSERT INTO permisos (nombre, descripcion) VALUES
     ('VER_ESTADISTICAS', 'Permite ver estadísticas'),
     ('VER_ETIQUETAS', 'Permite ver etiquetas'),
     ('EDITAR_ETIQUETAS', 'Permite editar etiquetas'),
-    ('ELIMINAR_ETIQUETAS', 'Permite eliminar etiquetas');
+    ('ELIMINAR_ETIQUETAS', 'Permite eliminar etiquetas'),
     ('VER_SESIONES_ACTIVAS', 'Permite listar las sesiones activas');
+
+
+INSERT INTO permisos (nombre, descripcion) VALUES
+    ('CREAR_CHAT', 'Permite crear un chat'),
+    ('VER_CHATS', 'Permite ver todos los chats'),
+    ('VER_PREGUNTAS', 'Permite ver todas las preguntas'),
+    ('ELIMINAR_CHAT', 'Permite eliminar un chat'),
+    ('MODIFICAR_CHAT', 'Permite modificar un chat'),
+    ('VER_LISTA_CONTEXTOS', 'Permite ver las listas de contextos'),
+    ('CREAR_PREGUNTA', 'Permite crear preguntas'),
+    ('MODIFICAR_PREGUNTA', 'Permite modificar preguntas'),
+    ('CREAR_ACREDITACIONES', 'Permite crear acreditaciones'),
+    ('CREAR_MENSAJE', 'Permite crear mensajes'),
+    ('VER_ACREDITACIONES', 'Permite ver acreditaciones');
+
+INSERT INTO rol_permisos (rol_id, permiso_id) VALUES
+    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'CREAR_CHAT')),
+    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'VER_CHATS')),
+    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'ELIMINAR_CHAT')),
+    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'MODIFICAR_CHAT')),
+    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'VER_LISTA_CONTEXTOS')),
+    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'CREAR_PREGUNTA')),
+    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'MODIFICAR_PREGUNTA'));
+
+-- Asignar permisos al rol USUARIO ACREDITADOR
+INSERT INTO rol_permisos (rol_id, permiso_id) VALUES
+    ((SELECT id FROM roles WHERE nombre = 'ACREDITADOR'), (SELECT id FROM permisos WHERE nombre = 'CREAR_ACREDITACIONES')),
+    ((SELECT id FROM roles WHERE nombre = 'ACREDITADOR'), (SELECT id FROM permisos WHERE nombre = 'CREAR_MENSAJE')),
+    ((SELECT id FROM roles WHERE nombre = 'ACREDITADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_ACREDITACIONES')),
+    ((SELECT id FROM roles WHERE nombre = 'USUARIO'), (SELECT id FROM permisos WHERE nombre = 'CREAR_ACREDITACIONES')),
+    ((SELECT id FROM roles WHERE nombre = 'USUARIO'), (SELECT id FROM permisos WHERE nombre = 'CREAR_MENSAJE')),
+    ((SELECT id FROM roles WHERE nombre = 'USUARIO'), (SELECT id FROM permisos WHERE nombre = 'VER_ACREDITACIONES'));
+
 
 -- Asignar permisos a roles
 INSERT INTO rol_permisos (rol_id, permiso_id) VALUES

@@ -12,6 +12,7 @@ import org.ieslluissimarro.rag.rag2daw2025.srv.FiltrosYEstadisticasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -72,7 +73,7 @@ public class FiltrosYEstadisticasController {
         return ResponseEntity.ok().body(respuesta);
 
     }
-
+    @PreAuthorize("@authorizationService.hasPermission('VER_ESTADISTICAS')")
     @PostMapping("estadisticas")
     public ResponseEntity<?> getEstadisticas(@RequestBody FiltrosRequest parametros,
             @RequestParam(defaultValue = "none") String groupBy,
@@ -95,7 +96,7 @@ public class FiltrosYEstadisticasController {
         return ResponseEntity.ok().body(service.executeQuery(query));
 
     }
-
+    @PreAuthorize("@authorizationService.hasPermission('VER_LISTA_CONTEXTOS')")
     @GetMapping("contexto/popular")
     public ResponseEntity<?> getListaContextos() {
         try {
@@ -108,7 +109,7 @@ public class FiltrosYEstadisticasController {
         }
 
     }
-
+    @PreAuthorize("@authorizationService.hasPermission('VER_USUARIOS')")
     @GetMapping("getListUsuarios")
     public ResponseEntity<?> getListUsuarios() {
         try {
@@ -122,7 +123,7 @@ public class FiltrosYEstadisticasController {
 
     }
 
-
+    @PreAuthorize("@authorizationService.hasPermission('VER_CHUNKS')")
     @GetMapping("getListChunks")
     public ResponseEntity<?> getListChunks() {
         try {

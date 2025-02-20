@@ -9,6 +9,7 @@ import org.ieslluissimarro.rag.rag2daw2025.model.dto.PreguntaInfo;
 import org.ieslluissimarro.rag.rag2daw2025.srv.PreguntaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -46,6 +47,7 @@ public class PreguntaController {
                         @ApiResponse(responseCode = "404", description = "Not Found: No se encontró la pregunta con el ID proporcionado (errorCode='PREGUNTA_NOT_FOUND')", content = {
                                         @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) })
         })
+        @PreAuthorize("@authorizationService.hasPermission('CREAR_PREGUNTA')")
         @PostMapping("createQuestionChat")
         public ResponseEntity<PreguntaEdit> createPregunta(@Valid @RequestBody PreguntaEdit preguntaEdit,
                         BindingResult bindingResult) {
@@ -55,7 +57,6 @@ public class PreguntaController {
                 return ResponseEntity.status(HttpStatus.CREATED).body(preguntaService.create(
                                 preguntaEdit.getIdChat(), preguntaEdit.getTextoPregunta(), preguntaEdit.getUsuario()));
         }
-
         @GetMapping("initialMessageChat")
         public ResponseEntity<String> initialMessagechat() {
                 return ResponseEntity.ok(MENSAJE_INICIAL);
@@ -76,6 +77,7 @@ public class PreguntaController {
                         @ApiResponse(responseCode = "409", description = "Conflict: Error al intentar actualizar un 'Chat' (errorCodes: 'FOREIGN_KEY_VIOLATION', 'UNIQUE_CONSTRAINT_VIOLATION', 'DATA_INTEGRITY_VIOLATION')", content = {
                                         @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) })
         })
+        @PreAuthorize("@authorizationService.hasPermission('MODIFICAR_PREGUNTA')")
         @PutMapping("/updatePregunta/{id}")
         public ResponseEntity<PreguntaEdit> update(@PathVariable Long id, @Valid @RequestBody PreguntaEdit preguntaEdit,
                         BindingResult bindingResult) {
