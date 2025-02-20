@@ -11,7 +11,8 @@ import org.ieslluissimarro.rag.rag2daw2025.filters.model.PeticionListadoFiltrado
 import org.ieslluissimarro.rag.rag2daw2025.filters.specification.FiltroBusquedaSpecification;
 import org.ieslluissimarro.rag.rag2daw2025.filters.utils.PaginationFactory;
 import org.ieslluissimarro.rag.rag2daw2025.filters.utils.PeticionListadoFiltradoConverter;
-import org.ieslluissimarro.rag.rag2daw2025.model.db.DocumentoDB;
+import org.ieslluissimarro.rag.rag2daw2025.model.db.DocumentoDb;
+import org.ieslluissimarro.rag.rag2daw2025.model.db.DocumentoDbDocu;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoEditDocu;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoList;
@@ -45,14 +46,14 @@ public class DocumentoServiceImplDocu implements DocumentoServiceDocu {
         if (documentoNew.getMultipart() == null || documentoNew.getMultipart().isEmpty()) {
             throw new MultipartProcessingException("BAD_MULTIPART", "El archivo no puede estar vacío");
         }
-        DocumentoDB entity = DocumentoMapperDocu.INSTANCE.documentoNewToDocumentoDB(documentoNew);
+        DocumentoDbDocu entity = DocumentoMapperDocu.INSTANCE.documentoNewToDocumentoDB(documentoNew);
         
         return DocumentoMapperDocu.INSTANCE.documentoDBToDocumentoNew(documentoRepository.save(entity));
     }
 
     @Override
     public DocumentoInfo read(Long id) {
-        DocumentoDB entity = documentoRepository.findById(id)
+        DocumentoDbDocu entity = documentoRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("DOCUMENT_ID_MISMATCH", "El documento con ID " + id + " no existe"));
         return DocumentoMapperDocu.INSTANCE.documentoDBToDocumentoInfo(entity);
     }
@@ -62,7 +63,7 @@ public class DocumentoServiceImplDocu implements DocumentoServiceDocu {
         if (!id.equals(documentoEdit.getId())) {
             throw new EntityIllegalArgumentException("DOCUMENT_ID_MISMATCH", "El ID proporcionado no coincide con el ID del documento");
         }
-        DocumentoDB existingEntity = documentoRepository.findById(id)
+        DocumentoDbDocu existingEntity = documentoRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("DOCUMENT_NOT_FOUND_FOR_UPDATE", "No se puede actualizar. El curso con ID " + id + " no existe"));
         DocumentoMapperDocu.INSTANCE.updateDocumentoDBFromDocumentoEdit(documentoEdit, existingEntity);
         return DocumentoMapperDocu.INSTANCE.documentoDBToDocumentoEdit(documentoRepository.save(existingEntity));
@@ -89,12 +90,12 @@ public class DocumentoServiceImplDocu implements DocumentoServiceDocu {
             Pageable pageable = paginationFactory.createPageable(peticionListadoFiltrado);
     
             // Configurar criterio de filtrado con Specification
-            Specification<DocumentoDB> filtrosBusquedaSpecification = new FiltroBusquedaSpecification<DocumentoDB>(
+            Specification<DocumentoDbDocu> filtrosBusquedaSpecification = new FiltroBusquedaSpecification<DocumentoDbDocu>(
                 peticionListadoFiltrado.getListaFiltros());
 
 
             // Filtrar y ordenar: puede producir cualquier de los errores controlados en el catch
-            Page<DocumentoDB> page = documentoRepository.findAll(filtrosBusquedaSpecification, pageable);
+            Page<DocumentoDbDocu> page = documentoRepository.findAll(filtrosBusquedaSpecification, pageable);
             //Devolver respuesta
             return DocumentoMapperDocu.pageToPaginaResponseDocumentoList(
                 page,

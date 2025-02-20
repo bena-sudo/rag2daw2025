@@ -4,7 +4,10 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.ieslluissimarro.rag.rag2daw2025.model.enums.EstadoDocumento;
 import org.ieslluissimarro.rag.rag2daw2025.model.enums.EstadoDocumentoDocu;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
@@ -25,13 +28,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+@JsonIgnoreProperties({"usuario"})
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 @Entity
 @Table(name = "documentos")
-public class DocumentoDB {
-
+public class DocumentoDbDocu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(example = "1", description = "Identificador único del documento")

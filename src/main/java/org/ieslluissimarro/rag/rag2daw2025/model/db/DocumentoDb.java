@@ -2,12 +2,11 @@ package org.ieslluissimarro.rag.rag2daw2025.model.db;
 
 import org.ieslluissimarro.rag.rag2daw2025.model.enums.EstadoDocumento;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,13 +15,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@JsonIgnoreProperties({"usuario"})
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Entity
 @Table(name = "documentos")
 public class DocumentoDb {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

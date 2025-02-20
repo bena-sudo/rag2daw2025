@@ -3,7 +3,6 @@ package org.ieslluissimarro.rag.rag2daw2025.srv.mapper;
 import java.util.List;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PaginaResponse;
