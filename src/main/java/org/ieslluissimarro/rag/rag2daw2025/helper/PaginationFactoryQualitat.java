@@ -12,7 +12,7 @@ import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PaginationFactory {
+public class PaginationFactoryQualitat {
     
     public Pageable createPageable(PeticionListadoFiltrado peticion) {
         return PageRequest.of(

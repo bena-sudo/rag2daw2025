@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class FiltroBusqueda {
+public class FiltroBusquedaQualitat {
 
     @Size(min = 1, message = "Debe especificar un atributo")
     private String atributo;

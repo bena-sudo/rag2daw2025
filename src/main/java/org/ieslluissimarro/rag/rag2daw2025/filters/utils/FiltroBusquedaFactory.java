@@ -41,6 +41,30 @@ public class FiltroBusquedaFactory {
         
     }
 
+
+
+    /**
+     * Convierte un array de cadenas en una lista de FiltroBusqueda.
+     * 
+     * @param filtros Array de filtros en formato "atributo:Operador:valor"
+     * @return Lista de FiltroBusqueda
+     * @throws FiltroException
+     */
+    public List<FiltroBusqueda> crearListaFiltrosBusqueda(String[] filtros) throws FiltroException {
+        if (filtros == null || filtros.length == 0) {
+            return Collections.emptyList();
+        }
+        try {
+
+            return Arrays.stream(filtros)
+                    .map(FiltroBusquedaFactory::createFiltro)
+                    .collect(Collectors.toList());
+        } catch (IllegalArgumentException e) {
+            throw new FiltroException("BAD_FILTER",
+                    "Error: Filtro incorrecto", e.getMessage());
+        }
+    }
+
     private static FiltroBusqueda createFiltro(String filtro) {
         if (filtro == null || !filtro.contains(separador)) {
             throw new IllegalArgumentException("El filtro proporcionado no tiene el formato esperado" +

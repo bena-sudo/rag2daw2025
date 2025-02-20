@@ -1,6 +1,6 @@
 package org.ieslluissimarro.rag.rag2daw2025.srv.specification.operacion;
 
-import org.ieslluissimarro.rag.rag2daw2025.helper.FiltroBusqueda;
+import org.ieslluissimarro.rag.rag2daw2025.helper.FiltroBusquedaQualitat;
 import org.ieslluissimarro.rag.rag2daw2025.model.enums.TipoOperacionBusqueda;
 import org.ieslluissimarro.rag.rag2daw2025.srv.specification.OperacionBusquedaStrategy;
 
@@ -14,7 +14,7 @@ public class MenorQueOperacionStrategy implements OperacionBusquedaStrategy {
     public Predicate crearPredicado(
         Root<?> root, 
         CriteriaBuilder criteriaBuilder, 
-        FiltroBusqueda filtro
+        FiltroBusquedaQualitat filtro
     ) {
         return criteriaBuilder.lessThan(
             root.get(filtro.getAtributo()), 

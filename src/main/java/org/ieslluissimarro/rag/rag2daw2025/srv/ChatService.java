@@ -5,7 +5,7 @@ import java.util.List;
 import org.ieslluissimarro.rag.rag2daw2025.exception.BindingResultException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityAlreadyExistsException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.FiltroException;
-import org.ieslluissimarro.rag.rag2daw2025.helper.FiltroBusqueda;
+import org.ieslluissimarro.rag.rag2daw2025.helper.FiltroBusquedaQualitat;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatList;
@@ -82,7 +82,7 @@ public interface ChatService {
 	// public List<ChatList> findAllChatList(Sort sort);
 	// public @NonNull List<ChatDb> findByTitleContaining( String title, Sort sort);
 
-	public PaginaDto<ChatList> findAllPageChatInfo(List<FiltroBusqueda> listaFiltros, Pageable pageable);
+	public PaginaDto<ChatList> findAllPageChatInfo(List<FiltroBusquedaQualitat> listaFiltros, Pageable pageable);
 
     public ChatInfo findById(Long idChat);
 

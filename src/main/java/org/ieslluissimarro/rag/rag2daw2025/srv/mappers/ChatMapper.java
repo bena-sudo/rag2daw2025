@@ -2,7 +2,7 @@ package org.ieslluissimarro.rag.rag2daw2025.srv.mappers;
 
 import java.util.List;
 
-import org.ieslluissimarro.rag.rag2daw2025.helper.FiltroBusqueda;
+import org.ieslluissimarro.rag.rag2daw2025.helper.FiltroBusquedaQualitat;
 import org.ieslluissimarro.rag.rag2daw2025.model.db.ChatDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatEdit;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatInfo;
@@ -34,7 +34,7 @@ public interface ChatMapper {
     // Convierte una pagina de chats en una respuesta paginada
     static PaginaResponse<ChatList> pageToPaginaResponse(
             Page<ChatDb> page,
-            List<FiltroBusqueda> filtros,
+            List<FiltroBusquedaQualitat> filtros,
             List<String> ordenaciones) {
         return new PaginaResponse<>(
                 page.getNumber(),

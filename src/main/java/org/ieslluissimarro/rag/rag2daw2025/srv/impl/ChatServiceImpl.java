@@ -5,9 +5,9 @@ import java.util.List;
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityIllegalArgumentException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityNotFoundException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.FiltroException;
-import org.ieslluissimarro.rag.rag2daw2025.helper.FiltroBusqueda;
-import org.ieslluissimarro.rag.rag2daw2025.helper.PaginationFactory;
-import org.ieslluissimarro.rag.rag2daw2025.helper.PeticionListadoFiltradoConverter;
+import org.ieslluissimarro.rag.rag2daw2025.helper.FiltroBusquedaQualitat;
+import org.ieslluissimarro.rag.rag2daw2025.helper.PaginationFactoryQualitat;
+import org.ieslluissimarro.rag.rag2daw2025.helper.PeticionListadoFiltradoConverterQualitat;
 import org.ieslluissimarro.rag.rag2daw2025.model.db.ChatDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.db.PreguntaDb;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatEdit;
@@ -38,8 +38,8 @@ import lombok.RequiredArgsConstructor;
 public class ChatServiceImpl implements ChatService {
 
 	private final ChatRepository chatRepository;
-	private final PaginationFactory paginationFactory;
-	private final PeticionListadoFiltradoConverter peticionConverter;
+	private final PaginationFactoryQualitat paginationFactory;
+	private final PeticionListadoFiltradoConverterQualitat peticionConverter;
 	private final PreguntaRepository preguntaRepository;
 
 	@Override
@@ -135,7 +135,7 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public PaginaDto<ChatList> findAllPageChatInfo(List<FiltroBusqueda> listaFiltros, Pageable pageable) {
+	public PaginaDto<ChatList> findAllPageChatInfo(List<FiltroBusquedaQualitat> listaFiltros, Pageable pageable) {
 		Page<ChatDb> paginaChatRelaciones;
 
 		if (listaFiltros.isEmpty()) {
