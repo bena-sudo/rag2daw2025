@@ -23,6 +23,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -62,6 +63,8 @@ public class ChatController {
             @ApiResponse(responseCode = "404", description = "Not Found: No se encontró el Chat con el ID proporcionado (errorCode='CHAT_NOT_FOUND')", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) })
     })
+
+    @PreAuthorize("@authorizationService.hasPermission('CREAR_CHAT')")
     @PostMapping("createChat")
     public ResponseEntity<ChatInfo> createChat(@Valid @RequestBody ChatList chatEdit, BindingResult bindingResult) {
 
@@ -69,7 +72,7 @@ public class ChatController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(chatService.create(chatEdit));
     }
-
+    @PreAuthorize("@authorizationService.hasPermission('VER_CHATS')")
     @GetMapping("returnChats")
     public ResponseEntity<ListadoRespuesta<ChatList>> devuelveListaDeChatList(
             @RequestParam(required = false) String[] filter,
@@ -92,19 +95,20 @@ public class ChatController {
 
         return ResponseEntity.ok(respuesta);
     }
-
+    @PreAuthorize("@authorizationService.hasPermission('VER_CHATS')")
     @GetMapping("returnChatInfo")
     public ResponseEntity<ChatInfo> devuelveChatInfo(@RequestParam Long idChat) {
         return ResponseEntity.ok(chatService.findById(idChat));
     }
 
     @Operation(summary = "Devuelve un listado de PreguntaInfo dado un idChat.")
+    @PreAuthorize("@authorizationService.hasPermission('VER_PREGUNTAS')")
     @GetMapping("returnPreguntasByIdChat")
     public ResponseEntity<List<PreguntaInfo>> devuelvePreguntasByIdChat(@RequestParam Long idChat) {
 
         return ResponseEntity.ok(chatService.getChatPreguntasByIdChat(idChat));
     }
-
+    @PreAuthorize("@authorizationService.hasPermission('ELIMINAR_CHAT')")
     @DeleteMapping("deleteChat")
     public ResponseEntity<Void> delete(@RequestParam Long idChat) {
         chatService.delete(idChat);
@@ -124,6 +128,7 @@ public class ChatController {
             @ApiResponse(responseCode = "409", description = "Conflict: Error al intentar actualizar un 'Chat' (errorCodes: 'FOREIGN_KEY_VIOLATION', 'UNIQUE_CONSTRAINT_VIOLATION', 'DATA_INTEGRITY_VIOLATION')", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) })
     })
+    @PreAuthorize("@authorizationService.hasPermission('MODIFICAR_CHAT')")
     @PutMapping("/updateChat/{id}")
     public ResponseEntity<ChatEdit> update(@PathVariable Long id, @Valid @RequestBody ChatEdit chatEdit,
             BindingResult bindingResult) {
@@ -132,7 +137,6 @@ public class ChatController {
 
         return ResponseEntity.ok(chatService.update(id, chatEdit));
     }
-
     @GetMapping(value = "/reply/{idPregunta}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Character> responderPregunta(@PathVariable Long idPregunta) {
         String respuesta = "Simulación de respuesta. Esto es una simulación para comprobar si realmente funciona el flujo que hemos incorporado en el backend y el SSE que hay en el frontend.";
