@@ -65,7 +65,7 @@ public class ChatController {
     @PostMapping("createChat")
     public ResponseEntity<ChatInfo> createChat(@Valid @RequestBody ChatList chatEdit, BindingResult bindingResult) {
 
-        BindingResultHelper.validationBindingResult(bindingResult, "CHAT_CREATE_VALIDATION");
+        BindingResultHelper.validateBindingResult(bindingResult, "CHAT_CREATE_VALIDATION");
 
         return ResponseEntity.status(HttpStatus.CREATED).body(chatService.create(chatEdit));
     }
@@ -128,7 +128,7 @@ public class ChatController {
     public ResponseEntity<ChatEdit> update(@PathVariable Long id, @Valid @RequestBody ChatEdit chatEdit,
             BindingResult bindingResult) {
 
-        BindingResultHelper.validationBindingResult(bindingResult, "CHAT_UPDATE_VALIDATION");
+        BindingResultHelper.validateBindingResult(bindingResult, "CHAT_UPDATE_VALIDATION");
 
         return ResponseEntity.ok(chatService.update(id, chatEdit));
     }

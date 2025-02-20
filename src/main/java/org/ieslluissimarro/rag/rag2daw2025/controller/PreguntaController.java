@@ -50,7 +50,7 @@ public class PreguntaController {
         public ResponseEntity<PreguntaEdit> createPregunta(@Valid @RequestBody PreguntaEdit preguntaEdit,
                         BindingResult bindingResult) {
 
-                BindingResultHelper.validationBindingResult(bindingResult, "PREGUNTA_CREATE_VALIDATION");
+                BindingResultHelper.validateBindingResult(bindingResult, "PREGUNTA_CREATE_VALIDATION");
 
                 return ResponseEntity.status(HttpStatus.CREATED).body(preguntaService.create(
                                 preguntaEdit.getIdChat(), preguntaEdit.getTextoPregunta(), preguntaEdit.getUsuario()));
@@ -80,7 +80,7 @@ public class PreguntaController {
         public ResponseEntity<PreguntaEdit> update(@PathVariable Long id, @Valid @RequestBody PreguntaEdit preguntaEdit,
                         BindingResult bindingResult) {
 
-                BindingResultHelper.validationBindingResult(bindingResult, "PREGUNTA_UPDATE_VALIDATION");
+                BindingResultHelper.validateBindingResult(bindingResult, "PREGUNTA_UPDATE_VALIDATION");
 
                 return ResponseEntity.ok(preguntaService.update(id, preguntaEdit));
         }

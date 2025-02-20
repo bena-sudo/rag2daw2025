@@ -21,6 +21,8 @@ public enum PermisoNombre {
     //GESTIONAR_SESIONES("Permite gestionar sesiones activas");
 
     VER_SESIONES_ACTIVAS("Permite listar las sesiones activas"),
+
+
     CREAR_DOCUMENTO("Permite crear documentos"), // ADMIN, ASESOR
     EDITAR_DOCUMENTO("Permite editar documentos"), // ADMIN, ASESOR
     ELIMINAR_DOCUMENTO("Permite eliminar documentos"), // ADMIN, ASESOR
@@ -35,6 +37,8 @@ public enum PermisoNombre {
     EDITAR_ETIQUETAS("Permite editar etiquetas"),
     ELIMINAR_ETIQUETAS("Permite eliminar etiquetas"),
     CREAR_ETIQUETAS("Permite crear etiquetas");
+
+
 
     
 
