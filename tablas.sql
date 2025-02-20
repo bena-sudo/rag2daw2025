@@ -141,120 +141,6 @@ CREATE TABLE IF NOT EXISTS refresh_tokens (
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
-
-
---------------------------------------------------------------
--- INSERTAR ROLES
-
-INSERT INTO roles (nombre) VALUES
-    ('USUARIO'),
-    ('ADMINISTRADOR'),
-    ('ASESOR'),
-    ('SUPERVISOR'),
-    ('ACREDITADOR'),
-    ('EVALUADOR'),
-    ('PROFESOR'),
-    ('JEFEDPTO'),
-    ('JEFEESTUDIOS');
-
-
-
--- Insertar permisos
-INSERT INTO permisos (nombre, descripcion) VALUES
-    ('EDITAR_USUARIO', 'Permite editar la información de los usuarios'),
-    ('ELIMINAR_USUARIO', 'Permite eliminar usuarios'),
-    ('VER_USUARIOS', 'Permite ver la lista de usuarios'),
-    ('VER_USUARIO', 'Permite ver la información de un usuario'),
-    ('ASIGNAR_ROLES', 'Permite asignar roles a los usuarios'),
-    ('GESTIONAR_PERMISOS', 'Permite gestionar los permisos de los roles'),
-    ('VER_AUDITORIA', 'Permite ver los registros de auditoría'),
-    ('DESBLOQUEAR_CUENTAS', 'Permite desbloquear cuentas de usuario'),
-    ('VER_CUENTAS_BLOQUEADAS', 'Permite ver las cuentas de usuario bloqueadas'),
-    ('VER_PERMISOS_POR_ROL', 'Permite ver los permisos de los roles'),
-    ('VER_PERMISOS', 'Permite ver los permisos existentes'),
-    ('ASIGNAR_PERMISOS_A_ROL', 'Permite asignar permisos a los roles'),
-    ('VER_USUARIOS_POR_ROL', 'Permite ver los usuarios que tienen un rol concreto'),
-    ('CREAR_DOCUMENTO', 'Permite crear documentos'),
-    ('EDITAR_DOCUMENTO', 'Permite editar documentos'),
-    ('ELIMINAR_DOCUMENTO', 'Permite eliminar documentos'),
-    ('VER_DOCUMENTOS', 'Permite ver documentos'),
-    ('EDITAR_CHUNKS', 'Permite editar chunks'),
-    ('VER_ESTADISTICAS', 'Permite ver estadísticas'),
-    ('VER_ETIQUETAS', 'Permite ver etiquetas'),
-    ('EDITAR_ETIQUETAS', 'Permite editar etiquetas'),
-    ('ELIMINAR_ETIQUETAS', 'Permite eliminar etiquetas'),
-    ('VER_SESIONES_ACTIVAS', 'Permite listar las sesiones activas');
-
-
-INSERT INTO permisos (nombre, descripcion) VALUES
-    ('CREAR_CHAT', 'Permite crear un chat'),
-    ('VER_CHATS', 'Permite ver todos los chats'),
-    ('VER_PREGUNTAS', 'Permite ver todas las preguntas'),
-    ('ELIMINAR_CHAT', 'Permite eliminar un chat'),
-    ('MODIFICAR_CHAT', 'Permite modificar un chat'),
-    ('VER_LISTA_CONTEXTOS', 'Permite ver las listas de contextos'),
-    ('CREAR_PREGUNTA', 'Permite crear preguntas'),
-    ('MODIFICAR_PREGUNTA', 'Permite modificar preguntas'),
-    ('CREAR_ACREDITACIONES', 'Permite crear acreditaciones'),
-    ('CREAR_MENSAJE', 'Permite crear mensajes'),
-    ('VER_ACREDITACIONES', 'Permite ver acreditaciones');
-
-INSERT INTO rol_permisos (rol_id, permiso_id) VALUES
-    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'CREAR_CHAT')),
-    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'VER_CHATS')),
-    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'ELIMINAR_CHAT')),
-    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'MODIFICAR_CHAT')),
-    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'VER_LISTA_CONTEXTOS')),
-    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'CREAR_PREGUNTA')),
-    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'MODIFICAR_PREGUNTA')),
-    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'VER_ESTADISTICAS')),
-    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'VER_ETIQUETAS')),
-    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'EDITAR_ETIQUETAS')),
-    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'ELIMINAR_ETIQUETAS'));
-
--- Asignar permisos al rol USUARIO ACREDITADOR
-INSERT INTO rol_permisos (rol_id, permiso_id) VALUES
-    ((SELECT id FROM roles WHERE nombre = 'ACREDITADOR'), (SELECT id FROM permisos WHERE nombre = 'CREAR_ACREDITACIONES')),
-    ((SELECT id FROM roles WHERE nombre = 'ACREDITADOR'), (SELECT id FROM permisos WHERE nombre = 'CREAR_MENSAJE')),
-    ((SELECT id FROM roles WHERE nombre = 'ACREDITADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_ACREDITACIONES')),
-    ((SELECT id FROM roles WHERE nombre = 'USUARIO'), (SELECT id FROM permisos WHERE nombre = 'CREAR_ACREDITACIONES')),
-    ((SELECT id FROM roles WHERE nombre = 'USUARIO'), (SELECT id FROM permisos WHERE nombre = 'CREAR_MENSAJE')),
-    ((SELECT id FROM roles WHERE nombre = 'USUARIO'), (SELECT id FROM permisos WHERE nombre = 'VER_ACREDITACIONES'));
-
-
--- Asignar permisos a roles
-INSERT INTO rol_permisos (rol_id, permiso_id) VALUES
-    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'EDITAR_USUARIO')),
-    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'ELIMINAR_USUARIO')),
-    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_USUARIOS')),
-    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_USUARIO')),
-    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'ASIGNAR_ROLES')),
-    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'GESTIONAR_PERMISOS')),
-    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_AUDITORIA')),
-    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'DESBLOQUEAR_CUENTAS')),
-    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_CUENTAS_BLOQUEADAS')),
-    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_PERMISOS_POR_ROL')),
-    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_PERMISOS')),
-    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'ASIGNAR_PERMISOS_A_ROL')),
-    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_USUARIOS_POR_ROL')),
-
-    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'CREAR_DOCUMENTO')),
-    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'EDITAR_DOCUMENTO')),
-    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'ELIMINAR_DOCUMENTO')),
-    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_DOCUMENTOS')),
-    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_ESTADISTICAS')),
-    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_ETIQUETAS')),
-    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'EDITAR_ETIQUETAS')),
-    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_SESIONES_ACTIVAS')),
-    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'ELIMINAR_ETIQUETAS')),
-
-
-    ((SELECT id FROM roles WHERE nombre = 'ASESOR'), (SELECT id FROM permisos WHERE nombre = 'CREAR_DOCUMENTO')),
-    ((SELECT id FROM roles WHERE nombre = 'ASESOR'), (SELECT id FROM permisos WHERE nombre = 'EDITAR_DOCUMENTO')),
-    ((SELECT id FROM roles WHERE nombre = 'ASESOR'), (SELECT id FROM permisos WHERE nombre = 'ELIMINAR_DOCUMENTO')),
-    ((SELECT id FROM roles WHERE nombre = 'ASESOR'), (SELECT id FROM permisos WHERE nombre = 'VER_DOCUMENTOS'));
--- 1. Tablas base (sin dependencias)
-
 CREATE TABLE chats (
     id_chat BIGSERIAL PRIMARY KEY,
     "user" VARCHAR NOT NULL,
@@ -412,3 +298,124 @@ CREATE TABLE pregunta_documentchunk (
     id_documentchunk BIGINT NOT NULL REFERENCES documentos_chunks(id) ON DELETE CASCADE,
     PRIMARY KEY (id_pregunta, id_documentchunk)
 );
+
+
+
+--------------------------------------------------------------
+-- INSERTAR ROLES
+
+INSERT INTO roles (nombre) VALUES
+    ('USUARIO'),
+    ('ADMINISTRADOR'),
+    ('ASESOR'),
+    ('SUPERVISOR'),
+    ('ACREDITADOR'),
+    ('EVALUADOR'),
+    ('PROFESOR'),
+    ('JEFEDPTO'),
+    ('JEFEESTUDIOS');
+
+
+
+-- Insertar permisos
+INSERT INTO permisos (nombre, descripcion) VALUES
+    ('EDITAR_USUARIO', 'Permite editar la información de los usuarios'),
+    ('ELIMINAR_USUARIO', 'Permite eliminar usuarios'),
+    ('VER_USUARIOS', 'Permite ver la lista de usuarios'),
+    ('VER_USUARIO', 'Permite ver la información de un usuario'),
+    ('ASIGNAR_ROLES', 'Permite asignar roles a los usuarios'),
+    ('GESTIONAR_PERMISOS', 'Permite gestionar los permisos de los roles'),
+    ('VER_AUDITORIA', 'Permite ver los registros de auditoría'),
+    ('DESBLOQUEAR_CUENTAS', 'Permite desbloquear cuentas de usuario'),
+    ('VER_CUENTAS_BLOQUEADAS', 'Permite ver las cuentas de usuario bloqueadas'),
+    ('VER_PERMISOS_POR_ROL', 'Permite ver los permisos de los roles'),
+    ('VER_PERMISOS', 'Permite ver los permisos existentes'),
+    ('ASIGNAR_PERMISOS_A_ROL', 'Permite asignar permisos a los roles'),
+    ('VER_USUARIOS_POR_ROL', 'Permite ver los usuarios que tienen un rol concreto'),
+    ('CREAR_DOCUMENTO', 'Permite crear documentos'),
+    ('EDITAR_DOCUMENTO', 'Permite editar documentos'),
+    ('ELIMINAR_DOCUMENTO', 'Permite eliminar documentos'),
+    ('VER_DOCUMENTOS', 'Permite ver documentos'),
+    ('EDITAR_CHUNKS', 'Permite editar chunks'),
+    ('VER_ESTADISTICAS', 'Permite ver estadísticas'),
+    ('VER_ETIQUETAS', 'Permite ver etiquetas'),
+    ('EDITAR_ETIQUETAS', 'Permite editar etiquetas'),
+    ('ELIMINAR_ETIQUETAS', 'Permite eliminar etiquetas'),
+    ('VER_SESIONES_ACTIVAS', 'Permite listar las sesiones activas');
+
+
+INSERT INTO permisos (nombre, descripcion) VALUES
+    ('CREAR_CHAT', 'Permite crear un chat'),
+    ('VER_CHATS', 'Permite ver todos los chats'),
+    ('VER_PREGUNTAS', 'Permite ver todas las preguntas'),
+    ('ELIMINAR_CHAT', 'Permite eliminar un chat'),
+    ('MODIFICAR_CHAT', 'Permite modificar un chat'),
+    ('VER_LISTA_CONTEXTOS', 'Permite ver las listas de contextos'),
+    ('CREAR_PREGUNTA', 'Permite crear preguntas'),
+    ('MODIFICAR_PREGUNTA', 'Permite modificar preguntas'),
+    ('CREAR_ACREDITACIONES', 'Permite crear acreditaciones'),
+    ('CREAR_MENSAJE', 'Permite crear mensajes'),
+    ('VER_CHUNKS', 'Permite ver chunks'),
+    ('ELIMINAR_CHUNKS', 'Permite eliminar chunks'),
+    ('VER_ACREDITACIONES', 'Permite ver acreditaciones');
+
+INSERT INTO rol_permisos (rol_id, permiso_id) VALUES
+    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'CREAR_CHAT')),
+    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'VER_CHATS')),
+    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'ELIMINAR_CHAT')),
+    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'MODIFICAR_CHAT')),
+    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'VER_LISTA_CONTEXTOS')),
+    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'CREAR_PREGUNTA')),
+    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'MODIFICAR_PREGUNTA')),
+    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'VER_ESTADISTICAS')),
+    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'VER_ETIQUETAS')),
+    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'EDITAR_ETIQUETAS')),
+    ((SELECT id FROM roles WHERE nombre = 'SUPERVISOR'), (SELECT id FROM permisos WHERE nombre = 'ELIMINAR_ETIQUETAS'));
+
+-- Asignar permisos al rol USUARIO ACREDITADOR
+INSERT INTO rol_permisos (rol_id, permiso_id) VALUES
+    ((SELECT id FROM roles WHERE nombre = 'ACREDITADOR'), (SELECT id FROM permisos WHERE nombre = 'CREAR_ACREDITACIONES')),
+    ((SELECT id FROM roles WHERE nombre = 'ACREDITADOR'), (SELECT id FROM permisos WHERE nombre = 'CREAR_MENSAJE')),
+    ((SELECT id FROM roles WHERE nombre = 'ACREDITADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_ACREDITACIONES')),
+    ((SELECT id FROM roles WHERE nombre = 'USUARIO'), (SELECT id FROM permisos WHERE nombre = 'CREAR_ACREDITACIONES')),
+    ((SELECT id FROM roles WHERE nombre = 'USUARIO'), (SELECT id FROM permisos WHERE nombre = 'CREAR_MENSAJE')),
+    ((SELECT id FROM roles WHERE nombre = 'USUARIO'), (SELECT id FROM permisos WHERE nombre = 'VER_ACREDITACIONES')),
+    ((SELECT id FROM roles WHERE nombre = 'USUARIO'), (SELECT id FROM permisos WHERE nombre = 'ELIMINAR_CHUNKS')),
+    ((SELECT id FROM roles WHERE nombre = 'USUARIO'), (SELECT id FROM permisos WHERE nombre = 'VER_CHUNKS')),
+    ((SELECT id FROM roles WHERE nombre = 'USUARIO'), (SELECT id FROM permisos WHERE nombre = 'EDITAR_CHUNKS'));
+
+-- Asignar permisos a roles
+INSERT INTO rol_permisos (rol_id, permiso_id) VALUES
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'EDITAR_USUARIO')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'ELIMINAR_USUARIO')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_USUARIOS')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_USUARIO')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'ASIGNAR_ROLES')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'GESTIONAR_PERMISOS')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_AUDITORIA')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'DESBLOQUEAR_CUENTAS')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_CUENTAS_BLOQUEADAS')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_PERMISOS_POR_ROL')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_PERMISOS')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'ASIGNAR_PERMISOS_A_ROL')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_USUARIOS_POR_ROL')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'CREAR_DOCUMENTO')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'EDITAR_DOCUMENTO')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'ELIMINAR_DOCUMENTO')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_DOCUMENTOS')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_ESTADISTICAS')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_ETIQUETAS')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'EDITAR_ETIQUETAS')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_SESIONES_ACTIVAS')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'ELIMINAR_ETIQUETAS')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'ELIMINAR_CHUNKS')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'VER_CHUNKS')),
+    ((SELECT id FROM roles WHERE nombre = 'ADMINISTRADOR'), (SELECT id FROM permisos WHERE nombre = 'EDITAR_CHUNKS')),
+    ((SELECT id FROM roles WHERE nombre = 'ASESOR'), (SELECT id FROM permisos WHERE nombre = 'ELIMINAR_CHUNKS')),
+    ((SELECT id FROM roles WHERE nombre = 'ASESOR'), (SELECT id FROM permisos WHERE nombre = 'VER_CHUNKS')),
+    ((SELECT id FROM roles WHERE nombre = 'ASESOR'), (SELECT id FROM permisos WHERE nombre = 'EDITAR_CHUNKS')),
+    ((SELECT id FROM roles WHERE nombre = 'ASESOR'), (SELECT id FROM permisos WHERE nombre = 'CREAR_DOCUMENTO')),
+    ((SELECT id FROM roles WHERE nombre = 'ASESOR'), (SELECT id FROM permisos WHERE nombre = 'EDITAR_DOCUMENTO')),
+    ((SELECT id FROM roles WHERE nombre = 'ASESOR'), (SELECT id FROM permisos WHERE nombre = 'ELIMINAR_DOCUMENTO')),
+    ((SELECT id FROM roles WHERE nombre = 'ASESOR'), (SELECT id FROM permisos WHERE nombre = 'VER_DOCUMENTOS'));
+-- 1. Tablas base (sin dependencias)

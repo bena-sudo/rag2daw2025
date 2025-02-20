@@ -22,9 +22,8 @@ public enum PermisoNombre {
 
     VER_SESIONES_ACTIVAS("Permite listar las sesiones activas"),
 
-
-    CREAR_DOCUMENTO("Permite crear documentos"), // ADMIN, ASESOR,USUARI
     EDITAR_DOCUMENTO("Permite editar documentos"), // ADMIN, ASESOR
+    CREAR_DOCUMENTO("Permite crear documentos"), // ADMIN, ASESOR,USUARI
     ELIMINAR_DOCUMENTO("Permite eliminar documentos"), // ADMIN, ASESOR,USUARI
     VER_DOCUMENTOS("Permite ver documentos"), // ADMIN, ASESOR,USUARI
 
