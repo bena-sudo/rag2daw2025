@@ -28,7 +28,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/mensajes")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 public class MensajeController {
 
     private final MensajeService mensajeService;

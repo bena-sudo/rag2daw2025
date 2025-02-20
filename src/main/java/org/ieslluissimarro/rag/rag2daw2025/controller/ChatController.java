@@ -46,7 +46,7 @@ import reactor.core.publisher.Flux;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("api/rag/v1/")
