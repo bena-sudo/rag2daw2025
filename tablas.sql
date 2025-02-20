@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS pregunta_documentchunk;
-DROP TABLE IF EXISTS documentchunks;
-DROP TABLE IF EXISTS preguntas;
-DROP TABLE IF EXISTS chats;
+DROP TABLE IF EXISTS pregunta_documentchunk CASCADE;
+DROP TABLE IF EXISTS documentchunks CASCADE;
+DROP TABLE IF EXISTS preguntas CASCADE;
+DROP TABLE IF EXISTS chats CASCADE;
 
 
 -- -----------------------------------------------------
@@ -9,18 +9,18 @@ DROP TABLE IF EXISTS chats;
 -- -----------------------------------------------------
 
 -- Eliminación de tablas en el orden correcto para evitar errores de dependencia
-DROP TABLE IF EXISTS usuarios_roles;
-DROP TABLE IF EXISTS usuarios_permisos;
-DROP TABLE IF EXISTS rol_permisos;
-DROP TABLE IF EXISTS bloqueo_cuentas;
-DROP TABLE IF EXISTS sesiones_activas;
-DROP TABLE IF EXISTS auditoria_eventos;
-DROP TABLE IF EXISTS intentos_login;
-DROP TABLE IF EXISTS refresh_tokens;
-DROP TABLE IF EXISTS verificationtoken;
-DROP TABLE IF EXISTS permisos;
-DROP TABLE IF EXISTS usuarios;
-DROP TABLE IF EXISTS roles;
+DROP TABLE IF EXISTS usuarios_roles CASCADE;
+DROP TABLE IF EXISTS usuarios_permisos CASCADE;
+DROP TABLE IF EXISTS rol_permisos CASCADE;
+DROP TABLE IF EXISTS bloqueo_cuentas CASCADE;
+DROP TABLE IF EXISTS sesiones_activas CASCADE;
+DROP TABLE IF EXISTS auditoria_eventos CASCADE;
+DROP TABLE IF EXISTS intentos_login CASCADE;
+DROP TABLE IF EXISTS refresh_tokens CASCADE;
+DROP TABLE IF EXISTS verificationtoken CASCADE;
+DROP TABLE IF EXISTS permisos CASCADE;
+DROP TABLE IF EXISTS usuarios CASCADE;
+DROP TABLE IF EXISTS roles CASCADE;
 --DROP TABLE IF EXISTS categorias;
 DROP TABLE IF EXISTS unidades_competencia CASCADE;
 DROP TABLE IF EXISTS cuestionarios CASCADE;
