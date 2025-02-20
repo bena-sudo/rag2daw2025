@@ -34,7 +34,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/sectores")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 public class SectorController {
 
     private final SectorService sectorService;

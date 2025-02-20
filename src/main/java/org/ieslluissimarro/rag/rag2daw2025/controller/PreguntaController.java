@@ -29,7 +29,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("api/rag/v1/")
