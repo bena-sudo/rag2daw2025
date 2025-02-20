@@ -2,6 +2,7 @@ package org.ieslluissimarro.rag.rag2daw2025.filters.specification;
 
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.FiltroBusqueda;
 import org.ieslluissimarro.rag.rag2daw2025.filters.specification.operacion.ContieneOperacionStrategy;
+import org.ieslluissimarro.rag.rag2daw2025.filters.specification.operacion.EmpiezaOperacionStrategy;
 import org.ieslluissimarro.rag.rag2daw2025.filters.specification.operacion.IgualOperacionStrategy;
 import org.ieslluissimarro.rag.rag2daw2025.filters.specification.operacion.MayorQueOperacionStrategy;
 import org.ieslluissimarro.rag.rag2daw2025.filters.specification.operacion.MenorQueOperacionStrategy;
@@ -28,7 +29,8 @@ public class FiltroBusquedaSpecification<T> implements Specification<T> {
                 new IgualOperacionStrategy(),
                 new ContieneOperacionStrategy(),
                 new MayorQueOperacionStrategy(),
-                new MenorQueOperacionStrategy()
+                new MenorQueOperacionStrategy(),
+                new EmpiezaOperacionStrategy()
         // Añadir nuevas estrategias aquí sin modificar otras clases
         );
     }

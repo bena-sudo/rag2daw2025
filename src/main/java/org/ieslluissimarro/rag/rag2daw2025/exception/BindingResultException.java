@@ -9,7 +9,6 @@ public class BindingResultException extends RuntimeException{
     private final Map<String, String> validationErrors;
 
     public BindingResultException(String errorCode, Map<String, String> validationErrors){
-        this.errorCode = errorCode;
-        this.validationErrors = validationErrors;
-    }
-}
+    private final Map<String,String> validationErrors;
+
+    public BindingResultException(String errorCode, Map<String,String> validationErrors) {

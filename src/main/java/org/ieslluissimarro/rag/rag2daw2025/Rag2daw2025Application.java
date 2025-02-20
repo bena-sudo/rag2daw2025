@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-@EnableScheduling  // Habilita el uso de @Scheduled
+@EnableScheduling
 public class Rag2daw2025Application {
 
 	public static void main(String[] args) {

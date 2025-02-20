@@ -12,7 +12,7 @@ public class BindingResultErrorsResponse {
     private Map<String, String> validationErrors;
     private String timestamp;
 
-    public BindingResultErrorsResponse(String errorCode, Map<String, String> validationErrors){
+    public BindingResultErrorsResponse(String errorCode, Map<String, String> validationErrors) {
         this.errorCode = errorCode;
         this.validationErrors = validationErrors;
         this.timestamp = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME);

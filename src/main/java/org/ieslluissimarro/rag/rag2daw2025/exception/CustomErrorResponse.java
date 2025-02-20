@@ -4,9 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
-
-@Getter
+import lombok.Data;
+@Data
 public class CustomErrorResponse {
     @Schema(example = "ERRROR_CODE_STRING", description = "Código del error (String)")
     private String errorCode;

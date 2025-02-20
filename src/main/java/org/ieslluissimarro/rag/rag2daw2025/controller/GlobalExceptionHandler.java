@@ -24,25 +24,26 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
     private final DataIntegrityViolationAnalyzer analyzer;
 
-    public GlobalExceptionHandler(DataIntegrityViolationAnalyzer analyzer){
+    public GlobalExceptionHandler(DataIntegrityViolationAnalyzer analyzer) {
         this.analyzer = analyzer;
     }
-
-    @ExceptionHandler(EntityIllegalArgumentException.class) //Datos incorrectos
+    
+    @ExceptionHandler(EntityIllegalArgumentException.class)
     public ResponseEntity<CustomErrorResponse> handleEntityIllegalArgumentException(EntityIllegalArgumentException ex) {
         CustomErrorResponse response = new CustomErrorResponse(ex.getErrorCode(), ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(EntityNotFoundException.class) //No se ha encontrado el dato
+    @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<CustomErrorResponse> handleEntityNotFoundException(EntityNotFoundException ex) {
         CustomErrorResponse response = new CustomErrorResponse(ex.getErrorCode(), ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(EntityAlreadyExistsException.class) //Se intenta crear un dato con una pk que ya existe
+    @ExceptionHandler(EntityAlreadyExistsException.class)
     public ResponseEntity<CustomErrorResponse> handleEntityAlreadyExistsException(EntityAlreadyExistsException ex) {
         CustomErrorResponse response = new CustomErrorResponse(ex.getErrorCode(), ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
@@ -62,30 +63,33 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class) //Error en las validaciones de los datos
-    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+    
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
+        //devolver BAD_REQUEST con la lista de errores
         ex.getBindingResult().getFieldErrors().forEach(error -> 
-            errors.put(error.getField(), error.getDefaultMessage())
-        );
+            errors.put(error.getField(), error.getDefaultMessage()));
         return ResponseEntity.badRequest().body(errors);
     }
 
+
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<CustomErrorResponse> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
-        String detailedMessage = (ex.getRootCause() != null) ? ex.getRootCause().getMessage() : ex.getMessage();
-
-        String errorCode = DataIntegrityViolationAnalyzer.analyzeErrorCode(detailedMessage);
-        String userMessage = DataIntegrityViolationAnalyzer.analyzeUserMessage(detailedMessage);
+        String detailedMessage = ex.getRootCause() != null ? ex.getRootCause().getMessage() : ex.getMessage();
+        String errorCode = analyzer.analyzeErrorCode(detailedMessage);
+        String userMessage = analyzer.analyzeUserMessage(detailedMessage);
 
         CustomErrorResponse response = new CustomErrorResponse(errorCode, userMessage);
         response.setDetailedMessage(detailedMessage);
 
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
+
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<CustomErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex){
-        CustomErrorResponse response = new CustomErrorResponse("DATA_CONVERSION_ERROR",
+    public ResponseEntity<CustomErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+        CustomErrorResponse response = new CustomErrorResponse("DATA_CONVERSION_ERROR", 
         "Error en el tipo de dato de uno de los atributos suministrados",
         ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
