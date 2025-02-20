@@ -273,7 +273,7 @@ public class UsuarioRestController {
                 // con el errorCode
                 BindingResultHelper.validateBindingResult(bindingResult, "USER_UPDATE_VALIDATION");
                 // No hay error de validación y procedemos a modificar el registro
-                return ResponseEntity.ok(usuarioService.update(new IdEntityLong(id).getValue(), usuarioEdit));
+                return ResponseEntity.ok(usuarioService.update(id, usuarioEdit));
         }
 
         /**
