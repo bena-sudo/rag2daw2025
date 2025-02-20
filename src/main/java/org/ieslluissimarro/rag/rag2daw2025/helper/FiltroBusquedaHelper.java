@@ -7,8 +7,8 @@ import org.ieslluissimarro.rag.rag2daw2025.model.enums.TipoOperacionBusqueda;
 
 public class FiltroBusquedaHelper {
 
-    public static List<FiltroBusqueda> createFiltroBusqueda(String[] filtros) {
-        List<FiltroBusqueda> listaFiltros = new ArrayList<>();
+    public static List<FiltroBusquedaQualitat> createFiltroBusqueda(String[] filtros) {
+        List<FiltroBusquedaQualitat> listaFiltros = new ArrayList<>();
 
         if (filtros == null || filtros.length == 0) {
             return listaFiltros;
@@ -39,7 +39,7 @@ public class FiltroBusquedaHelper {
             }
 
             // Crear un nuevo FiltroBusqueda y añadirlo a la lista
-            listaFiltros.add(new FiltroBusqueda(atributo, TipoOperacionBusqueda.deSimbolo(operador), valor));
+            listaFiltros.add(new FiltroBusquedaQualitat(atributo, TipoOperacionBusqueda.deSimbolo(operador), valor));
         }
         return listaFiltros;
     }

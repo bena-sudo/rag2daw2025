@@ -3,7 +3,7 @@ package org.ieslluissimarro.rag.rag2daw2025.srv.specification;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.ieslluissimarro.rag.rag2daw2025.helper.FiltroBusqueda;
+import org.ieslluissimarro.rag.rag2daw2025.helper.FiltroBusquedaQualitat;
 import org.ieslluissimarro.rag.rag2daw2025.srv.specification.operacion.ContieneOperacionStrategy;
 import org.ieslluissimarro.rag.rag2daw2025.srv.specification.operacion.IgualOperacionStrategy;
 import org.ieslluissimarro.rag.rag2daw2025.srv.specification.operacion.MayorQueOperacionStrategy;
@@ -19,7 +19,7 @@ import jakarta.persistence.criteria.Root;
 
 public class FiltroBusquedaSpecification<T> implements Specification<T> {
 
-    private List<FiltroBusqueda> filtrosBusqueda;
+    private List<FiltroBusquedaQualitat> filtrosBusqueda;
     private final List<OperacionBusquedaStrategy> estrategias;
 
     private List<OperacionBusquedaStrategy> getDefaultStrategies() {
@@ -32,21 +32,21 @@ public class FiltroBusquedaSpecification<T> implements Specification<T> {
         );
     }
 
-    public FiltroBusquedaSpecification(List<FiltroBusqueda> filtrosBusqueda) {
+    public FiltroBusquedaSpecification(List<FiltroBusquedaQualitat> filtrosBusqueda) {
         this.filtrosBusqueda = filtrosBusqueda;
         // Cuando no se especifican estrategias asignamos las estrategias de las
         // operaciones por defecto
         this.estrategias = getDefaultStrategies();
     }
 
-    public FiltroBusquedaSpecification(List<FiltroBusqueda> filtrosBusqueda,
+    public FiltroBusquedaSpecification(List<FiltroBusquedaQualitat> filtrosBusqueda,
             List<OperacionBusquedaStrategy> estrategias) {
         this.filtrosBusqueda = filtrosBusqueda;
         this.estrategias = estrategias;
     }
 
     // Método Builder
-    public Specification<T> build(List<FiltroBusqueda> filtros) {
+    public Specification<T> build(List<FiltroBusquedaQualitat> filtros) {
         if (filtros == null || filtros.isEmpty()) {
             return (root, query, cb) -> cb.conjunction();
         }
@@ -62,7 +62,7 @@ public class FiltroBusquedaSpecification<T> implements Specification<T> {
         };
     }
 
-    private Predicate crearPredicado(Root<T> root, CriteriaBuilder criteriaBuilder, FiltroBusqueda filtro) {
+    private Predicate crearPredicado(Root<T> root, CriteriaBuilder criteriaBuilder, FiltroBusquedaQualitat filtro) {
         return estrategias.stream()
                 .filter(estrategia -> estrategia.soportaOperacion(filtro.getOperacion()))
                 .findFirst()

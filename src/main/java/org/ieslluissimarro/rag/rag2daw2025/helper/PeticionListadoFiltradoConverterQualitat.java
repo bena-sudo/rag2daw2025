@@ -9,11 +9,11 @@ import org.ieslluissimarro.rag.rag2daw2025.model.dto.PeticionListadoFiltrado;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PeticionListadoFiltradoConverter {
+public class PeticionListadoFiltradoConverterQualitat {
 	
-	private final FiltroBusquedaFactory filtroBusquedaFactory;
+	private final FiltroBusquedaFactoryQualitat filtroBusquedaFactory;
 
-	public PeticionListadoFiltradoConverter(FiltroBusquedaFactory filtroBusquedaFactory) {
+	public PeticionListadoFiltradoConverterQualitat(FiltroBusquedaFactoryQualitat filtroBusquedaFactory) {
 		this.filtroBusquedaFactory = filtroBusquedaFactory;
 	}
 
@@ -25,7 +25,7 @@ public class PeticionListadoFiltradoConverter {
 		String[] sort
 	) throws FiltroException {
 
-		List<FiltroBusqueda> filtros = filtroBusquedaFactory.crearListaFiltrosBusqueda(filter);
+		List<FiltroBusquedaQualitat> filtros = filtroBusquedaFactory.crearListaFiltrosBusqueda(filter);
 
 		List<String> sortList = (sort != null) ? Arrays.asList(sort) : Collections.emptyList();
 		

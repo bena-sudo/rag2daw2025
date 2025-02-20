@@ -10,7 +10,7 @@ import org.ieslluissimarro.rag.rag2daw2025.model.enums.TipoOperacionBusqueda;
 import org.springframework.stereotype.Component;
 
 @Component
-public class FiltroBusquedaFactory {
+public class FiltroBusquedaFactoryQualitat {
 
     private final static CharSequence separador = ":";
 
@@ -21,14 +21,14 @@ public class FiltroBusquedaFactory {
      * @return Lista de FiltroBusqueda
      * @throws FiltroException
      */
-    public List<FiltroBusqueda> crearListaFiltrosBusqueda(String[] filtros) throws FiltroException {
+    public List<FiltroBusquedaQualitat> crearListaFiltrosBusqueda(String[] filtros) throws FiltroException {
         if (filtros == null || filtros.length == 0) {
             return Collections.emptyList();
         }
         try {
 
             return Arrays.stream(filtros)
-                    .map(FiltroBusquedaFactory::createFiltro)
+                    .map(FiltroBusquedaFactoryQualitat::createFiltro)
                     .collect(Collectors.toList());
         } catch (IllegalArgumentException e) {
             throw new FiltroException("BAD_FILTER",
@@ -36,7 +36,7 @@ public class FiltroBusquedaFactory {
         }
     }
 
-    private static FiltroBusqueda createFiltro(String filtro) {
+    private static FiltroBusquedaQualitat createFiltro(String filtro) {
         if (filtro == null || !filtro.contains(separador)) {
             throw new IllegalArgumentException("El filtro proporcionado no tiene el formato esperado" +
                     " (ATRIBUTO" + separador.toString() + "OPERACION" + separador.toString() + "VALOR).");
@@ -62,6 +62,6 @@ public class FiltroBusquedaFactory {
             throw new IllegalArgumentException("Operación no válida: " + operacionTexto);
         }
 
-        return new FiltroBusqueda(atributo, operacion, valor);
+        return new FiltroBusquedaQualitat(atributo, operacion, valor);
     }
 }

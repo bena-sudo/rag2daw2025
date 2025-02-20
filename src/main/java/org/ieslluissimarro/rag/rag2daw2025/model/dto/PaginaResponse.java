@@ -2,7 +2,7 @@ package org.ieslluissimarro.rag.rag2daw2025.model.dto;
 
 import java.util.List;
 
-import org.ieslluissimarro.rag.rag2daw2025.helper.FiltroBusqueda;
+import org.ieslluissimarro.rag.rag2daw2025.helper.FiltroBusquedaQualitat;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +19,6 @@ public class PaginaResponse<T> {
     int totalPages; //total páginas teniendo en cuenta el tamaño de cada página
     
     List<T> content; //lista de elementos
-    List<FiltroBusqueda> listaFiltros; // lista de filtros aplicados
+    List<FiltroBusquedaQualitat> listaFiltros; // lista de filtros aplicados
     List<String> listaOrdenaciones; // lista de Ordenaciones aplicadas
 }

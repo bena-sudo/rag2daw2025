@@ -8,7 +8,7 @@ import org.ieslluissimarro.rag.rag2daw2025.exception.BindingResultErrorsResponse
 import org.ieslluissimarro.rag.rag2daw2025.exception.CustomErrorResponse;
 import org.ieslluissimarro.rag.rag2daw2025.exception.FiltroException;
 import org.ieslluissimarro.rag.rag2daw2025.helper.BindingResultHelper;
-import org.ieslluissimarro.rag.rag2daw2025.helper.FiltroBusqueda;
+import org.ieslluissimarro.rag.rag2daw2025.helper.FiltroBusquedaQualitat;
 import org.ieslluissimarro.rag.rag2daw2025.helper.FiltroBusquedaHelper;
 import org.ieslluissimarro.rag.rag2daw2025.helper.PaginationHelper;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.ChatEdit;
@@ -77,7 +77,7 @@ public class ChatController {
             @RequestParam(defaultValue = "50") int size,
             @RequestParam(defaultValue = "idChat,asc") String[] sort) throws FiltroException {
 
-        List<FiltroBusqueda> listarFiltros = FiltroBusquedaHelper.createFiltroBusqueda(filter);
+        List<FiltroBusquedaQualitat> listarFiltros = FiltroBusquedaHelper.createFiltroBusqueda(filter);
 
         Pageable paging = PaginationHelper.createPageable(page, size, sort);
 

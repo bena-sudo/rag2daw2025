@@ -1,6 +1,6 @@
 package org.ieslluissimarro.rag.rag2daw2025.srv.specification;
 
-import org.ieslluissimarro.rag.rag2daw2025.helper.FiltroBusqueda;
+import org.ieslluissimarro.rag.rag2daw2025.helper.FiltroBusquedaQualitat;
 import org.ieslluissimarro.rag.rag2daw2025.model.enums.TipoOperacionBusqueda;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -19,7 +19,7 @@ public interface OperacionBusquedaStrategy {
    Predicate crearPredicado(
        Root<?> root, 
        CriteriaBuilder criteriaBuilder, 
-       FiltroBusqueda filtro
+       FiltroBusquedaQualitat filtro
    );
 
 
