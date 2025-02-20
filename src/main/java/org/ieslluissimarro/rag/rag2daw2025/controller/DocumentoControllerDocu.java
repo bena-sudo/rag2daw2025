@@ -39,7 +39,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v2")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin()
 public class DocumentoControllerDocu {
 
     private final DocumentoServiceDocu documentoService;
