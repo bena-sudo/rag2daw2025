@@ -14,6 +14,7 @@ import org.ieslluissimarro.rag.rag2daw2025.srv.DocumentoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -48,6 +49,7 @@ public class DocumentoController {
     // ResponseEntity.status(HttpStatus.CREATED).body(documentoService.create(documentoNew));
     // }
 
+    @PreAuthorize("@authorizationService.hasPermission('CREAR_DOCUMENTO')")
     @PostMapping(value = "/documento",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<DocumentoNew> create(
         @Valid @ModelAttribute DocumentoNew documentoNew,
@@ -58,11 +60,13 @@ public class DocumentoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(documentoService.create(documentoNew));
     }
 
+    @PreAuthorize("@authorizationService.hasPermission('VER_DOCUMENTOS')")
     @GetMapping("/documento/{id}")
     public ResponseEntity<DocumentoInfo> read(@PathVariable Long id) {
         return ResponseEntity.ok(documentoService.read(id));
     }
 
+    @PreAuthorize("@authorizationService.hasPermission('EDITAR_DOCUMENTO')")
     @PutMapping("/documento/{id}")
     public ResponseEntity<DocumentoEdit> update(@PathVariable Long id, @Valid @RequestBody DocumentoEdit documentoEdit,
             BindingResult bindingResult) {
@@ -70,12 +74,14 @@ public class DocumentoController {
         return ResponseEntity.ok(documentoService.update(id, documentoEdit));
     }
 
+    @PreAuthorize("@authorizationService.hasPermission('ELIMINAR_DOCUMENTO')")
     @DeleteMapping("/documento/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         documentoService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("@authorizationService.hasPermission('VER_DOCUMENTOS')")
     @GetMapping("/documentos")
     public ResponseEntity<PaginaResponse<DocumentoList>> getAllDocumentosGET(
             @RequestParam(required = false) List<String> filter,
@@ -85,6 +91,7 @@ public class DocumentoController {
         return ResponseEntity.ok(documentoService.findAll(filter, page, size, sort));
     }
 
+    @PreAuthorize("@authorizationService.hasPermission('VER_DOCUMENTOS')")
     @PostMapping("/documentos")
     public ResponseEntity<PaginaResponse<DocumentoList>> getAllDocumentosPOST(
             @Valid @RequestBody PeticionListadoFiltrado peticionListadoFiltrado) throws FiltroException {

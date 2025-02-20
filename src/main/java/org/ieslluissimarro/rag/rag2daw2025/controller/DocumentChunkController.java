@@ -13,6 +13,7 @@ import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoChunkList;
 import org.ieslluissimarro.rag.rag2daw2025.srv.DocumentoChunkService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,16 +36,20 @@ import lombok.RequiredArgsConstructor;
 public class DocumentChunkController {
     private final DocumentoChunkService documentChunkService;
 
+    @PreAuthorize("@authorizationService.hasPermission('EDITAR_CHUNKS')")
     @PostMapping("/chunk")
     public ResponseEntity<DocumentoChunkEdit> create(@Valid @RequestBody DocumentoChunkEdit documentoChunkEdit, BindingResult bindingResult) {
         BindingResultHelper.validateBindingResult(bindingResult, "CHUNK_CREATE_VALIDATION");
         return ResponseEntity.status(HttpStatus.CREATED).body(documentChunkService.create(documentoChunkEdit));
     }
+
+    @PreAuthorize("@authorizationService.hasPermission('VER_CHUNKS')")
     @GetMapping("/chunk/{id}")
     public ResponseEntity<DocumentoChunkInfo> read(@PathVariable String id) {
             return ResponseEntity.ok(documentChunkService.read(new IdEntityLong(id).getValue()));
     }
 
+    @PreAuthorize("@authorizationService.hasPermission('EDITAR_CHUNKS')")
     @PutMapping("/chunk/{id}")
     public ResponseEntity<DocumentoChunkEdit> update(@PathVariable String id,
                     @Valid @RequestBody DocumentoChunkEdit documentoChunkEdit, BindingResult bindingResult) {
@@ -52,12 +57,14 @@ public class DocumentChunkController {
             return ResponseEntity.ok(documentChunkService.update(new IdEntityLong(id).getValue(), documentoChunkEdit));
     }
 
+    @PreAuthorize("@authorizationService.hasPermission('ELIMINAR_CHUNKS')")
     @DeleteMapping("/chunk/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id) {
         documentChunkService.delete(new IdEntityLong(id).getValue());
             return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("@authorizationService.hasPermission('VER_CHUNKS')")
     @GetMapping("/chunks")
     public ResponseEntity<PaginaResponse<DocumentoChunkList>> getAllChunksGET(
                     @RequestParam(required = false) List<String> filter,
@@ -67,6 +74,7 @@ public class DocumentChunkController {
             return ResponseEntity.ok(documentChunkService.findAll(filter, page, size, sort));
     }
 
+    @PreAuthorize("@authorizationService.hasPermission('VER_CHUNKS')")
     @PostMapping("/chunks")
     public ResponseEntity<PaginaResponse<DocumentoChunkList>> getAllChunksPOST(
                     @Valid @RequestBody PeticionListadoFiltrado peticionListadoFiltrado) throws FiltroException {
