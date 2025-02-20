@@ -11,6 +11,7 @@ import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoEdit;
 import org.ieslluissimarro.rag.rag2daw2025.srv.DocumentoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,6 +47,7 @@ public class DocumentoController {
         @ApiResponse(responseCode = "400", description = "Errores de validación en los datos proporcionados", 
         content = @Content(mediaType = "application/json", schema = @Schema(implementation = BindingResultErrorsResponse.class)))
     })
+    @PreAuthorize("@authorizationService.hasPermission('CREAR_DOCUMENTO_USUARIO')")
     @PostMapping
     public ResponseEntity<DocumentoEdit> create(@Valid @RequestBody DocumentoEdit documentoEdit, BindingResult bindingResult) {
         BindingResultHelper.validateBindingResult(bindingResult, "DOCUMENTO_CREATE_VALIDATION");
@@ -86,6 +88,7 @@ public class DocumentoController {
         @ApiResponse(responseCode = "404", description = "Documento no encontrado", 
         content = @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)))
     })
+    @PreAuthorize("@authorizationService.hasPermission('ELIMINAR_DOCUMENTO_USUARIO')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         documentoService.delete(id);
@@ -100,6 +103,7 @@ public class DocumentoController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) }),
         @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
+    @PreAuthorize("@authorizationService.hasPermission('VER_DOCUMENTOS_USUARIO')")
     @GetMapping
     public ResponseEntity<PaginaResponse<DocumentoEdit>> getAllDocumentos(
                         @RequestParam(required = false) List<String> filter,

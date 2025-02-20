@@ -9,6 +9,7 @@ import org.ieslluissimarro.rag.rag2daw2025.model.dto.MensajeEdit;
 import org.ieslluissimarro.rag.rag2daw2025.srv.MensajeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,6 +33,7 @@ public class MensajeController {
 
     private final MensajeService mensajeService;
 
+    @PreAuthorize("@authorizationService.hasPermission('CREAR_ACREDITACIONES')")
     @PostMapping
     public ResponseEntity<MensajeEdit> create(@Valid @RequestBody MensajeEdit mensajeEdit, BindingResult bindingResult) {
         BindingResultHelper.validateBindingResult(bindingResult, "MENSAJE_CREATE_VALIDATION");

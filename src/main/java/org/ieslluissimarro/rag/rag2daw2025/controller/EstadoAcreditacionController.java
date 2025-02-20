@@ -10,6 +10,7 @@ import org.ieslluissimarro.rag.rag2daw2025.model.dto.EstadoAcreditacionEdit;
 import org.ieslluissimarro.rag.rag2daw2025.srv.EstadoAcreditacionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,6 +39,7 @@ public class EstadoAcreditacionController {
 
     private final EstadoAcreditacionService estadoAcreditacionService;
 
+    @PreAuthorize("@authorizationService.hasPermission('CREAR_ACREDITACIONES')")
     @PostMapping
     public ResponseEntity<EstadoAcreditacionEdit> create(@Valid @RequestBody EstadoAcreditacionEdit estadoAcreditacionEdit, BindingResult bindingResult) {
         BindingResultHelper.validateBindingResult(bindingResult, "ESTADO_ACREDITACION_CREATE_VALIDATION");
@@ -49,6 +51,7 @@ public class EstadoAcreditacionController {
         return ResponseEntity.ok(estadoAcreditacionService.read(id));
     }
 
+    @PreAuthorize("@authorizationService.hasPermission('ASSIGNAR_ACREDITACIONES')")
     @PutMapping("/{id}")
     public ResponseEntity<EstadoAcreditacionEdit> update(@PathVariable Long id, @Valid @RequestBody EstadoAcreditacionEdit estadoAcreditacionEdit,
             BindingResult bindingResult) {
@@ -70,6 +73,7 @@ public class EstadoAcreditacionController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = CustomErrorResponse.class)) }),
         @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
+    @PreAuthorize("@authorizationService.hasPermission('VER_ACREDITACIONES')")
     @GetMapping
     public ResponseEntity<PaginaResponse<EstadoAcreditacionEdit>> getAllEstadoAcreditacion(
                         @RequestParam(required = false) List<String> filter,
