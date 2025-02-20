@@ -418,3 +418,65 @@ Content-Type: application/json
 ###Quitar sesion activa por administrador de cualquier sesión activa
 DELETE http://localhost:8090/auth/logout/13
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjaHJpc3RpYW5jaXNjYXJyQGhvdG1haWwuY29tIiwiaWF0IjoxNzM5ODkzODg4LCJleHAiOjE3Mzk5Mjk4ODh9.zePqgPgVbQstUNsWRic9qG1IcdoE3RC2MoSERh3auMY
+
+
+
+### DOCUMENTAL
+
+## getEstadisticasPaginadas
+GET http://localhost:8090/api/v1/estadisticas HTTP/1.1
+Content-Type: application/json
+###
+
+## getEstadisticasPaginadas
+GET http://localhost:8090/api/v1/estadistica/por-fecha HTTP/1.1
+Content-Type: application/json
+###
+
+## getAllEstadistica
+GET http://localhost:8090/api/v1/estadistica/estadisticas?filter=tiempoRevision:IGUAL:95&page=0&size=10&sort=id HTTP/1.1
+Content-Type: application/json
+###
+
+## getAllEstadistica
+GET http://localhost:8090/api/v1/estadistica/estadisticas?filter=idDocumento:IGUAL:2&page=0&size=10&sort=id HTTP/1.1
+Content-Type: application/json
+###
+
+## getAllEstadistica
+GET http://localhost:8090/api/v1/estadistica/estadisticas?filter=id:IGUAL:7&page=0&size=10&sort=id HTTP/1.1
+Content-Type: application/json
+###
+
+## getAllEstadistica
+GET http://localhost:8090/api/v1/estadistica/estadisticas?filter=usuario:IGUAL:3&page=0&size=10&sort=id HTTP/1.1
+Content-Type: application/json
+###
+
+## getAllEstadistica
+GET http://localhost:8090/api/v1/estadistica/estadisticas?filter=idChunk:IGUAL:3&page=0&size=10&sort=id HTTP/1.1
+Content-Type: application/json
+###
+GET http://localhost:8090/api/v1/chunks?filter=idDocumento:IGUAL:2&page=0&size=6&sort=id HTTP/1.1
+Content-Type: application/json
+
+###
+GET http://localhost:8090/api/v1/chunks HTTP/1.1
+Content-Type: application/json
+
+### Crear un nuevo DocumentoChunkEdit
+POST http://localhost:8090/api/v1/chunk HTTP/1.1
+Content-Type: application/json
+
+{
+  "idDocumento": 2,
+  "idDocRag": 123,
+  "chunkOrder": 1,
+  "chunkText": "Este es el texto del chunk",
+  "chunkedBy": 456,
+  "estado": "PENDIENTE"
+}
+
+###
+GET http://localhost:8090/api/v1/rag/confirmChunk/3/1 HTTP/1.1
+Content-Type: application/json

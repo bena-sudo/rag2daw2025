@@ -1,0 +1,63 @@
+## create
+POST http://localhost:8090/api/v1/etiqueta HTTP/1.1
+Content-Type: application/json
+
+{
+    "nombre": "OFICIALES"
+}
+###
+
+##  read
+GET http://localhost:8090/api/v1/etiqueta/1 HTTP/1.1
+Content-Type: application/json
+###
+
+##  update
+PUT http://localhost:8090/api/v1/etiqueta/1 HTTP/1.1
+Content-Type: application/json
+
+{
+    "id": 1,
+    "nombre": "DOCUMENTAL"
+}
+###
+
+## delete
+DELETE  http://localhost:8090/api/v1/etiqueta/1 HTTP/1.1
+Content-Type: application/json
+###
+
+## Filtro
+POST http://localhost:8090/api/v1/etiqueta/etiquetas HTTP/1.1
+Content-Type: application/json
+
+{
+    "listaFiltros": [
+        {
+            "atributo": "nombre",
+            "operacion": "CONTIENE",
+            "valor": "C"
+        }
+    ],
+    "page": 0,
+    "size": 10,
+    "sort": [
+        "nombre,asc"
+    ]
+}
+###
+
+## Filtro
+GET http://localhost:8090/api/v1/etiqueta/etiquetas?filter=id:IGUAL:1 HTTP/1.1
+Content-Type: application/json
+###
+
+## Filtro
+GET http://localhost:8090/api/v1/etiqueta/etiquetas?filter=nombre:CONTIENE:OF HTTP/1.1
+Content-Type: application/json
+###
+
+## 
+GET http://localhost:8090/api/v1/etiqueta/etiquetas HTTP/1.1
+Content-Type: application/json
+###

@@ -35,3 +35,5 @@ build/
 ### SQL ###
 *.sql
 !tablas.sql
+
+*.http

@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.ieslluissimarro.rag.rag2daw2025.exception.DataValidationException;
+import org.ieslluissimarro.rag.rag2daw2025.exception.EntityIllegalArgumentException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.EntityNotFoundException;
 import org.ieslluissimarro.rag.rag2daw2025.exception.FiltroException;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PaginaResponse;
@@ -213,7 +215,10 @@ entity=usuarioRepository.save(entity);
 
     @Override
     public UsuarioEdit update(Long id, UsuarioEdit usuarioEdit) {
-        /*if (!id.equals(usuarioEdit.getId())) {
+        if (id == null) {
+            throw new DataValidationException("ID_NULL", "El ID no puede ser nulo.");
+        }
+         /*if (!id.equals(usuarioEdit.getId())) {
             throw new EntityIllegalArgumentException("USER_ID_MISMATCH", 
                 "El ID proporcionado no coincide con el ID del usuario.");
         }
