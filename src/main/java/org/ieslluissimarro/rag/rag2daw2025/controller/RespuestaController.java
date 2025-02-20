@@ -33,7 +33,6 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/respuestas")
-@CrossOrigin
 public class RespuestaController {
 
     private final RespuestaService respuestaService;

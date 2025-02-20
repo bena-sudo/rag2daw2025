@@ -54,7 +54,6 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@CrossOrigin(origins = "http://13.73.226.200")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {

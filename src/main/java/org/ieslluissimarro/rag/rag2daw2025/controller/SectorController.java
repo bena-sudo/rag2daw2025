@@ -31,7 +31,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-@RestController
+
 @RequiredArgsConstructor
 @RequestMapping("api/v1/sectores")
 @CrossOrigin

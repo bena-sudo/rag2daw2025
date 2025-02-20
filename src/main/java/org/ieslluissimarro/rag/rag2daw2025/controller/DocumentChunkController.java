@@ -37,7 +37,6 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
-@CrossOrigin()
 public class DocumentChunkController {
 
         private final DocumentoChunkService documentChunkService;

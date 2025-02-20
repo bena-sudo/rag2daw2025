@@ -35,7 +35,6 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/documentos")
-@CrossOrigin
 public class DocumentoController {
 
     private final DocumentoService documentoService;

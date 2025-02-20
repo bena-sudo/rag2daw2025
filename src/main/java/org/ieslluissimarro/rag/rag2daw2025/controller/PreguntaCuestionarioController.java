@@ -25,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/preguntas")
-@CrossOrigin
 public class PreguntaCuestionarioController {
 
     private final PreguntaCuestionarioService preguntaService;

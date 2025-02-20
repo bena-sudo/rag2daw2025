@@ -12,7 +12,6 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @RestController
 @RequestMapping("api/v1/sse")
-@CrossOrigin(origins = "http://localhost:4200")
 public class DocumentoSseController {
 
     private final SseDocumentosService sseDocumentosService;

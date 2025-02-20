@@ -34,7 +34,6 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/unidadCompetencia")
-@CrossOrigin
 public class UnidadCompetenciaController {
 
     private final UnidadCompetenciaService unidadCompetenciaService;

@@ -46,7 +46,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
-@CrossOrigin
+
 @RestController
 @RequestMapping("api/")
 public class UsuarioRestController {

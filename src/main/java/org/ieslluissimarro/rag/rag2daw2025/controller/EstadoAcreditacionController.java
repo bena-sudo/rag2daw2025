@@ -34,7 +34,6 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/estadoAcreditacion")
-@CrossOrigin
 public class EstadoAcreditacionController {
 
     private final EstadoAcreditacionService estadoAcreditacionService;

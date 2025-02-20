@@ -28,7 +28,6 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/mensajes")
-@CrossOrigin
 public class MensajeController {
 
     private final MensajeService mensajeService;

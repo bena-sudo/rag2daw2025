@@ -46,7 +46,6 @@ import reactor.core.publisher.Flux;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
-@CrossOrigin
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("api/rag/v1/")
