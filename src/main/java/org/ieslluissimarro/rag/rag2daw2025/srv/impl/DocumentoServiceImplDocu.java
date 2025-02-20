@@ -12,13 +12,13 @@ import org.ieslluissimarro.rag.rag2daw2025.filters.specification.FiltroBusquedaS
 import org.ieslluissimarro.rag.rag2daw2025.filters.utils.PaginationFactory;
 import org.ieslluissimarro.rag.rag2daw2025.filters.utils.PeticionListadoFiltradoConverter;
 import org.ieslluissimarro.rag.rag2daw2025.model.db.DocumentoDB;
-import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoEdit;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoEditDocu;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoList;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoNew;
-import org.ieslluissimarro.rag.rag2daw2025.repository.DocumentoRepository;
-import org.ieslluissimarro.rag.rag2daw2025.srv.DocumentoService;
-import org.ieslluissimarro.rag.rag2daw2025.srv.mapper.DocumentoMapper;
+import org.ieslluissimarro.rag.rag2daw2025.repository.DocumentoRepositoryDocu;
+import org.ieslluissimarro.rag.rag2daw2025.srv.DocumentoServiceDocu;
+import org.ieslluissimarro.rag.rag2daw2025.srv.mapper.DocumentoMapperDocu;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,9 +31,9 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class DocumentoServiceImpl implements DocumentoService {
+public class DocumentoServiceImplDocu implements DocumentoServiceDocu {
 
-    private final DocumentoRepository documentoRepository;
+    private final DocumentoRepositoryDocu documentoRepository;
     private final PaginationFactory paginationFactory;
     private final PeticionListadoFiltradoConverter peticionConverter;
 
@@ -45,27 +45,27 @@ public class DocumentoServiceImpl implements DocumentoService {
         if (documentoNew.getMultipart() == null || documentoNew.getMultipart().isEmpty()) {
             throw new MultipartProcessingException("BAD_MULTIPART", "El archivo no puede estar vacío");
         }
-        DocumentoDB entity = DocumentoMapper.INSTANCE.documentoNewToDocumentoDB(documentoNew);
+        DocumentoDB entity = DocumentoMapperDocu.INSTANCE.documentoNewToDocumentoDB(documentoNew);
         
-        return DocumentoMapper.INSTANCE.documentoDBToDocumentoNew(documentoRepository.save(entity));
+        return DocumentoMapperDocu.INSTANCE.documentoDBToDocumentoNew(documentoRepository.save(entity));
     }
 
     @Override
     public DocumentoInfo read(Long id) {
         DocumentoDB entity = documentoRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("DOCUMENT_ID_MISMATCH", "El documento con ID " + id + " no existe"));
-        return DocumentoMapper.INSTANCE.documentoDBToDocumentoInfo(entity);
+        return DocumentoMapperDocu.INSTANCE.documentoDBToDocumentoInfo(entity);
     }
 
     @Override
-    public DocumentoEdit update(Long id, DocumentoEdit documentoEdit) {
+    public DocumentoEditDocu update(Long id, DocumentoEditDocu documentoEdit) {
         if (!id.equals(documentoEdit.getId())) {
             throw new EntityIllegalArgumentException("DOCUMENT_ID_MISMATCH", "El ID proporcionado no coincide con el ID del documento");
         }
         DocumentoDB existingEntity = documentoRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("DOCUMENT_NOT_FOUND_FOR_UPDATE", "No se puede actualizar. El curso con ID " + id + " no existe"));
-        DocumentoMapper.INSTANCE.updateDocumentoDBFromDocumentoEdit(documentoEdit, existingEntity);
-        return DocumentoMapper.INSTANCE.documentoDBToDocumentoEdit(documentoRepository.save(existingEntity));
+        DocumentoMapperDocu.INSTANCE.updateDocumentoDBFromDocumentoEdit(documentoEdit, existingEntity);
+        return DocumentoMapperDocu.INSTANCE.documentoDBToDocumentoEdit(documentoRepository.save(existingEntity));
     }
 
     @Override
@@ -96,7 +96,7 @@ public class DocumentoServiceImpl implements DocumentoService {
             // Filtrar y ordenar: puede producir cualquier de los errores controlados en el catch
             Page<DocumentoDB> page = documentoRepository.findAll(filtrosBusquedaSpecification, pageable);
             //Devolver respuesta
-            return DocumentoMapper.pageToPaginaResponseDocumentoList(
+            return DocumentoMapperDocu.pageToPaginaResponseDocumentoList(
                 page,
                 peticionListadoFiltrado.getListaFiltros(), 
                 peticionListadoFiltrado.getSort());

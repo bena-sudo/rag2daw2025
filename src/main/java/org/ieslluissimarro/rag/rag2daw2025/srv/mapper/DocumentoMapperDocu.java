@@ -5,7 +5,7 @@ import java.util.List;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.FiltroBusqueda;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PaginaResponse;
 import org.ieslluissimarro.rag.rag2daw2025.model.db.DocumentoDB;
-import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoEdit;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoEditDocu;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoList;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoNew;
@@ -18,11 +18,11 @@ import org.springframework.data.domain.Page;
 
 @SuppressWarnings("unused")
 @Mapper(imports = {MultipartUtils.class})
-public interface DocumentoMapper {
+public interface DocumentoMapperDocu {
     
-    DocumentoMapper INSTANCE = Mappers.getMapper(DocumentoMapper.class);
+    DocumentoMapperDocu INSTANCE = Mappers.getMapper(DocumentoMapperDocu.class);
 
-    DocumentoEdit documentoDBToDocumentoEdit(DocumentoDB documentoDb);
+    DocumentoEditDocu documentoDBToDocumentoEdit(DocumentoDB documentoDb);
 
     DocumentoInfo documentoDBToDocumentoInfo(DocumentoDB documentoDb);
 
@@ -46,7 +46,7 @@ public interface DocumentoMapper {
     @Mapping(target = "base64Documento", expression = "java(documentoEdit.getMultipart() != null ? MultipartUtils.multipartToString(documentoEdit.getMultipart()) : documentoDb.getBase64Documento())")
     @Mapping(target = "extensionDocumento", expression = "java(documentoEdit.getMultipart() != null ? MultipartUtils.getExtensionMultipartfile(documentoEdit.getMultipart()) : documentoDb.getExtensionDocumento())")
     @Mapping(target = "contentTypeDocumento", expression = "java(documentoEdit.getMultipart() != null ? documentoEdit.getMultipart().getContentType() : documentoDb.getContentTypeDocumento())")
-    void updateDocumentoDBFromDocumentoEdit(DocumentoEdit documentoEdit, @MappingTarget DocumentoDB documentoDb);
+    void updateDocumentoDBFromDocumentoEdit(DocumentoEditDocu documentoEdit, @MappingTarget DocumentoDB documentoDb);
 
     /**
      * Conversión de una página de DocumentoDB en una respuesta paginada

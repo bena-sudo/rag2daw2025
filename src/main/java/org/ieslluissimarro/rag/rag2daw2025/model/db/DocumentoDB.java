@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.ieslluissimarro.rag.rag2daw2025.model.enums.EstadoDocumento;
+import org.ieslluissimarro.rag.rag2daw2025.model.enums.EstadoDocumentoDocu;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
@@ -78,7 +78,7 @@ public class DocumentoDB {
     @Enumerated(EnumType.STRING)
     @Column(length = 20, name = "estado_documento")
     @Schema(example = "EN_REVISION", description = "Estado del documento")
-    private EstadoDocumento estado;
+    private EstadoDocumentoDocu estado;
 
     @Column(name = "fecha_creacion", insertable = false, updatable = false, nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @Schema(example = "2023-01-01T12:00:00", description = "Fecha y hora de creación del documento")

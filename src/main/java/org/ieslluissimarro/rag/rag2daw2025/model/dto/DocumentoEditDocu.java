@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.ieslluissimarro.rag.rag2daw2025.model.db.EtiquetaDB;
-import org.ieslluissimarro.rag.rag2daw2025.model.enums.EstadoDocumento;
+import org.ieslluissimarro.rag.rag2daw2025.model.enums.EstadoDocumentoDocu;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.constraints.NotNull;
@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DocumentoEdit {
+public class DocumentoEditDocu {
 
    private Long id;
 
@@ -26,7 +26,7 @@ public class DocumentoEdit {
 
    private String comentario;
 
-   private EstadoDocumento estado;
+   private EstadoDocumentoDocu estado;
 
    private String nombreFichero;
 

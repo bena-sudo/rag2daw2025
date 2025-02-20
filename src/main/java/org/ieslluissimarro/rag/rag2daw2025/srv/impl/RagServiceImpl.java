@@ -12,7 +12,7 @@ import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoChunkList;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.enums.EstadoChunk;
 import org.ieslluissimarro.rag.rag2daw2025.srv.DocumentoChunkService;
-import org.ieslluissimarro.rag.rag2daw2025.srv.DocumentoService;
+import org.ieslluissimarro.rag.rag2daw2025.srv.DocumentoServiceDocu;
 import org.ieslluissimarro.rag.rag2daw2025.srv.RagService;
 import org.ieslluissimarro.rag.rag2daw2025.srv.mapper.DocumentoChunkMapper;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RagServiceImpl implements RagService {
 
-    private final DocumentoService documentoService;  
+    private final DocumentoServiceDocu documentoService;  
     private final DocumentoChunkService documentoChunkService;  
 
     @Override

@@ -6,11 +6,11 @@ import org.ieslluissimarro.rag.rag2daw2025.exception.FiltroException;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PaginaResponse;
 import org.ieslluissimarro.rag.rag2daw2025.filters.model.PeticionListadoFiltrado;
 import org.ieslluissimarro.rag.rag2daw2025.helper.BindingResultHelper;
-import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoEdit;
+import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoEditDocu;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoInfo;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoList;
 import org.ieslluissimarro.rag.rag2daw2025.model.dto.DocumentoNew;
-import org.ieslluissimarro.rag.rag2daw2025.srv.DocumentoService;
+import org.ieslluissimarro.rag.rag2daw2025.srv.DocumentoServiceDocu;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -38,11 +38,11 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v2")
 @CrossOrigin(origins = "http://localhost:4200")
-public class DocumentoController {
+public class DocumentoControllerDocu {
 
-    private final DocumentoService documentoService;
+    private final DocumentoServiceDocu documentoService;
 
     /**
      * Crea un nuevo documento en el sistema.
@@ -106,12 +106,12 @@ public class DocumentoController {
      */
     @Operation(summary = "Actualiza los datos de un documento existente")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Documento actualizado exitosamente", content = @Content(mediaType = "application/json", schema = @Schema(implementation = DocumentoEdit.class))),
+            @ApiResponse(responseCode = "200", description = "Documento actualizado exitosamente", content = @Content(mediaType = "application/json", schema = @Schema(implementation = DocumentoEditDocu.class))),
             @ApiResponse(responseCode = "400", description = "Error de validación en los datos proporcionados", content = @Content(mediaType = "application/json"))
     })
     @PreAuthorize("@authorizationService.hasPermission('EDITAR_DOCUMENTO')")
     @PutMapping("/documento/{id}")
-    public ResponseEntity<DocumentoEdit> update(@PathVariable Long id, @Valid @RequestBody DocumentoEdit documentoEdit,
+    public ResponseEntity<DocumentoEditDocu> update(@PathVariable Long id, @Valid @RequestBody DocumentoEditDocu documentoEdit,
             BindingResult bindingResult) {
         BindingResultHelper.validateBindingResult(bindingResult, "DOCUMENT_UPDATE_VALIDATION");
         return ResponseEntity.ok(documentoService.update(id, documentoEdit));
