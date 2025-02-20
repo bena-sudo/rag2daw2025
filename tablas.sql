@@ -363,7 +363,7 @@ CREATE TABLE documentos (
     fecha_revision TIMESTAMP,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE SET NULL
 );
-
+--Tabla
 -- Tabla de estado de acreditación
 CREATE TABLE estado_acreditacion (
     id SERIAL PRIMARY KEY,
