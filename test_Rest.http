@@ -1,0 +1,420 @@
+###
+## crear nuevo usuario edgar ok
+POST http://localhost:8090/auth/nuevo HTTP/1.1
+Content-Type: application/json
+
+{
+    "nickname": "ergegregergreg",
+    "nombre": "Edgar Tormo Jornet",
+    "email": "edgtorjor@alu.edu.gva.es",
+    "password": "TeLoDigo@2",
+    "telefono": "123456789"
+}
+
+###
+## crear nuevo usuario ADMINISTRADOR ok
+POST http://localhost:8090/auth/nuevo HTTP/1.1
+Content-Type: application/json
+
+{
+    "nickname": "Administrador",
+    "nombre": "Administrador",
+    "email": "administrador@gmail.com",
+    "password": "Administrador@2",
+    "telefono": "123456789"
+}
+
+
+###
+## login error datos incorrectos
+POST http://localhost:8090/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "edgar.t@gmail",
+    "password": "TeLoDigo@2"
+}
+
+###
+## login OK
+POST http://localhost:8090/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "christianciscarr@hotmail.com",
+    "password": "Telocuento1@"
+}
+
+###
+## login OK
+POST http://localhost:8090/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "edgtorjor@alu.edu.gva.es",
+    "password": "TeLoDigo@2"
+}
+
+
+###
+## login OK ADMINISTRADOR
+POST http://localhost:8090/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "administrador@gmail.com",
+    "password": "Administrador@2"
+}
+
+###
+## getAll usuarios con JWT
+GET http://localhost:8090/api/usuarios HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+
+
+
+
+###
+## getAllUsuarios con ordenación sin filtros
+GET http://localhost:8090/api/v1/usuarios?sort=fechaCreacion,asc&sort=nombre,asc&page=0&size=10 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+
+###
+## getAllUsuarios con ordenación sin filtros
+GET http://localhost:8090/api/v1/usuarios?sort=fechaCreacion,desc&sort=nombre,asc&page=0&size=1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+
+
+
+
+
+
+
+###
+## getAllusuarios con CONTIENE
+GET http://localhost:8090/api/v1/usuarios?filter=nombre:CONTIENE:Tor&sort=id&page=0&size=10 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+###
+## getAllusuarios con EMPIEZA
+GET http://localhost:8090/api/v1/usuarios?filter=nombre:EMPIEZA:Tor&sort=id&page=0&size=10 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+
+
+
+###
+## getAllusuarios filtrado por rol con CONTIENE
+GET http://localhost:8090/api/v1/usuarios?filter=roles.nombre:CONTIENE:USUARIO&sort=id&page=0&size=10 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+###
+GET http://localhost:8090/api/v1/usuarios?filter=roles:CONTIENE:USUARIO&sort=id&page=0&size=10 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+
+
+
+###
+## getAllUsuarios con CONTIENE (Usuarios cuyo nombre contenga un valor) NO FUNCIONA (POR HACER)
+GET http://localhost:8090/api/v1/usuarios?filter=nombre:CONTIENE:Edgar&sort=nombre&page=0&size=10 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+
+
+###
+## getAllUsuarios FILTRO POST val
+POST http://localhost:8090/api/v1/usuarios/x HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+Content-Type: application/json
+
+{
+    "listaFiltros": [
+        {
+            "atributo": "nombre",
+            "operacion": "CONTIENE",
+            "valor": "Tormo"
+        }
+    ],
+    "page": 0,
+    "size": 10,
+    "sort": [
+    ]
+}
+
+###
+## getAllUsuarios FILTRO POST sin ordenación ni filtro
+POST http://localhost:8090/api/v1/usuarios/x HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+Content-Type: application/json
+
+{
+    "page": 0,
+    "size": 10
+}
+
+
+
+
+# ###
+# ##  create
+# POST  http://localhost:8090/api/v1/usuarios HTTP/1.1
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+
+# {
+#   "nombre": "Juan Pérez",
+#   "nickname": "juanperez",
+#   "email": "juan.perez@example.com",
+#   "telefono": "555123456",
+#   "estado": "activo",
+#   "roleIds": [1, 2]
+# }
+# ###
+# ##  create errorCode: USER_ALREADY_EXIST
+# POST  http://localhost:8090/api/v1/usuarios HTTP/1.1
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+
+# {
+#   "id": 2,
+#   "nombre": "Juan Pérez",
+#   "nickname": "juanperez",
+#   "email": "juan.perez@example.com",
+#   "telefono": "555123456",
+#   "fechaNacimiento": "1990-01-01",
+#   "estado": "activo",
+#   "roles": [
+#     {
+#       "nombre": "ADMINISTRADOR"
+#     }
+#   ],
+#   "permisosIds": [1, 2, 3]
+# }
+# ###
+# ##  create errorCode: USER_CREATE_VALIDATION
+# POST  http://localhost:8090/api/v1/usuarios HTTP/1.1
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+
+# {
+#   "nombre": "Juan Pérez",
+#   "nickname": "juanperez",
+#   "email": "juan.perez@example.com",
+#   "telefono": "555123456",
+#   "fechaNacimiento": "1990-01-01",
+#   "estado": "activo",
+#   "roleIds": [1, 2],
+#   "permisosIds": [1, 2, 3]
+# }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+##  read
+GET http://localhost:8090/api/v1/usuarios/11 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+###
+##  "errorCode": "ID_FORMAT_INVALID"
+GET http://localhost:8090/api/v1/usuarios/a HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+###
+##  "errorCode": "USER_NOT_FOUND"
+GET http://localhost:8090/api/v1/usuarios/5000 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+
+
+
+
+
+
+
+###
+##  update
+PUT  http://localhost:8090/api/v1/usuarios/10 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+Content-Type: application/json
+
+{
+    "nombre": "Pepito Flautas",
+    "nickname": "PeterTheBest",
+    "email": "pepito@gmail.com",
+    "telefono": "123456789",
+    "roleIds": [1, 2]
+}
+
+
+###
+##  update - errorCode: USER_NOT_FOUND_FOR_UPDATE
+PUT  http://localhost:8090/api/v1/usuarios/1000 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+Content-Type: application/json
+
+{
+    "id": 1000,
+    "nombre": "Pepito Flautas",
+    "nickname": "PeterTheBest",
+    "email": "pepito@gmail.com",
+    "telefono": "123456789",
+    "fechaNacimiento": "2025-02-06",
+    "estado": "pendiente",
+    "roles": [
+        {
+        "nombre": "USUARIO"
+        }
+    ],
+    "permisosIds": null
+}
+###
+##  update - errorCode: USER_UPDATE_VALIDATION
+PUT  http://localhost:8090/api/v1/usuarios/3 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+Content-Type: application/json
+
+{
+    "nombre": "Pepito Flautas",
+    "nickname": "PeterTheBest",
+    "email": "pepito@gmail.com",
+    "telefono": "123456789",
+    "fechaNacimiento": "2025-02-06",
+    "estado": "pendiente",
+    "roles": [
+        {
+        "nombre": "USUARIO"
+        }
+    ],
+    "permisosIds": null
+}
+
+###
+##  update - errorCode: USER_ID_MISMATCH
+PUT  http://localhost:8090/api/v1/usuarios/3 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+Content-Type: application/json
+
+{
+    "id": 1,
+    "nombre": "Pepito Flautas",
+    "nickname": "PeterTheBest",
+    "email": "pepito@gmail.com",
+    "telefono": "123456789",
+    "fechaNacimiento": "2025-02-06",
+    "estado": "pendiente",
+    "roles": [
+        {
+        "nombre": "USUARIO"
+        }
+    ],
+    "permisosIds": null
+}
+
+
+
+
+
+
+
+###
+## delete
+DELETE  http://localhost:8090/api/v1/usuarios/25 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###
+## Obtener todos los roles
+GET http://localhost:8090/api/v1/roles HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+###
+## Obtener usuarios por rol 
+GET http://localhost:8090/api/v1/roles/ADMINISTRADOR/usuarios HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+
+
+
+
+
+### Asignar roles a un usuario
+POST http://localhost:8090/api/v1/usuarios/5/roles HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+Content-Type: application/json
+
+[
+    1, 2, 4, 5
+]
+
+
+### Desbloquear cuenta de usuario
+POST http://localhost:8090/auth/desbloquear/1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+Content-Type: application/json
+
+
+
+###
+## Obtener todos los permisos
+GET http://localhost:8090/api/v1/permisos HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+
+
+###
+## Ver permisos de un rol
+GET http://localhost:8090/api/v1/roles/1/permisos HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+###
+## Ver permisos de un rol - "errorCode": "ROL_NOT_FOUND"
+GET http://localhost:8090/api/v1/roles/2352/permisos HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+
+
+
+
+###
+## Asignar permisos a un rol por ID
+POST http://localhost:8090/api/v1/roles/1/permisos HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+Content-Type: application/json
+
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+
+
+
+###
+## Ver auditorías de eventos de un usuario
+GET http://localhost:8090/api/v1/auditorias/usuario/2 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+
+###
+## Ver auditorías de eventos de un usuario - errorCode: USER_NOT_FOUND
+GET http://localhost:8090/api/v1/auditorias/usuario/2000 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhZG9yQGdtYWlsLmNvbSIsImlhdCI6MTczOTk3NTgxOCwiZXhwIjoxNzQwMDExODE4fQ.327CGRnC0JlAmkvOlxmOWh7m-6i3x8VFGyojF9xASpU
+
+### Obtener sesiones activas
+GET http://localhost:8090/auth/sesiones-activas
+Authorization: Bearer 
+Content-Type: application/json
+
+###Quitar sesion activa por administrador de cualquier sesión activa
+DELETE http://localhost:8090/auth/logout/13
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjaHJpc3RpYW5jaXNjYXJyQGhvdG1haWwuY29tIiwiaWF0IjoxNzM5ODkzODg4LCJleHAiOjE3Mzk5Mjk4ODh9.zePqgPgVbQstUNsWRic9qG1IcdoE3RC2MoSERh3auMY

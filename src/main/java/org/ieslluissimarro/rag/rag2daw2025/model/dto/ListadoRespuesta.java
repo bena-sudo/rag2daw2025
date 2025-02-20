@@ -12,14 +12,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ListadoRespuesta<T> {
-
     int number;
-
     int size;
-
     long totalElements;
-
     int totalPages;
-
     List<T> content;
 }

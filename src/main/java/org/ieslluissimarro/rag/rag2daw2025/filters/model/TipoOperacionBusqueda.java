@@ -4,7 +4,8 @@ public enum TipoOperacionBusqueda {
     IGUAL("="),
     CONTIENE("LIKE"),
     MAYOR_QUE(">"),
-    MENOR_QUE("<");
+    MENOR_QUE("<"),
+    EMPIEZA("^");
 
     private final String simbolo;
 

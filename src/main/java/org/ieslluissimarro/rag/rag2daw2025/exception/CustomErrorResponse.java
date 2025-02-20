@@ -1,18 +1,11 @@
 package org.ieslluissimarro.rag.rag2daw2025.exception;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-
-@Getter
-@Setter
-@AllArgsConstructor
-
+import lombok.Data;
+@Data
 public class CustomErrorResponse {
     @Schema(example = "ERRROR_CODE_STRING", description = "Código del error (String)")
     private String errorCode;

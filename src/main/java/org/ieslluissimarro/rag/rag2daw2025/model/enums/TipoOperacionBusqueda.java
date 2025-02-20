@@ -17,11 +17,11 @@ public enum TipoOperacionBusqueda {
     }
 
     public static TipoOperacionBusqueda deSimbolo(String simbolo) {
-        for (TipoOperacionBusqueda operacion : values())
-            if (operacion.simbolo.equals(simbolo))
+        for (TipoOperacionBusqueda operacion : values()) {
+            if (operacion.simbolo.equals(simbolo)) {
                 return operacion;
-            
-        
-        throw new IllegalArgumentException("Símbolo de operación no válido: " + simbolo);
+            }
+        }
+        throw new IllegalArgumentException("Simbolo de operación no válido: " + simbolo);
     }
 }

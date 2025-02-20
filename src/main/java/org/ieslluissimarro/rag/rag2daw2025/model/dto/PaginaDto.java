@@ -14,22 +14,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaginaDto<T> {
-
-    // Numero de página solicitada
     int number;
-
-    // Tamaño de la página
     int size;
-
-    // Total de elementos devueltos por la consulta sin paginación
     long totalElements;
-
-    // Total páginas teniendo en cuenta el tamaño de cada página
     int totalPages;
 
-    // Lista de elementos
     List<T> content;
-
-    // Ordenación de la consulta
     Sort sort;
 }
