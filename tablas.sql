@@ -22,8 +22,16 @@ DROP TABLE IF EXISTS permisos;
 DROP TABLE IF EXISTS usuarios;
 DROP TABLE IF EXISTS roles;
 --DROP TABLE IF EXISTS categorias;
-
-
+DROP TABLE IF EXISTS unidades_competencia CASCADE;
+DROP TABLE IF EXISTS cuestionarios CASCADE;
+DROP TABLE IF EXISTS respuestas CASCADE;
+DROP TABLE IF EXISTS modulos CASCADE;
+DROP TABLE IF EXISTS sectores CASCADE;
+DROP TABLE IF EXISTS documentos CASCADE;
+DROP TABLE IF EXISTS estado_acreditacion CASCADE;
+DROP TABLE IF EXISTS tipo_pregunta CASCADE;
+DROP TABLE IF EXISTS preguntas_cuestionarios CASCADE;
+DROP TABLE IF EXISTS mensajes CASCADE; 
 
 -- -----------------------------------------------------
 -- Tabla `usuarios`
