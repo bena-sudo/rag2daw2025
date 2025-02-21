@@ -20,9 +20,11 @@ public class Rag2daw2025Application {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("*") // Permitir cualquier origen
-                        .allowedMethods("GET", "POST", "PUT", "DELETE");
+                registry.addMapping("/**")  // Permite todas las rutas
+                        .allowedOrigins("*")  // Permite cualquier origen (⚠️ No recomendado en producción)
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Métodos permitidos
+                        .allowedHeaders("*") // Permite todos los headers
+                        .allowCredentials(true); // Permite enviar cookies (si usas autenticación)
             }
         };
     }
