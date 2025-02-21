@@ -431,5 +431,8 @@ public class AuthController {
 
         return ResponseEntity.ok(sesiones);
     }
-
+    @RequestMapping(value = "/nuevo", method = RequestMethod.OPTIONS)
+    public void handleOptions() {
+        // Este método maneja las solicitudes OPTIONS
+    }
 }
