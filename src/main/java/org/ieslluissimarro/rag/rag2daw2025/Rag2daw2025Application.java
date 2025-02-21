@@ -15,7 +15,8 @@ public class Rag2daw2025Application {
 		SpringApplication.run(Rag2daw2025Application.class, args);
 	}
 
-	@Bean
+	
+    @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
