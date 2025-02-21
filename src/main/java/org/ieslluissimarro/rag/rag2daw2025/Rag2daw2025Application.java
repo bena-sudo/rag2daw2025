@@ -3,11 +3,14 @@ package org.ieslluissimarro.rag.rag2daw2025;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"org.ieslluissimarro.rag.rag2daw2025", 
+"org.ieslluissimarro.rag.rag2daw2025.controller"})
+@ComponentScan(basePackages = {"org.ieslluissimarro.rag.rag2daw2025.controller"})
 @EnableScheduling
 public class Rag2daw2025Application {
 
