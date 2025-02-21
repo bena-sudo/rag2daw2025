@@ -10,7 +10,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication(scanBasePackages = {"org.ieslluissimarro.rag.rag2daw2025", 
 "org.ieslluissimarro.rag.rag2daw2025.controller"})
-@ComponentScan(basePackages = {"org.ieslluissimarro.rag.rag2daw2025.controller"})
+@ComponentScan(basePackages = {"org.ieslluissimarro.rag.rag2daw2025.controller", 
+"org.ieslluissimarro.rag.rag2daw2025.controller"})
 @EnableScheduling
 public class Rag2daw2025Application {
 

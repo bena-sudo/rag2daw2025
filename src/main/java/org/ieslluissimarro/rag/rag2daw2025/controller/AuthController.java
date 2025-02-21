@@ -103,6 +103,8 @@ public class AuthController {
             @ApiResponse(responseCode = "201", description = "Usuario registrado con éxito"),
             @ApiResponse(responseCode = "400", description = "Datos incorrectos o usuario ya existe", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Mensaje.class)))
     })
+    
+    @CrossOrigin(origins = "http://13.73.226.200:80")
     @PostMapping("/nuevo")
     public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
